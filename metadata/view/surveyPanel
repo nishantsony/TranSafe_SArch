@@ -1,0 +1,527 @@
+{
+    "type": "Ext.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "surveypanel",
+        "designer|userClassName": "surveyPanel",
+        "id": "surveyPanel",
+        "style": "background-color: #FFF"
+    },
+    "designerId": "b7ba1fa6-6778-43e0-a6b4-09767da752c8",
+    "cn": [
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "docked": "top"
+            },
+            "designerId": "283506ad-1a1a-49a1-b775-459087cc2050",
+            "cn": [
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|uiInterfaceName": "action-round",
+                        "docked": "right",
+                        "id": "signUpBtn",
+                        "text": "Sign up",
+                        "ui": "action-round"
+                    },
+                    "designerId": "a8b85dc4-e270-42f7-9a06-0cd185337a2d",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    "        //Ext.Viewport.add(Ext.create('TranSafe.view.MyNavigationView'));",
+                                    "        Ext.Viewport.setActiveItem('signuppanel',{",
+                                    "                            type: \"slide\",",
+                                    "                            direction: \"left\"",
+                                    "                        });",
+                                    ""
+                                ]
+                            },
+                            "designerId": "fadd8e9b-1da8-4d20-9d65-5e774449a92a"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|uiInterfaceName": "action-round",
+                        "docked": "right",
+                        "id": "signInBtn",
+                        "text": "Sign in",
+                        "ui": "action-round"
+                    },
+                    "designerId": "9b12be6f-d090-4c74-b672-d56657beb0f5",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    "        //Ext.Viewport.add(Ext.create('TranSafe.view.MyNavigationView'));",
+                                    "        Ext.Viewport.setActiveItem('signinpanel',{",
+                                    "                            type: \"slide\",",
+                                    "                            direction: \"left\"",
+                                    "                        });",
+                                    ""
+                                ]
+                            },
+                            "designerId": "6e52f4c3-6f12-4d6b-8e70-5b6901990852"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|uiInterfaceName": "action-round",
+                        "docked": "right",
+                        "hidden": true,
+                        "id": "signOutBtn",
+                        "text": "Sign out",
+                        "ui": "action-round"
+                    },
+                    "designerId": "43bb1431-1499-4ca5-958f-64bb1b26a7ee",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    "localStorage.setItem('ifLogged', 0);",
+                                    "localStorage.setItem('username','');",
+                                    "console.log('signing out');",
+                                    "Ext.Viewport.setActiveItem('surveypanel',{",
+                                    "                            type: \"slide\",",
+                                    "                            direction: \"left\"",
+                                    "                        });",
+                                    "window.location.reload();"
+                                ]
+                            },
+                            "designerId": "ab4f0118-9a4f-4467-a4b5-c5f69cdafc5e"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "docked": "right",
+                        "hidden": true,
+                        "html": "Hello, username",
+                        "id": "greetingLabel"
+                    },
+                    "designerId": "3ac5b9e5-44da-4d0d-8e43-4ce80fa78b75"
+                }
+            ]
+        },
+        {
+            "type": "Ext.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "docked": "top",
+                "html": "Venue: ",
+                "id": "venueLblSurvey"
+            },
+            "designerId": "3a769ea9-b57d-4399-ad95-2392c56d822d"
+        },
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "docked": "top"
+            },
+            "designerId": "707a60eb-6916-4fd1-a186-408ac011d2be",
+            "cn": [
+                {
+                    "type": "Ext.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "docked": "top"
+                    },
+                    "designerId": "91e61bc3-39f9-4e65-8495-193846d6ad44",
+                    "cn": [
+                        {
+                            "type": "Ext.Img",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "docked": "left",
+                                "height": 70,
+                                "src": "Emoticons/emotion_sad.jpg",
+                                "styleHtmlContent": true,
+                                "width": 50
+                            },
+                            "designerId": "f03dcde5-dea0-46ed-9dae-8dcef8816d8a"
+                        },
+                        {
+                            "type": "Ext.Img",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "docked": "right",
+                                "height": 70,
+                                "src": "Emoticons/emotion_happy_notext.png",
+                                "width": 50
+                            },
+                            "designerId": "152a9dd2-89a2-4e31-867d-252be42be5a2"
+                        },
+                        {
+                            "type": "Ext.field.Slider",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "clearIcon": false,
+                                "docked": "top",
+                                "id": "sliderHappySad",
+                                "label": "",
+                                "labelAlign": "top",
+                                "maxValue": 5,
+                                "minValue": -5,
+                                "value": [
+                                    0
+                                ],
+                                "width": ""
+                            },
+                            "designerId": "b51ee636-9837-45e4-a367-4b621d0ab52f"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "width": ""
+                    },
+                    "designerId": "028a3743-ba14-4bc5-97f3-d7640646d792",
+                    "cn": [
+                        {
+                            "type": "Ext.Img",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "docked": "right",
+                                "height": 70,
+                                "src": "Emoticons/emotion_excited.jpg",
+                                "width": 50
+                            },
+                            "designerId": "a46a302f-c2a4-4ec4-baee-d77ab3f6f719"
+                        },
+                        {
+                            "type": "Ext.Img",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "docked": "left",
+                                "height": 70,
+                                "src": "Emoticons/emotion_bored.jpg",
+                                "width": 48
+                            },
+                            "designerId": "554432a7-b1cc-44c2-8b93-94e439cdc86e"
+                        },
+                        {
+                            "type": "Ext.field.Slider",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "clearIcon": false,
+                                "docked": "top",
+                                "id": "sliderExcitedBored",
+                                "label": "",
+                                "labelAlign": "top",
+                                "maxValue": 5,
+                                "minValue": -5,
+                                "value": [
+                                    0
+                                ],
+                                "width": ""
+                            },
+                            "designerId": "008b9077-c45b-452e-81b6-dd65da4588b8"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "designerId": "fd59ae5a-4a1a-48be-b851-68e6cb9b355e",
+                    "cn": [
+                        {
+                            "type": "Ext.Img",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "docked": "right",
+                                "height": 70,
+                                "src": "Emoticons/emotion_safe.jpg",
+                                "width": 50
+                            },
+                            "designerId": "1d811a1d-167f-4c9e-b99d-4df8303479c6"
+                        },
+                        {
+                            "type": "Ext.Img",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "docked": "left",
+                                "height": 70,
+                                "src": "Emoticons/emotion_scared.jpg",
+                                "width": 48
+                            },
+                            "designerId": "5bef0fbf-fe80-4bd4-a37f-6b83656fb677"
+                        },
+                        {
+                            "type": "Ext.field.Slider",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "clearIcon": false,
+                                "docked": "top",
+                                "id": "sliderSafeScared",
+                                "label": "",
+                                "labelAlign": "top",
+                                "maxValue": 5,
+                                "minValue": -5,
+                                "value": [
+                                    0
+                                ],
+                                "width": ""
+                            },
+                            "designerId": "26cd6e2c-68d8-4557-9a69-eca590863464"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "designerId": "3b7ff7ca-5914-49bd-914c-8e87a4d73fb9",
+                    "cn": [
+                        {
+                            "type": "Ext.Img",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "docked": "right",
+                                "height": 70,
+                                "src": "Emoticons/emotion_peaceful.jpg",
+                                "width": 50
+                            },
+                            "designerId": "206454e4-8a42-4346-809e-9a7597d9e735"
+                        },
+                        {
+                            "type": "Ext.Img",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "docked": "left",
+                                "height": 70,
+                                "src": "Emoticons/emotion_angry.jpg",
+                                "width": 48
+                            },
+                            "designerId": "a12e7b6e-13d4-436e-9f26-ed4f6cff709b"
+                        },
+                        {
+                            "type": "Ext.field.Slider",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "clearIcon": false,
+                                "docked": "top",
+                                "id": "sliderPeacefulAngry",
+                                "label": "",
+                                "labelAlign": "top",
+                                "maxValue": 5,
+                                "minValue": -5,
+                                "value": [
+                                    0
+                                ],
+                                "width": ""
+                            },
+                            "designerId": "9147e21b-024e-4e65-894b-46af621e00ce"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "designerId": "ff9aba1b-251a-4cb4-9161-8515b20d9671"
+                }
+            ]
+        },
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "docked": "bottom"
+            },
+            "designerId": "04f6f95c-0538-4e9b-bfce-f89e24f61cbe",
+            "cn": [
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|uiInterfaceName": "forward",
+                        "docked": "bottom",
+                        "itemId": "mybutton2",
+                        "text": "Next",
+                        "ui": "forward"
+                    },
+                    "designerId": "3e3111d9-7da6-4076-bca7-ccb31de46e5c",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    " Ext.Viewport.setActiveItem('comfortPanel',{",
+                                    "                            type: \"slide\",",
+                                    "                            direction: \"left\"",
+                                    "                        });",
+                                    "",
+                                    ""
+                                ]
+                            },
+                            "designerId": "88fa7ff4-1c6f-4c5a-b22f-e8c6ec4e9ae6"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

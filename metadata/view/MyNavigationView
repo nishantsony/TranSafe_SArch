@@ -1,0 +1,102 @@
+{
+    "type": "Ext.navigation.View",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "mynavigationview",
+        "designer|userClassName": "MyNavigationView",
+        "style": "background-color: #FFF"
+    },
+    "designerId": "6f6512a8-2106-4983-b1cf-102c7371b9fd",
+    "cn": [
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "docked": "top"
+            },
+            "designerId": "474bdd50-ffc0-463b-9c1c-7a38a7a6b034",
+            "cn": [
+                {
+                    "type": "Ext.Map",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 200,
+                        "mapOptions": [
+                            "{}"
+                        ],
+                        "useCurrentLocation": true
+                    },
+                    "designerId": "89ff5123-2fc7-4ca0-8312-e2b24065ffba"
+                }
+            ]
+        },
+        {
+            "type": "Ext.dataview.List",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "allowDeselect": true,
+                "docked": null,
+                "grouped": true,
+                "hideOnMaskTap": false,
+                "itemId": "mylist",
+                "store": "FS",
+                "title": "Locations NearBy"
+            },
+            "designerId": "346f3943-73aa-4272-9e42-5d3d64d91c39",
+            "cn": [
+                {
+                    "type": "Ext.XTemplate",
+                    "reference": {
+                        "name": "itemTpl",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|displayName": "itemTpl",
+                        "implHandler": [
+                            "<div>{name}</div>"
+                        ]
+                    },
+                    "designerId": "5f496474-1e2c-4be1-a921-663d273817a8"
+                },
+                {
+                    "type": "Ext.dataview.IndexBar",
+                    "reference": {
+                        "name": "indexBar",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "0c092602-cba6-414f-b292-22108fae70cf"
+                }
+            ]
+        },
+        {
+            "type": "Ext.navigation.Bar",
+            "reference": {
+                "name": "navigationBar",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "docked": "top"
+            },
+            "designerId": "6983cca2-4780-4eac-81f7-448d437d371c"
+        }
+    ]
+}

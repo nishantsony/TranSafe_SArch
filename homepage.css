@@ -1,0 +1,22 @@
+
+    	
+    	.home {
+    		text-align:center;
+    		
+    	}
+    	.home .x-html h1{
+    		font-weight: bold;
+    		font-size: 1.2em;
+    	}
+    	.home .x-html p{
+    		color: #666;
+    		line-height: 1.6em;
+    		margin: 10px 20px 20px 20px;
+    	}
+    	.home .x-html img{
+    		margin-top:30px;
+    	}
+    	.home .x-html h2{
+    		color:#999;
+    		font-size:0.9em;
+    	}

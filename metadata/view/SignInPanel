@@ -1,0 +1,132 @@
+{
+    "type": "Ext.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "signinpanel",
+        "designer|userClassName": "SignInPanel",
+        "style": "background-color: #FFF"
+    },
+    "designerId": "091b688f-f7ac-4980-832e-4ff6d8a7f271",
+    "cn": [
+        {
+            "type": "Ext.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "html": "Please, authorise"
+            },
+            "designerId": "43c8a05e-999a-4e52-9016-b55c1cb2815d"
+        },
+        {
+            "type": "Ext.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "border": 1,
+                "id": "signInUsernameField",
+                "label": "Login",
+                "margin": null,
+                "padding": 2,
+                "style": "'border-color: blue; border-style: solid;',"
+            },
+            "designerId": "e0be0a7e-f22a-4e0a-b9b1-4abaf3fa81ee"
+        },
+        {
+            "type": "Ext.field.Password",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "border": 1,
+                "id": "signInPasswordField",
+                "label": "Password",
+                "labelAlign": null,
+                "style": "'border-color: blue; border-style: solid;',"
+            },
+            "designerId": "5877add9-9919-4c21-8286-3891a1183a85"
+        },
+        {
+            "type": "Ext.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|uiInterfaceName": "action-round",
+                "docked": "bottom",
+                "text": "Submit",
+                "ui": "action-round"
+            },
+            "designerId": "b1fe2acb-01f9-4d8c-9d66-4ba882187cb2",
+            "cn": [
+                {
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|params": [
+                            "button",
+                            "e"
+                        ],
+                        "fn": "handler",
+                        "implHandler": [
+                            "var username = Ext.getCmp('signInUsernameField').getValue();",
+                            "var pass = Ext.getCmp('signInPasswordField').getValue();",
+                            "console.log('Username: ' + username );",
+                            "console.log('Password: ' + pass );",
+                            "",
+                            "Ext.data.JsonP.request({",
+                            "",
+                            "     url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/Login',",
+                            "     params: {",
+                            "         username: username,",
+                            "         pass: pass,",
+                            "         format: 'json',",
+                            "         response: 'application/jsonp'",
+                            "             },",
+                            "     callbackKey: 'callback',",
+                            "                    success: function (response) {",
+                            "                        alert('Working!');",
+                            "                        console.log(response);",
+                            "                        localStorage.setItem('ifLogged', response['return']);",
+                            "                        localStorage.setItem('username', username);",
+                            "                        console.log(localStorage.getItem('ifLogged'));",
+                            "",
+                            "                         Ext.Viewport.setActiveItem('surveypanel',{",
+                            "                            type: \"slide\",",
+                            "                            direction: \"left\"",
+                            "                        });",
+                            "                    },",
+                            "                    failure: function (response) {",
+                            "                        alert('Not working!');",
+                            "                        console.log(response);",
+                            "                    },",
+                            "     callback: function(successful, data){",
+                            "     alert(data);",
+                            " }",
+                            "               });",
+                            ""
+                        ]
+                    },
+                    "designerId": "9984c13f-10b8-4527-9729-c9c204cf09f7"
+                }
+            ]
+        }
+    ]
+}

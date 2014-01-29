@@ -1,0 +1,338 @@
+{
+    "type": "Ext.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "comfortPanel",
+        "designer|userClassName": "comfortPanel",
+        "scrollable": true,
+        "style": "background-color: #FFF",
+        "styleHtmlContent": true
+    },
+    "designerId": "23ac6a21-268e-429c-9f79-b0b7b7010bc8",
+    "cn": [
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "centered": false
+            },
+            "designerId": "b186f849-7b1f-4657-914f-4e8b46e7c9e3",
+            "cn": [
+                {
+                    "type": "Ext.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "designerId": "a26246a7-7497-4825-b2fc-9420fc907bd2",
+                    "cn": [
+                        {
+                            "type": "Ext.field.Slider",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "clearIcon": false,
+                                "designer|displayName": "hotorcold",
+                                "label": "",
+                                "maxValue": 10,
+                                "minWidth": "70%",
+                                "styleHtmlContent": true,
+                                "value": [
+                                    5
+                                ]
+                            },
+                            "designerId": "ea5eb05c-2958-455d-9c4b-893b1025f083"
+                        },
+                        {
+                            "type": "Ext.Label",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "Cold",
+                                "docked": "left",
+                                "html": "Hot",
+                                "style": "color:red;",
+                                "styleHtmlContent": true
+                            },
+                            "designerId": "c5c6f54a-c2a2-47e2-a732-afb871098d72"
+                        },
+                        {
+                            "type": "Ext.Label",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "cold",
+                                "docked": "right",
+                                "html": "Cold",
+                                "styleHtmlContent": true
+                            },
+                            "designerId": "1d146f33-d63e-4100-9dec-9d04d11b78ea"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "designerId": "600d48ca-8f4d-4568-b994-4438498c5a3c",
+                    "cn": [
+                        {
+                            "type": "Ext.field.Slider",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "noisyorquiet",
+                                "label": "",
+                                "maxValue": 10,
+                                "minWidth": "",
+                                "styleHtmlContent": true,
+                                "value": [
+                                    5
+                                ]
+                            },
+                            "designerId": "293c5121-73fd-4b14-bac6-42c6a7c0cfd1"
+                        },
+                        {
+                            "type": "Ext.Label",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "noisy",
+                                "docked": "left",
+                                "html": "Noisy",
+                                "styleHtmlContent": true
+                            },
+                            "designerId": "b34df619-b118-4980-a19d-cfd7f8d18a2d"
+                        },
+                        {
+                            "type": "Ext.Label",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "quiet",
+                                "docked": "right",
+                                "html": "Quiet",
+                                "styleHtmlContent": true
+                            },
+                            "designerId": "a63c04ce-440e-449a-bf42-fa38ecda598b"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "designerId": "3e526da0-6e09-4df1-92b6-e007b0b01d4a",
+                    "cn": [
+                        {
+                            "type": "Ext.field.Slider",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "crowdedorempty",
+                                "label": "",
+                                "maxValue": 10,
+                                "styleHtmlContent": true,
+                                "value": [
+                                    5
+                                ]
+                            },
+                            "designerId": "820d6343-57ba-460a-b07e-096fbcad21e3"
+                        },
+                        {
+                            "type": "Ext.Label",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "Crowded",
+                                "docked": "left",
+                                "html": "Crowded",
+                                "styleHtmlContent": true
+                            },
+                            "designerId": "e6f3899d-4231-41b9-a8e8-939a665d5abf"
+                        },
+                        {
+                            "type": "Ext.Label",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "Empty",
+                                "docked": "right",
+                                "html": "Empty",
+                                "styleHtmlContent": true
+                            },
+                            "designerId": "d59ea453-d7f6-42be-95a9-5209f3666f21"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "centered": false,
+                        "designer|displayName": "ComfortLabel",
+                        "docked": "top",
+                        "html": "Are you Comfortable?"
+                    },
+                    "designerId": "75ee19a8-92ce-44a1-a4aa-dda5f5bb5b47"
+                }
+            ]
+        },
+        {
+            "type": "Ext.field.Slider",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|displayName": "comfortlevel",
+                "label": "Comfort Level",
+                "labelAlign": "top",
+                "value": [
+                    50
+                ]
+            },
+            "designerId": "edcf03b8-ca43-4b93-8edc-faf7bb8d426e"
+        },
+        {
+            "type": "Ext.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|uiInterfaceName": "confirm",
+                "docked": "bottom",
+                "itemId": "mybutton8",
+                "text": "Submit",
+                "ui": "confirm"
+            },
+            "designerId": "d64ecf89-a9ee-447e-b016-0a41b71d1c65",
+            "cn": [
+                {
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|params": [
+                            "button",
+                            "e"
+                        ],
+                        "fn": "handler",
+                        "implHandler": [
+                            "var currentdate = new Date();",
+                            "var timestamp = currentdate.getFullYear() + \"-\"+(currentdate.getMonth()+1)  + \"-\" + currentdate.getDate() + \"%20\"  + currentdate.getHours() + \"-\"  + currentdate.getMinutes() + \"-\" + currentdate.getSeconds();",
+                            "var chosenVenue = Ext.getCmp('venueLblSurvey').getHtml();",
+                            "chosenVenue = chosenVenue.replace('You are at ','');",
+                            "/*\tgetting feelings' values.",
+                            "*\tif < 0 this is a negative feeling Sad rather than Happy, Angry rather than Peacful etc.",
+                            "*\tfor this we calculate |val| and store it in an array along with all the others.",
+                            "*\tif = 0 this is neutral",
+                            "*\tif > 0 this is a positive feeling",
+                            "*/",
+                            "var tempFeelingArray = new Array();",
+                            "tempFeelingArray.push(Ext.getCmp('sliderHappySad').getValue()[0]);",
+                            "tempFeelingArray.push(Ext.getCmp('sliderExcitedBored').getValue()[0]);",
+                            "tempFeelingArray.push(Ext.getCmp('sliderSafeScared').getValue()[0]);",
+                            "tempFeelingArray.push(Ext.getCmp('sliderPeacefulAngry').getValue()[0]);",
+                            "var feelingsValues = new Array();",
+                            "console.log(tempFeelingArray);",
+                            "for(var i = 0; i < 4; i++){",
+                            "    feelingsValues=setFeelings(feelingsValues, tempFeelingArray[i]);",
+                            "}",
+                            "console.log(feelingsValues);",
+                            "console.log(chosenVenue);",
+                            "Ext.data.JsonP.request({",
+                            "",
+                            "     url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/SaveSurverWithoutPersonalDetails',",
+                            "     params: {",
+                            "         survey: timestamp,",
+                            "         survey: chosenVenue,",
+                            "         feeling: HAPPY_TO_SERVER()+'|'+feelingsValues[HAPPY_INDEX],",
+                            "         feeling: SAD_TO_SERVER()+'|'+feelingsValues[SAD_INDEX],",
+                            "         feeling: EXCITED_TO_SERVER()+'|'+feelingsValues[EXCITED_INDEX],",
+                            "         feeling: BORED_TO_SERVER()+'|'+feelingsValues[BORED_INDEX],",
+                            "         feeling: SAFE_TO_SERVER()+'|'+feelingsValues[SAFE_INDEX],",
+                            "         feeling: SCARED_TO_SERVER()+'|'+feelingsValues[SCARED_INDEX],",
+                            "         feeling: PEACEFUL_TO_SERVER()+'|'+feelingsValues[PEACEFUL_INDEX],",
+                            "         feeling: ANGRY_TO_SERVER()+'|'+feelingsValues[ANGRY_INDEX],",
+                            "         format: 'json',",
+                            "         response: 'application/jsonp'",
+                            "             },",
+                            "     callbackKey: 'callback',",
+                            "                    success: function (response) {",
+                            "                        alert('Working!');",
+                            "                        console.log(response);",
+                            "",
+                            "//                          Ext.Viewport.setActiveItem('surveypanel',{",
+                            "//                             type: \"slide\",",
+                            "//                             direction: \"left\"",
+                            "//                         });",
+                            "                    },",
+                            "                    failure: function (response) {",
+                            "                        alert('Not working!');",
+                            "                        console.log(response);",
+                            "                    },",
+                            "     callback: function(successful, data){",
+                            "     alert(data);",
+                            " }",
+                            "               });"
+                        ]
+                    },
+                    "designerId": "206707d5-856d-4ccd-be30-bbf06bbeede7"
+                }
+            ]
+        }
+    ]
+}

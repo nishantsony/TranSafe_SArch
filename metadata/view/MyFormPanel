@@ -1,0 +1,114 @@
+{
+    "type": "Ext.form.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "MyFormPanel"
+    },
+    "designerId": "22325f5e-c6c4-4e9a-9675-755cdb136a9c",
+    "cn": [
+        {
+            "type": "Ext.form.FieldSet",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "title": "What do you feel?"
+            },
+            "designerId": "e686412c-e6be-4f5d-a688-0687672f9364",
+            "cn": [
+                {
+                    "type": "Ext.field.Slider",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "label": "Happy"
+                    },
+                    "designerId": "fecb6b42-5ea7-42d0-9502-977cc3b78216"
+                },
+                {
+                    "type": "Ext.field.Slider",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "label": "Sad"
+                    },
+                    "designerId": "b2a640d2-b7c6-4cfb-8a7d-28c01e5f5afa"
+                },
+                {
+                    "type": "Ext.field.Slider",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "label": "Angry"
+                    },
+                    "designerId": "a94e6e74-deaf-491c-b8c8-1aa4f5186ef6"
+                },
+                {
+                    "type": "Ext.field.Slider",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "label": "Scared"
+                    },
+                    "designerId": "8bb89357-d4c8-4358-bee7-32211d3ad604"
+                }
+            ]
+        },
+        {
+            "type": "Ext.field.Hidden",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "lt"
+            },
+            "designerId": "3113bb6c-630f-4f35-83f2-818554d5b561"
+        },
+        {
+            "type": "Ext.field.Hidden",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "lng"
+            },
+            "designerId": "cca0f0a9-1787-4bef-a33b-688e66a8d759"
+        },
+        {
+            "type": "Ext.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|uiInterfaceName": "confirm",
+                "text": "Submit",
+                "ui": "confirm"
+            },
+            "designerId": "5cc2ee56-589f-45a5-9258-ea000d1451c0"
+        }
+    ]
+}

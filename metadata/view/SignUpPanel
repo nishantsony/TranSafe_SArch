@@ -1,0 +1,254 @@
+{
+    "type": "Ext.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "signuppanel",
+        "designer|userClassName": "SignUpPanel",
+        "id": "signinpanel",
+        "modal": false,
+        "style": "background-color: #FFF"
+    },
+    "designerId": "84a0048a-1dd5-4977-a25f-8ec8d96cd0a4",
+    "cn": [
+        {
+            "type": "Ext.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "docked": "top",
+                "html": "Please, choose your login and password"
+            },
+            "designerId": "1d6cebf6-6254-4670-9cdb-595ac9cf02f3"
+        },
+        {
+            "type": "Ext.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "border": 1,
+                "id": "signUpUsernameField",
+                "label": "Username",
+                "padding": null,
+                "style": "'border-color: blue; border-style: solid;',"
+            },
+            "designerId": "6778d2c3-9c6a-44dd-9973-580ded487d19"
+        },
+        {
+            "type": "Ext.field.Password",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "border": 1,
+                "id": "signUpPasswordField",
+                "label": "Password",
+                "labelAlign": null,
+                "padding": null,
+                "style": "'border-color: blue; border-style: solid;',"
+            },
+            "designerId": "f2120c8c-e878-466a-939c-3540483768e4"
+        },
+        {
+            "type": "Ext.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "html": "Tell us about yourself"
+            },
+            "designerId": "9f65a3b4-bd45-49d9-8d10-bb1dac49d42d"
+        },
+        {
+            "type": "Ext.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "border": 1,
+                "id": "emailField",
+                "label": "Email",
+                "padding": "",
+                "style": "'border-color: blue; border-style: solid;'"
+            },
+            "designerId": "7af4c42b-d1b3-429a-a588-39c21d0de424"
+        },
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "b5f57269-4355-42a4-b2ed-cc1cdcdf624d",
+            "cn": [
+                {
+                    "type": "Ext.field.Radio",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "docked": "left",
+                        "label": "Male",
+                        "labelAlign": null,
+                        "labelWidth": "60%",
+                        "minWidth": "50%",
+                        "name": "gender",
+                        "value": "male"
+                    },
+                    "designerId": "c8521609-9a06-479f-adc3-5e0cc3f877ba"
+                },
+                {
+                    "type": "Ext.field.Radio",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "centered": false,
+                        "docked": "right",
+                        "label": "Female",
+                        "labelAlign": "right",
+                        "labelWidth": "40%",
+                        "labelWrap": true,
+                        "minWidth": "50%",
+                        "name": "gender",
+                        "value": "female"
+                    },
+                    "designerId": "2f386365-7d3a-4200-a7a3-2bf05fb0c1f7"
+                }
+            ]
+        },
+        {
+            "type": "Ext.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "border": 1,
+                "designer|uiInterfaceName": "number",
+                "id": "ageField",
+                "label": "Age",
+                "padding": "",
+                "style": "'border-color: blue; border-style: solid;',",
+                "ui": "number"
+            },
+            "designerId": "7fdbe8d5-afdb-4e2f-86b1-fb3c59768b6e"
+        },
+        {
+            "type": "Ext.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "border": 1,
+                "id": "occupationField",
+                "label": "Role",
+                "padding": null,
+                "style": "'border-color: blue; border-style: solid;',"
+            },
+            "designerId": "e6f4f1ce-4f21-42e0-b9e1-76f25f3f7df3"
+        },
+        {
+            "type": "Ext.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|uiInterfaceName": "action-round",
+                "docked": "bottom",
+                "text": "Submit",
+                "ui": "action-round"
+            },
+            "designerId": "9073b3c8-b944-42dc-ad8e-c8dfb89aa32f",
+            "cn": [
+                {
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|params": [
+                            "button",
+                            "e"
+                        ],
+                        "fn": "handler",
+                        "implHandler": [
+                            "var login = Ext.getCmp('signUpUsernameField').getValue();",
+                            "var pass = Ext.getCmp('signUpPasswordField').getValue();",
+                            "var email = Ext.getCmp('emailField').getValue();",
+                            "var gender = Ext.ComponentQuery.query('radiofield[name=gender]')[0].getGroupValue();",
+                            "var age = Ext.getCmp('ageField').getValue();",
+                            "var role = Ext.getCmp('occupationField').getValue();",
+                            "console.log('Username: ' + login);",
+                            "console.log('Password: ' + pass);",
+                            "console.log('email: ' + email);",
+                            "console.log('age: ' + age);",
+                            "console.log('occupation: ' + role);",
+                            "console.log('gender: ' + gender);",
+                            "",
+                            "Ext.data.JsonP.request({",
+                            "",
+                            "     url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/CreateUser',",
+                            "     params: {",
+                            "         format: 'json',",
+                            "         response: 'application/jsonp',",
+                            "         userdetails: login,",
+                            "         userdetails: pass,",
+                            "         userdetails: email,",
+                            "         userdetails: gender,",
+                            "         userdetails: age,",
+                            "         userdetails: role",
+                            "             },",
+                            "     callbackKey: 'callback',",
+                            "                    success: function (response) {",
+                            "                        alert('Working!');",
+                            "                        console.log(response);",
+                            "                    },",
+                            "                    failure: function (response) {",
+                            "                        alert('Not working!');",
+                            "                        console.log(response);",
+                            "                    },",
+                            "     callback: function(successful, data){",
+                            "     alert(data);",
+                            " }",
+                            "               });",
+                            "",
+                            " Ext.Viewport.setActiveItem('surveypanel',{",
+                            "                            type: \"slide\",",
+                            "                            direction: \"left\"",
+                            "                        });"
+                        ]
+                    },
+                    "designerId": "b4d2094c-bae2-4db6-bd14-5fe56497f29b"
+                }
+            ]
+        }
+    ]
+}

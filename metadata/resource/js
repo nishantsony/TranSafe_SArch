@@ -1,0 +1,13 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "js",
+        "url": "test.js"
+    },
+    "designerId": "2cad6762-c156-4130-9f1f-c167a6467b76"
+}

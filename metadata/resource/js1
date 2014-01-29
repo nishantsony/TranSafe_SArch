@@ -1,0 +1,13 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "js1",
+        "url": "Feelings.js"
+    },
+    "designerId": "f37bfdef-55aa-498b-8f01-c777f12666db"
+}

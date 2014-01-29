@@ -1,0 +1,29 @@
+{
+    "type": "Ext.app.Application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "controllers": [
+            "MyController"
+        ],
+        "models": [
+            "newVenue"
+        ],
+        "name": "TranSafe",
+        "stores": [
+            "FS"
+        ],
+        "views": [
+            "MyPanel",
+            "surveyPanel",
+            "MyNavigationView",
+            "SignUpPanel",
+            "SignInPanel",
+            "comfortPanel"
+        ]
+    },
+    "designerId": "application"
+}

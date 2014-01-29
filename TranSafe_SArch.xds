@@ -1,0 +1,76 @@
+{
+    "name": "TranSafe_SArch",
+    "settings": {
+        "cmd": {
+            "license": "commercial",
+            "cmdVersion": "4.0.2.67",
+            "frameworkVersion": "2.3.1.408"
+        },
+        "canvasControls": {
+            "viewportSize": {
+                "name": "iPhone",
+                "builtIn": true,
+                "height": 480,
+                "width": 320
+            },
+            "viewportOrientation": "portrait"
+        },
+        "urlPrefix": "http://localhost/",
+        "exportPath": "/Applications/MAMP/htdocs",
+        "spacesToIndent": 4,
+        "sdkPath": "",
+        "lineEnding": "LF",
+        "genTimestamps": false,
+        "cacheBust": false,
+        "buildShouldOverwriteIndex": true,
+        "generateArchitectVersion": true,
+        "lastBuildSelection": {
+            "value": "iosSimulate",
+            "display": "Simulate iOS app"
+        },
+        "displayfield-ExtBox1-1387-inputEl": "Not Installed",
+        "displayfield-ExtBox1-1645-inputEl": "Not Installed",
+        "displayfield-ExtBox1-1695-inputEl": "Not Installed",
+        "displayfield-ExtBox1-1332-inputEl": "Not Installed",
+        "displayfield-ExtBox1-1432-inputEl": "Not Installed"
+    },
+    "xdsVersion": "3.0.2",
+    "xdsBuild": 1375,
+    "schemaVersion": 1,
+    "upgradeVersion": 300000000004,
+    "framework": "touch23",
+    "viewOrderMap": {
+        "view": [
+            "407dbdf7-4c2d-4fcb-a2a5-e9c236cc6fca",
+            "6f6512a8-2106-4983-b1cf-102c7371b9fd",
+            "22325f5e-c6c4-4e9a-9675-755cdb136a9c",
+            "b7ba1fa6-6778-43e0-a6b4-09767da752c8",
+            "23ac6a21-268e-429c-9f79-b0b7b7010bc8",
+            "84a0048a-1dd5-4977-a25f-8ec8d96cd0a4",
+            "091b688f-f7ac-4980-832e-4ff6d8a7f271"
+        ],
+        "store": [
+            "73fecb4d-dbdc-4b9b-9a7c-71100b0c50f9",
+            "18abdb72-5fed-4b0d-9852-978cd32f9902"
+        ],
+        "controller": [
+            "494abfff-6797-4594-ac9c-5f27f4940060"
+        ],
+        "model": [
+            "7a3ad55d-3735-4086-a315-4eb18f524388",
+            "118080a4-f6a9-45f0-b48a-111167fcb3c3"
+        ],
+        "resource": [
+            "6bcd9c33-278a-4c19-ad0d-9348bfd06878",
+            "95090551-38cb-4a67-b96e-5c0e384bcdc3",
+            "81f4936c-7673-4cc9-9448-d26995de6987",
+            "2cad6762-c156-4130-9f1f-c167a6467b76",
+            "0074b7aa-0a14-4c0f-ab74-a459c6f0b8ef",
+            "d32c6609-1092-4201-aaae-e53d8347f6f1",
+            "f37bfdef-55aa-498b-8f01-c777f12666db"
+        ],
+        "app": [
+            "application"
+        ]
+    }
+}

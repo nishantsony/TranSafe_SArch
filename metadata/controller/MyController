@@ -1,0 +1,186 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "MyController"
+    },
+    "designerId": "494abfff-6797-4594-ac9c-5f27f4940060",
+    "cn": [
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "list",
+                "designer|targetType": "Ext.dataview.List",
+                "fn": "onListItemTap",
+                "implHandler": [
+                    "console.log(record.get('name'));",
+                    " Ext.Viewport.setActiveItem('surveypanel',{",
+                    "                            type: \"slide\",",
+                    "                            direction: \"left\"",
+                    "                        });",
+                    "console.log(this.getVenueLblSurvey().setHtml('You are at ' + record.get('name')));"
+                ],
+                "name": "itemtap"
+            },
+            "designerId": "3cf11938-aa73-4e02-88a7-ba464d8b014d"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "venueLblSurvey",
+                "selector": "label#venueLblSurvey"
+            },
+            "designerId": "836d9eb8-0e3a-4420-91cc-f4952cb7e58b"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "surveyPanel",
+                "selector": "panel#surveyPanel"
+            },
+            "designerId": "65c3e78e-8ac9-4979-b897-5a68da380340"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "panel",
+                "designer|targetType": "surveyPanel",
+                "fn": "onPanelActivate",
+                "implHandler": [
+                    "// console.log('logged status is: ' + localStorage.getItem('ifLogged'));",
+                    "// if(localStorage.getItem('ifLogged') == 1){",
+                    "//     var username = localStorage.getItem('username');",
+                    "//     console.log('name: ' + username);",
+                    "//     this.getGreetingLabel().setHtml('Hello, ' + username);",
+                    "//     this.getGreetingLabel().show();",
+                    "//     this.getSignOutBtn().show();",
+                    "//     this.getSignInBtn().hide();",
+                    "//     this.getSignUpBtn().hide();",
+                    "// }",
+                    "// else{",
+                    "//     if(localStorage.getItem('ifLogged') === 0){",
+                    "//     this.getGreetingLabel().hide();",
+                    "//     this.getSignOutBtn().hide();",
+                    "//     this.getSignInBtn().show();",
+                    "//     this.getSignUpBtn().show();",
+                    "//     }",
+                    "// }"
+                ],
+                "name": "activate"
+            },
+            "designerId": "7db43d6d-97b0-4c12-94a9-3adae751b8d0"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "greetingLabel",
+                "selector": "label#greetingLabel"
+            },
+            "designerId": "aa63e37e-b0bb-4e30-84da-36b56e7d4650"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "signInBtn",
+                "selector": "button#signInBtn"
+            },
+            "designerId": "d49b7104-caca-4f06-9e5e-d8eb4e6fcb1b"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "signUpBtn",
+                "selector": "button#signUpBtn"
+            },
+            "designerId": "ee629181-3c83-4edd-95df-2e4f09a8dff6"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "signOutBtn",
+                "selector": "button#signOutBtn"
+            },
+            "designerId": "b2ce25fa-5d5e-46f0-b88b-bb5631aedb64"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#surveyPanel",
+                "designer|targetType": "surveyPanel",
+                "fn": "onSurveyPanelActivate",
+                "implHandler": [
+                    "console.log('Survey panel activated');",
+                    "console.log('logged status is: ' + localStorage.getItem('ifLogged'));",
+                    "if(localStorage.getItem('ifLogged') == 1){",
+                    "    var username = localStorage.getItem('username');",
+                    "    console.log('name: ' + username);",
+                    "    this.getGreetingLabel().setHtml('Hello, ' + username);",
+                    "    this.getGreetingLabel().show();",
+                    "    this.getSignOutBtn().show();",
+                    "    this.getSignInBtn().hide();",
+                    "    this.getSignUpBtn().hide();",
+                    "}",
+                    "else{",
+                    "    if(localStorage.getItem('ifLogged') === 0){",
+                    "    this.getGreetingLabel().hide();",
+                    "    this.getSignOutBtn().hide();",
+                    "    this.getSignInBtn().show();",
+                    "    this.getSignUpBtn().show();",
+                    "    }",
+                    "}"
+                ],
+                "name": "activate"
+            },
+            "designerId": "82b5e44d-be54-466c-9d5e-4dac909a6ad9"
+        }
+    ]
+}
