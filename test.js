@@ -14,7 +14,7 @@ function showPosition(position)
   {
   lt = position.coords.latitude;
   lng = position.coords.longitude;
-  alert ( lt +" " + lng);
+//  alert ( lt +" " + lng);
   }
 
 window.onload= getLocation();

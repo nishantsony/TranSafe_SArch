@@ -29,7 +29,7 @@ Ext.define('TranSafe.store.FSData', {
         storeId: 'FSData',
         proxy: {
             type: 'jsonp',
-            url: 'https://api.foursquare.com/v2/venues/search?ll=40.7,-74&client_id=FHGRALBMIKR04JREC02GPFOJFXNEDXVFJ0LCUM5J025YRFHY&client_secret=2BTYTCA4NIKM0EXVVKQ2NFQRXYPJ252RO4EDB0GVLTLMOLBI',
+            url: 'https://api.foursquare.com/v2/venues/search?ll=40.7,-74&client_id=FHGRALBMIKR04JREC02GPFOJFXNEDXVFJ0LCUM5J025YRFHY&client_secret=2BTYTCA4NIKM0EXVVKQ2NFQRXYPJ252RO4EDB0GVLTLMOLBI&v=20140130',
             reader: {
                 type: 'json',
                 rootProperty: 'response.groups[0].items'
@@ -41,7 +41,9 @@ Ext.define('TranSafe.store.FSData', {
             }
         },
         sorters: {
+            sorterFn: function(first, second) {
 
+            }
         }
     }
 });

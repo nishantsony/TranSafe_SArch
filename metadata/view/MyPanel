@@ -12,6 +12,7 @@
         "designer|initialView": true,
         "designer|userClassName": "MyPanel",
         "html": "<h1>Welcome to TranSafe</h1><p>Synopsis</p><h2>TranSafe (0.0.1)</h2>",
+        "id": "logoPanel",
         "requires": [
             "TranSafe.view.MyNavigationView"
         ],
@@ -54,6 +55,7 @@
                     "userConfig": {
                         "designer|uiInterfaceName": "action-round",
                         "docked": "right",
+                        "hidden": true,
                         "id": "start",
                         "text": "Continue",
                         "ui": "action-round"
@@ -97,6 +99,7 @@
                     "userConfig": {
                         "designer|uiInterfaceName": "action-round",
                         "docked": "left",
+                        "hidden": true,
                         "itemId": "addVenue",
                         "text": "Add venue",
                         "ui": "action-round"

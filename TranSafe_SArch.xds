@@ -15,8 +15,8 @@
             },
             "viewportOrientation": "portrait"
         },
-        "urlPrefix": "http://localhost/",
-        "exportPath": "/Applications/MAMP/htdocs",
+        "urlPrefix": "http://localhost/transafe",
+        "exportPath": "/Applications/MAMP/htdocs/transafe",
         "spacesToIndent": 4,
         "sdkPath": "",
         "lineEnding": "LF",
@@ -32,7 +32,11 @@
         "displayfield-ExtBox1-1645-inputEl": "Not Installed",
         "displayfield-ExtBox1-1695-inputEl": "Not Installed",
         "displayfield-ExtBox1-1332-inputEl": "Not Installed",
-        "displayfield-ExtBox1-1432-inputEl": "Not Installed"
+        "displayfield-ExtBox1-1432-inputEl": "Not Installed",
+        "displayfield-ExtBox1-1283-inputEl": "Not Installed",
+        "displayfield-ExtBox1-1333-inputEl": "Not Installed",
+        "displayfield-ExtBox1-1383-inputEl": "Not Installed",
+        "displayfield-ExtBox1-1433-inputEl": "Not Installed"
     },
     "xdsVersion": "3.0.2",
     "xdsBuild": 1375,

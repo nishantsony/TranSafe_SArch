@@ -42,6 +42,7 @@ Ext.define('TranSafe.view.comfortPanel', {
                                 styleHtmlContent: true,
                                 clearIcon: false,
                                 label: '',
+                                name: '',
                                 value: [
                                     5
                                 ],
@@ -135,7 +136,7 @@ Ext.define('TranSafe.view.comfortPanel', {
                 xtype: 'button',
                 handler: function(button, e) {
                     var currentdate = new Date();
-                    var timestamp = currentdate.getFullYear() + "-"+(currentdate.getMonth()+1)  + "-" + currentdate.getDate() + "%20"  + currentdate.getHours() + "-"  + currentdate.getMinutes() + "-" + currentdate.getSeconds();
+                    var timestamp = currentdate.getFullYear() + "-"+(currentdate.getMonth()+1)  + "-" + currentdate.getDate() + " "  + currentdate.getHours() + "-"  + currentdate.getMinutes() + "-" + currentdate.getSeconds();
                     var chosenVenue = Ext.getCmp('venueLblSurvey').getHtml();
                     chosenVenue = chosenVenue.replace('You are at ','');
                     /*	getting feelings' values.
@@ -156,41 +157,93 @@ Ext.define('TranSafe.view.comfortPanel', {
                     }
                     console.log(feelingsValues);
                     console.log(chosenVenue);
-                    Ext.data.JsonP.request({
+                    console.log(HAPPY_TO_SERVER()+'|'+feelingsValues[HAPPY_INDEX] + '|' +
+                    SAD_TO_SERVER()+'|'+feelingsValues[SAD_INDEX] + '|' +
+                    EXCITED_TO_SERVER()+'|'+feelingsValues[EXCITED_INDEX] + '|' +
+                    BORED_TO_SERVER()+'|'+feelingsValues[BORED_INDEX] + '|' +
+                    SAFE_TO_SERVER()+'|'+feelingsValues[SAFE_INDEX] + '|' +
+                    SCARED_TO_SERVER()+'|'+feelingsValues[SCARED_INDEX] + '|' +
+                    PEACEFUL_TO_SERVER()+'|'+feelingsValues[PEACEFUL_INDEX] + '|' +
+                    ANGRY_TO_SERVER()+'|'+feelingsValues[ANGRY_INDEX]);
 
-                        url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/SaveSurverWithoutPersonalDetails',
-                        params: {
-                            survey: timestamp,
-                            survey: chosenVenue,
-                            feeling: HAPPY_TO_SERVER()+'|'+feelingsValues[HAPPY_INDEX],
-                            feeling: SAD_TO_SERVER()+'|'+feelingsValues[SAD_INDEX],
-                            feeling: EXCITED_TO_SERVER()+'|'+feelingsValues[EXCITED_INDEX],
-                            feeling: BORED_TO_SERVER()+'|'+feelingsValues[BORED_INDEX],
-                            feeling: SAFE_TO_SERVER()+'|'+feelingsValues[SAFE_INDEX],
-                            feeling: SCARED_TO_SERVER()+'|'+feelingsValues[SCARED_INDEX],
-                            feeling: PEACEFUL_TO_SERVER()+'|'+feelingsValues[PEACEFUL_INDEX],
-                            feeling: ANGRY_TO_SERVER()+'|'+feelingsValues[ANGRY_INDEX],
-                            format: 'json',
-                            response: 'application/jsonp'
-                        },
-                        callbackKey: 'callback',
-                        success: function (response) {
-                            alert('Working!');
-                            console.log(response);
+                    // registered logged in users
+                    if(localStorage.getItem('ifLogged') != 'Invalid User' || localStorage.getItem('ifLogged') !==0){
+                        Ext.data.JsonP.request({
 
-                            //                          Ext.Viewport.setActiveItem('surveypanel',{
-                            //                             type: "slide",
-                            //                             direction: "left"
-                            //                         });
-                        },
-                        failure: function (response) {
-                            alert('Not working!');
-                            console.log(response);
-                        },
-                        callback: function(successful, data){
-                            alert(data);
-                        }
-                    });
+                            url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/SaveSurveyDistinctive',
+                            params: {
+                                timestamp : timestamp,
+                                location: chosenVenue,
+                                feeling: HAPPY_TO_SERVER()+'|'+feelingsValues[HAPPY_INDEX] + '|' +
+                                SAD_TO_SERVER()+'|'+feelingsValues[SAD_INDEX] + '|' +
+                                EXCITED_TO_SERVER()+'|'+feelingsValues[EXCITED_INDEX] + '|' +
+                                BORED_TO_SERVER()+'|'+feelingsValues[BORED_INDEX] + '|' +
+                                SAFE_TO_SERVER()+'|'+feelingsValues[SAFE_INDEX] + '|' +
+                                SCARED_TO_SERVER()+'|'+feelingsValues[SCARED_INDEX] + '|' +
+                                PEACEFUL_TO_SERVER()+'|'+feelingsValues[PEACEFUL_INDEX] + '|' +
+                                ANGRY_TO_SERVER()+'|'+feelingsValues[ANGRY_INDEX],
+                                username: localStorage.getItem('username'),
+                                token: localStorage.getItem('ifLogged'),
+                                format: 'json',
+                                response: 'application/jsonp'
+                            },
+                            callbackKey: 'callback',
+                            success: function (response) {
+                                alert('Working!');
+                                console.log(response);
+
+                                //                          Ext.Viewport.setActiveItem('surveypanel',{
+                                //                             type: "slide",
+                                //                             direction: "left"
+                                //                         });
+                            },
+                            failure: function (response) {
+                                alert('Not working!');
+                                console.log(response);
+                            },
+                            callback: function(successful, data){
+                                alert(data);
+                            }
+                        });
+                    }
+                    // anonimous users
+                    else{
+                        Ext.data.JsonP.request({
+
+                            url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/SaveSurveyAnonymous',
+                            params: {
+                                timestamp : timestamp,
+                                location: chosenVenue,
+                                feeling: HAPPY_TO_SERVER()+'|'+feelingsValues[HAPPY_INDEX] + '|' +
+                                SAD_TO_SERVER()+'|'+feelingsValues[SAD_INDEX] + '|' +
+                                EXCITED_TO_SERVER()+'|'+feelingsValues[EXCITED_INDEX] + '|' +
+                                BORED_TO_SERVER()+'|'+feelingsValues[BORED_INDEX] + '|' +
+                                SAFE_TO_SERVER()+'|'+feelingsValues[SAFE_INDEX] + '|' +
+                                SCARED_TO_SERVER()+'|'+feelingsValues[SCARED_INDEX] + '|' +
+                                PEACEFUL_TO_SERVER()+'|'+feelingsValues[PEACEFUL_INDEX] + '|' +
+                                ANGRY_TO_SERVER()+'|'+feelingsValues[ANGRY_INDEX],
+                                format: 'json',
+                                response: 'application/jsonp'
+                            },
+                            callbackKey: 'callback',
+                            success: function (response) {
+                                alert('Working!');
+                                console.log(response);
+
+                                //                          Ext.Viewport.setActiveItem('surveypanel',{
+                                //                             type: "slide",
+                                //                             direction: "left"
+                                //                         });
+                            },
+                            failure: function (response) {
+                                alert('Not working!');
+                                console.log(response);
+                            },
+                            callback: function(successful, data){
+                                alert(data);
+                            }
+                        });
+                    }
                 },
                 docked: 'bottom',
                 itemId: 'mybutton8',

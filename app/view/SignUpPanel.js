@@ -111,31 +111,43 @@ Ext.define('TranSafe.view.SignUpPanel', {
                     var email = Ext.getCmp('emailField').getValue();
                     var gender = Ext.ComponentQuery.query('radiofield[name=gender]')[0].getGroupValue();
                     var age = Ext.getCmp('ageField').getValue();
-                    var role = Ext.getCmp('occupationField').getValue();
+                    var occupation = Ext.getCmp('occupationField').getValue();
                     console.log('Username: ' + login);
                     console.log('Password: ' + pass);
                     console.log('email: ' + email);
                     console.log('age: ' + age);
-                    console.log('occupation: ' + role);
+                    console.log('occupation: ' + occupation);
                     console.log('gender: ' + gender);
 
                     Ext.data.JsonP.request({
 
                         url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/CreateUser',
                         params: {
+                            username: login,
+                            password: pass,
+                            email: email,
+                            gender: gender,
+                            age: age,
+                            occupation: occupation,
                             format: 'json',
-                            response: 'application/jsonp',
-                            userdetails: login,
-                            userdetails: pass,
-                            userdetails: email,
-                            userdetails: gender,
-                            userdetails: age,
-                            userdetails: role
+                            response: 'application/jsonp'
                         },
                         callbackKey: 'callback',
                         success: function (response) {
                             alert('Working!');
                             console.log(response);
+                            if(response['return'] != 'Invalid User'){
+                                localStorage.setItem('ifLogged', response['return']);
+                                localStorage.setItem('username', login);
+                                Ext.Viewport.setActiveItem('surveypanel',{
+                                    type: "slide",
+                                    direction: "left"
+                                });
+                            }
+                            else{
+                                console.log('the user is invalid');
+                                alert('Sorry, these user details cannot be used, try again with another details');
+                            }
                         },
                         failure: function (response) {
                             alert('Not working!');
@@ -144,11 +156,6 @@ Ext.define('TranSafe.view.SignUpPanel', {
                         callback: function(successful, data){
                             alert(data);
                         }
-                    });
-
-                    Ext.Viewport.setActiveItem('surveypanel',{
-                        type: "slide",
-                        direction: "left"
                     });
                 },
                 docked: 'bottom',

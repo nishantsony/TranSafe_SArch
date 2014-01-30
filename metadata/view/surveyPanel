@@ -140,7 +140,7 @@
                                 ],
                                 "fn": "handler",
                                 "implHandler": [
-                                    "localStorage.setItem('ifLogged', 0);",
+                                    "localStorage.setItem('ifLogged', '');",
                                     "localStorage.setItem('username','');",
                                     "console.log('signing out');",
                                     "Ext.Viewport.setActiveItem('surveypanel',{",
@@ -210,6 +210,48 @@
                     "designerId": "91e61bc3-39f9-4e65-8495-193846d6ad44",
                     "cn": [
                         {
+                            "type": "Ext.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "docked": "top"
+                            },
+                            "designerId": "15648170-f514-4e78-a267-a77a03633aca",
+                            "cn": [
+                                {
+                                    "type": "Ext.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "left",
+                                        "html": "Sad",
+                                        "padding": "0 0 0 10"
+                                    },
+                                    "designerId": "0eb1d071-b8d5-4828-879b-ab7f7ee7f486"
+                                },
+                                {
+                                    "type": "Ext.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "right",
+                                        "html": "Happy",
+                                        "padding": "0 10 0 0"
+                                    },
+                                    "designerId": "b354d420-9bab-4e3b-b7f0-978aa05e88da"
+                                }
+                            ]
+                        },
+                        {
                             "type": "Ext.Img",
                             "reference": {
                                 "name": "items",
@@ -219,9 +261,10 @@
                             "userConfig": {
                                 "docked": "left",
                                 "height": 70,
-                                "src": "Emoticons/emotion_sad.jpg",
+                                "id": "sadFacePic",
+                                "src": "Emoticons/centered/sad.png",
                                 "styleHtmlContent": true,
-                                "width": 50
+                                "width": 70
                             },
                             "designerId": "f03dcde5-dea0-46ed-9dae-8dcef8816d8a"
                         },
@@ -235,8 +278,8 @@
                             "userConfig": {
                                 "docked": "right",
                                 "height": 70,
-                                "src": "Emoticons/emotion_happy_notext.png",
-                                "width": 50
+                                "src": "Emoticons/centered/happy.png",
+                                "width": 70
                             },
                             "designerId": "152a9dd2-89a2-4e31-867d-252be42be5a2"
                         },
@@ -249,7 +292,7 @@
                             "codeClass": null,
                             "userConfig": {
                                 "clearIcon": false,
-                                "docked": "top",
+                                "docked": "bottom",
                                 "id": "sliderHappySad",
                                 "label": "",
                                 "labelAlign": "top",
@@ -277,6 +320,48 @@
                     "designerId": "028a3743-ba14-4bc5-97f3-d7640646d792",
                     "cn": [
                         {
+                            "type": "Ext.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "docked": "top"
+                            },
+                            "designerId": "f356de47-89ea-4c52-863c-1341875b1777",
+                            "cn": [
+                                {
+                                    "type": "Ext.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "left",
+                                        "html": "Bored",
+                                        "padding": "0 0 0 10"
+                                    },
+                                    "designerId": "a146c350-625a-4d90-921e-49deadac4ca7"
+                                },
+                                {
+                                    "type": "Ext.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "right",
+                                        "html": "Excited",
+                                        "padding": "0 10 0 0"
+                                    },
+                                    "designerId": "ccdf2d3d-ae8c-4e1e-a271-ecfc9de20eaf"
+                                }
+                            ]
+                        },
+                        {
                             "type": "Ext.Img",
                             "reference": {
                                 "name": "items",
@@ -286,8 +371,8 @@
                             "userConfig": {
                                 "docked": "right",
                                 "height": 70,
-                                "src": "Emoticons/emotion_excited.jpg",
-                                "width": 50
+                                "src": "Emoticons/centered/excited.png",
+                                "width": 70
                             },
                             "designerId": "a46a302f-c2a4-4ec4-baee-d77ab3f6f719"
                         },
@@ -301,8 +386,8 @@
                             "userConfig": {
                                 "docked": "left",
                                 "height": 70,
-                                "src": "Emoticons/emotion_bored.jpg",
-                                "width": 48
+                                "src": "Emoticons/centered/bored.png",
+                                "width": 70
                             },
                             "designerId": "554432a7-b1cc-44c2-8b93-94e439cdc86e"
                         },
@@ -340,6 +425,48 @@
                     "designerId": "fd59ae5a-4a1a-48be-b851-68e6cb9b355e",
                     "cn": [
                         {
+                            "type": "Ext.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "docked": "top"
+                            },
+                            "designerId": "fcca6052-1952-46b4-9a2a-5b4238fe49ae",
+                            "cn": [
+                                {
+                                    "type": "Ext.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "left",
+                                        "html": "Scared",
+                                        "padding": "0 0 0 10"
+                                    },
+                                    "designerId": "e165c64e-3528-4678-a88a-b136e8da4897"
+                                },
+                                {
+                                    "type": "Ext.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "right",
+                                        "html": "Safe",
+                                        "padding": "0 10 0 0"
+                                    },
+                                    "designerId": "4ffbca31-cd8f-42cf-af87-9741e1979d59"
+                                }
+                            ]
+                        },
+                        {
                             "type": "Ext.Img",
                             "reference": {
                                 "name": "items",
@@ -349,8 +476,8 @@
                             "userConfig": {
                                 "docked": "right",
                                 "height": 70,
-                                "src": "Emoticons/emotion_safe.jpg",
-                                "width": 50
+                                "src": "Emoticons/centered/safe.png",
+                                "width": 70
                             },
                             "designerId": "1d811a1d-167f-4c9e-b99d-4df8303479c6"
                         },
@@ -364,8 +491,8 @@
                             "userConfig": {
                                 "docked": "left",
                                 "height": 70,
-                                "src": "Emoticons/emotion_scared.jpg",
-                                "width": 48
+                                "src": "Emoticons/centered/scared.png",
+                                "width": 70
                             },
                             "designerId": "5bef0fbf-fe80-4bd4-a37f-6b83656fb677"
                         },
@@ -403,6 +530,48 @@
                     "designerId": "3b7ff7ca-5914-49bd-914c-8e87a4d73fb9",
                     "cn": [
                         {
+                            "type": "Ext.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "docked": "top"
+                            },
+                            "designerId": "89510c18-6002-488c-959b-852e479bdb3c",
+                            "cn": [
+                                {
+                                    "type": "Ext.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "left",
+                                        "html": "Angry",
+                                        "padding": "0 0 0 10"
+                                    },
+                                    "designerId": "906be9fd-2fcc-4e6e-99e1-def161e9b546"
+                                },
+                                {
+                                    "type": "Ext.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "right",
+                                        "html": "Peaceful",
+                                        "padding": "0 10 0 0"
+                                    },
+                                    "designerId": "3733de5d-1e61-44bd-bde8-148bef6e1cd7"
+                                }
+                            ]
+                        },
+                        {
                             "type": "Ext.Img",
                             "reference": {
                                 "name": "items",
@@ -412,8 +581,8 @@
                             "userConfig": {
                                 "docked": "right",
                                 "height": 70,
-                                "src": "Emoticons/emotion_peaceful.jpg",
-                                "width": 50
+                                "src": "Emoticons/centered/peaceful.png",
+                                "width": 70
                             },
                             "designerId": "206454e4-8a42-4346-809e-9a7597d9e735"
                         },
@@ -427,8 +596,8 @@
                             "userConfig": {
                                 "docked": "left",
                                 "height": 70,
-                                "src": "Emoticons/emotion_angry.jpg",
-                                "width": 48
+                                "src": "Emoticons/centered/angry.png",
+                                "width": 70
                             },
                             "designerId": "a12e7b6e-13d4-436e-9f26-ed4f6cff709b"
                         },

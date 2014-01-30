@@ -26,6 +26,7 @@ Ext.define('TranSafe.view.MyPanel', {
     config: {
         cls: 'home',
         html: '<h1>Welcome to TranSafe</h1><p>Synopsis</p><h2>TranSafe (0.0.1)</h2>',
+        id: 'logoPanel',
         style: 'background-color: #FFF',
         items: [
             {
@@ -49,6 +50,7 @@ Ext.define('TranSafe.view.MyPanel', {
 
                         },
                         docked: 'right',
+                        hidden: true,
                         id: 'start',
                         ui: 'action-round',
                         text: 'Continue'
@@ -64,6 +66,7 @@ Ext.define('TranSafe.view.MyPanel', {
 
                         },
                         docked: 'left',
+                        hidden: true,
                         itemId: 'addVenue',
                         ui: 'action-round',
                         text: 'Add venue'

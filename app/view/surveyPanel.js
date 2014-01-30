@@ -66,7 +66,7 @@ Ext.define('TranSafe.view.surveyPanel', {
                     {
                         xtype: 'button',
                         handler: function(button, e) {
-                            localStorage.setItem('ifLogged', 0);
+                            localStorage.setItem('ifLogged', '');
                             localStorage.setItem('username','');
                             console.log('signing out');
                             Ext.Viewport.setActiveItem('surveypanel',{
@@ -105,23 +105,42 @@ Ext.define('TranSafe.view.surveyPanel', {
                         docked: 'top',
                         items: [
                             {
+                                xtype: 'container',
+                                docked: 'top',
+                                items: [
+                                    {
+                                        xtype: 'label',
+                                        docked: 'left',
+                                        html: 'Sad',
+                                        padding: '0 0 0 10'
+                                    },
+                                    {
+                                        xtype: 'label',
+                                        docked: 'right',
+                                        html: 'Happy',
+                                        padding: '0 10 0 0'
+                                    }
+                                ]
+                            },
+                            {
                                 xtype: 'image',
                                 docked: 'left',
                                 height: 70,
+                                id: 'sadFacePic',
                                 styleHtmlContent: true,
-                                width: 50,
-                                src: 'Emoticons/emotion_sad.jpg'
+                                width: 70,
+                                src: 'Emoticons/centered/sad.png'
                             },
                             {
                                 xtype: 'image',
                                 docked: 'right',
                                 height: 70,
-                                width: 50,
-                                src: 'Emoticons/emotion_happy_notext.png'
+                                width: 70,
+                                src: 'Emoticons/centered/happy.png'
                             },
                             {
                                 xtype: 'sliderfield',
-                                docked: 'top',
+                                docked: 'bottom',
                                 id: 'sliderHappySad',
                                 width: '',
                                 clearIcon: false,
@@ -140,18 +159,36 @@ Ext.define('TranSafe.view.surveyPanel', {
                         width: '',
                         items: [
                             {
+                                xtype: 'container',
+                                docked: 'top',
+                                items: [
+                                    {
+                                        xtype: 'label',
+                                        docked: 'left',
+                                        html: 'Bored',
+                                        padding: '0 0 0 10'
+                                    },
+                                    {
+                                        xtype: 'label',
+                                        docked: 'right',
+                                        html: 'Excited',
+                                        padding: '0 10 0 0'
+                                    }
+                                ]
+                            },
+                            {
                                 xtype: 'image',
                                 docked: 'right',
                                 height: 70,
-                                width: 50,
-                                src: 'Emoticons/emotion_excited.jpg'
+                                width: 70,
+                                src: 'Emoticons/centered/excited.png'
                             },
                             {
                                 xtype: 'image',
                                 docked: 'left',
                                 height: 70,
-                                width: 48,
-                                src: 'Emoticons/emotion_bored.jpg'
+                                width: 70,
+                                src: 'Emoticons/centered/bored.png'
                             },
                             {
                                 xtype: 'sliderfield',
@@ -173,18 +210,36 @@ Ext.define('TranSafe.view.surveyPanel', {
                         xtype: 'container',
                         items: [
                             {
+                                xtype: 'container',
+                                docked: 'top',
+                                items: [
+                                    {
+                                        xtype: 'label',
+                                        docked: 'left',
+                                        html: 'Scared',
+                                        padding: '0 0 0 10'
+                                    },
+                                    {
+                                        xtype: 'label',
+                                        docked: 'right',
+                                        html: 'Safe',
+                                        padding: '0 10 0 0'
+                                    }
+                                ]
+                            },
+                            {
                                 xtype: 'image',
                                 docked: 'right',
                                 height: 70,
-                                width: 50,
-                                src: 'Emoticons/emotion_safe.jpg'
+                                width: 70,
+                                src: 'Emoticons/centered/safe.png'
                             },
                             {
                                 xtype: 'image',
                                 docked: 'left',
                                 height: 70,
-                                width: 48,
-                                src: 'Emoticons/emotion_scared.jpg'
+                                width: 70,
+                                src: 'Emoticons/centered/scared.png'
                             },
                             {
                                 xtype: 'sliderfield',
@@ -206,18 +261,36 @@ Ext.define('TranSafe.view.surveyPanel', {
                         xtype: 'container',
                         items: [
                             {
+                                xtype: 'container',
+                                docked: 'top',
+                                items: [
+                                    {
+                                        xtype: 'label',
+                                        docked: 'left',
+                                        html: 'Angry',
+                                        padding: '0 0 0 10'
+                                    },
+                                    {
+                                        xtype: 'label',
+                                        docked: 'right',
+                                        html: 'Peaceful',
+                                        padding: '0 10 0 0'
+                                    }
+                                ]
+                            },
+                            {
                                 xtype: 'image',
                                 docked: 'right',
                                 height: 70,
-                                width: 50,
-                                src: 'Emoticons/emotion_peaceful.jpg'
+                                width: 70,
+                                src: 'Emoticons/centered/peaceful.png'
                             },
                             {
                                 xtype: 'image',
                                 docked: 'left',
                                 height: 70,
-                                width: 48,
-                                src: 'Emoticons/emotion_angry.jpg'
+                                width: 70,
+                                src: 'Emoticons/centered/angry.png'
                             },
                             {
                                 xtype: 'sliderfield',

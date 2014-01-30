@@ -21,7 +21,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "url": "https://api.foursquare.com/v2/venues/search?ll=40.7,-74&client_id=FHGRALBMIKR04JREC02GPFOJFXNEDXVFJ0LCUM5J025YRFHY&client_secret=2BTYTCA4NIKM0EXVVKQ2NFQRXYPJ252RO4EDB0GVLTLMOLBI"
+                "url": "https://api.foursquare.com/v2/venues/search?ll=40.7,-74&client_id=FHGRALBMIKR04JREC02GPFOJFXNEDXVFJ0LCUM5J025YRFHY&client_secret=2BTYTCA4NIKM0EXVVKQ2NFQRXYPJ252RO4EDB0GVLTLMOLBI&v=20140130"
             },
             "designerId": "e66aff87-89e7-40c4-81f9-341e286f6e07",
             "cn": [
@@ -33,7 +33,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "rootProperty": "response.groups[0].items"
+                        "rootProperty": "response.venues"
                     },
                     "designerId": "94c36e60-66e8-48a8-b695-46fa8f0bfc7d"
                 }

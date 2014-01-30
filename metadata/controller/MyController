@@ -23,10 +23,10 @@
                 "fn": "onListItemTap",
                 "implHandler": [
                     "console.log(record.get('name'));",
-                    " Ext.Viewport.setActiveItem('surveypanel',{",
-                    "                            type: \"slide\",",
-                    "                            direction: \"left\"",
-                    "                        });",
+                    "Ext.Viewport.setActiveItem('surveypanel',{",
+                    "    type: \"slide\",",
+                    "    direction: \"left\"",
+                    "});",
                     "console.log(this.getVenueLblSurvey().setHtml('You are at ' + record.get('name')));"
                 ],
                 "name": "itemtap"
@@ -58,41 +58,6 @@
                 "selector": "panel#surveyPanel"
             },
             "designerId": "65c3e78e-8ac9-4979-b897-5a68da380340"
-        },
-        {
-            "type": "controlleraction",
-            "reference": {
-                "name": "listeners",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "designer|controlQuery": "panel",
-                "designer|targetType": "surveyPanel",
-                "fn": "onPanelActivate",
-                "implHandler": [
-                    "// console.log('logged status is: ' + localStorage.getItem('ifLogged'));",
-                    "// if(localStorage.getItem('ifLogged') == 1){",
-                    "//     var username = localStorage.getItem('username');",
-                    "//     console.log('name: ' + username);",
-                    "//     this.getGreetingLabel().setHtml('Hello, ' + username);",
-                    "//     this.getGreetingLabel().show();",
-                    "//     this.getSignOutBtn().show();",
-                    "//     this.getSignInBtn().hide();",
-                    "//     this.getSignUpBtn().hide();",
-                    "// }",
-                    "// else{",
-                    "//     if(localStorage.getItem('ifLogged') === 0){",
-                    "//     this.getGreetingLabel().hide();",
-                    "//     this.getSignOutBtn().hide();",
-                    "//     this.getSignInBtn().show();",
-                    "//     this.getSignUpBtn().show();",
-                    "//     }",
-                    "// }"
-                ],
-                "name": "activate"
-            },
-            "designerId": "7db43d6d-97b0-4c12-94a9-3adae751b8d0"
         },
         {
             "type": "controllerref",
@@ -160,7 +125,13 @@
                 "implHandler": [
                     "console.log('Survey panel activated');",
                     "console.log('logged status is: ' + localStorage.getItem('ifLogged'));",
-                    "if(localStorage.getItem('ifLogged') == 1){",
+                    "if(localStorage.getItem('ifLogged') == 'Invalid User' | localStorage.getItem('ifLogged') === '' | localStorage.getItem('ifLogged') == 'null' | localStorage.getItem('ifLogged') === null){",
+                    "    this.getGreetingLabel().hide();",
+                    "    this.getSignOutBtn().hide();",
+                    "    this.getSignInBtn().show();",
+                    "    this.getSignUpBtn().show();",
+                    "}",
+                    "else{",
                     "    var username = localStorage.getItem('username');",
                     "    console.log('name: ' + username);",
                     "    this.getGreetingLabel().setHtml('Hello, ' + username);",
@@ -168,19 +139,49 @@
                     "    this.getSignOutBtn().show();",
                     "    this.getSignInBtn().hide();",
                     "    this.getSignUpBtn().hide();",
-                    "}",
-                    "else{",
-                    "    if(localStorage.getItem('ifLogged') === 0){",
-                    "    this.getGreetingLabel().hide();",
-                    "    this.getSignOutBtn().hide();",
-                    "    this.getSignInBtn().show();",
-                    "    this.getSignUpBtn().show();",
                     "    }",
-                    "}"
+                    "",
+                    "//this.getSadFacePic.setHeight(this.getSliderHappySad().getHeight());"
                 ],
                 "name": "activate"
             },
             "designerId": "82b5e44d-be54-466c-9d5e-4dac909a6ad9"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "logoPanel",
+                "selector": "panel#logoPanel"
+            },
+            "designerId": "70214158-bda3-4d09-afc7-8ecfd404ab7a"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#logoPanel",
+                "designer|targetType": "MyPanel",
+                "fn": "onLogoPanelActivate",
+                "implHandler": [
+                    "setTimeout(function(){",
+                    "    Ext.Viewport.setActiveItem('mynavigationview',{",
+                    "    type: \"slide\",",
+                    "    direction: \"left\"",
+                    "});}, 2000);",
+                    ""
+                ],
+                "name": "activate"
+            },
+            "designerId": "762c566d-8c52-4105-8084-2fe895a26862"
         }
     ]
 }
