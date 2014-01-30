@@ -1,0 +1,43 @@
+{
+    "type": "Ext.data.Store",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "autoLoad": true,
+        "designer|userClassName": "MyStore",
+        "model": "pieModel",
+        "storeId": "MyStore"
+    },
+    "designerId": "f990e992-0abc-41fa-9fd0-1d4a1a2787b6",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.JsonP",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "url": "http://115.146.86.216:8080/TransNet/services/SurveyBO/SumTypeOfFeelingAnonymous?location=By%20Korea"
+            },
+            "designerId": "4b80327c-3ee4-4137-bca5-c81f4528877a",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "rootProperty": ""
+                    },
+                    "designerId": "bc35d1d9-16a7-493e-a464-7374d110f49a"
+                }
+            ]
+        }
+    ]
+}

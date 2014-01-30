@@ -1,0 +1,55 @@
+{
+    "type": "Ext.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "statistics"
+    },
+    "designerId": "42204824-7724-4ac2-9b3a-f7a7bbb251e5",
+    "cn": [
+        {
+            "type": "Ext.chart.PolarChart",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "colors": [
+                    "[\"#115fa6\", \"#94ae0a\", \"#a61120\", \"#ff8809\", \"#ffd13e\", \"#a61187\", \"#24ad9a\", \"#7c7474\", \"#a66111\"]"
+                ]
+            },
+            "designerId": "5e4b733d-7249-49fe-a964-c887f13680f3",
+            "isBuiltIn": true,
+            "iconCls": "icon-pie-chart",
+            "autoName": "MyPieChart",
+            "cn": [
+                {
+                    "type": "Ext.chart.series.Pie",
+                    "reference": {
+                        "name": "series",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "labelField": "x",
+                        "xField": "y2"
+                    },
+                    "designerId": "aa7372f6-9b33-4a6b-a6a3-6e72475699a5"
+                },
+                {
+                    "type": "Ext.chart.interactions.Rotate",
+                    "reference": {
+                        "name": "interactions",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "designerId": "179a3ab8-daf7-46b1-ad94-f9703394147b"
+                }
+            ]
+        }
+    ]
+}

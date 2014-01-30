@@ -10,11 +10,13 @@
             "MyController"
         ],
         "models": [
-            "newVenue"
+            "newVenue",
+            "pieModel"
         ],
         "name": "TranSafe",
         "stores": [
-            "FS"
+            "FS",
+            "MyStore"
         ],
         "views": [
             "MyPanel",
@@ -22,7 +24,8 @@
             "MyNavigationView",
             "SignUpPanel",
             "SignInPanel",
-            "comfortPanel"
+            "comfortPanel",
+            "statistics"
         ]
     },
     "designerId": "application"

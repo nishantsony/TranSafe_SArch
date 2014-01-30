@@ -21,10 +21,12 @@ Ext.Loader.setConfig({
 
 Ext.application({
     models: [
-        'newVenue'
+        'newVenue',
+        'pieModel'
     ],
     stores: [
-        'FS'
+        'FS',
+        'MyStore'
     ],
     views: [
         'MyPanel',
@@ -32,7 +34,8 @@ Ext.application({
         'MyNavigationView',
         'SignUpPanel',
         'SignInPanel',
-        'comfortPanel'
+        'comfortPanel',
+        'statistics'
     ],
     controllers: [
         'MyController'
