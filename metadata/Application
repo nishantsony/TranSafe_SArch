@@ -16,7 +16,8 @@
         "name": "TranSafe",
         "stores": [
             "FS",
-            "MyStore"
+            "MyStore",
+            "MyArrayStore"
         ],
         "views": [
             "MyPanel",
@@ -24,8 +25,7 @@
             "MyNavigationView",
             "SignUpPanel",
             "SignInPanel",
-            "comfortPanel",
-            "statistics"
+            "comfortPanel"
         ]
     },
     "designerId": "application"

@@ -1,0 +1,45 @@
+{
+    "type": "arraystore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[",
+            "    {system: 'ololo', percentage: 80},",
+            "    {system: 'mehmeh', percentage: 20}",
+            "]"
+        ],
+        "designer|userClassName": "MyArrayStore",
+        "storeId": "MyArrayStore"
+    },
+    "designerId": "3168ca2d-30f8-48c6-90e3-0596681ed39b",
+    "cn": [
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "system"
+            },
+            "designerId": "ea50d2ae-ac06-47d4-9390-558e979a45d6"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "percentage"
+            },
+            "designerId": "bb313a61-b162-490e-8f8a-b0183245dbe1"
+        }
+    ]
+}

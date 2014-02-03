@@ -36,7 +36,7 @@ Ext.define('TranSafe.view.MyNavigationView', {
                         xtype: 'map',
                         height: 200,
                         mapOptions: {
-                            
+                            zoom: 19
                         },
                         useCurrentLocation: true
                     }
@@ -44,7 +44,7 @@ Ext.define('TranSafe.view.MyNavigationView', {
             },
             {
                 xtype: 'list',
-                title: 'Locations NearBy',
+                title: 'Choose where you are',
                 itemId: 'mylist',
                 hideOnMaskTap: false,
                 allowDeselect: true,

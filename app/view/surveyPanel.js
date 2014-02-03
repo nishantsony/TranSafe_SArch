@@ -103,59 +103,61 @@ Ext.define('TranSafe.view.surveyPanel', {
                     {
                         xtype: 'container',
                         docked: 'top',
+                        margin: '10 0 10 0',
                         items: [
                             {
                                 xtype: 'container',
                                 docked: 'top',
                                 items: [
                                     {
-                                        xtype: 'label',
+                                        xtype: 'image',
                                         docked: 'left',
-                                        html: 'Sad',
-                                        padding: '0 0 0 10'
+                                        height: 70,
+                                        id: 'sadFacePic',
+                                        styleHtmlContent: true,
+                                        width: 70,
+                                        src: 'Emoticons/centered/sad.png'
                                     },
                                     {
-                                        xtype: 'label',
+                                        xtype: 'image',
                                         docked: 'right',
-                                        html: 'Happy',
-                                        padding: '0 10 0 0'
+                                        height: 70,
+                                        width: 70,
+                                        src: 'Emoticons/centered/happy.png'
+                                    },
+                                    {
+                                        xtype: 'sliderfield',
+                                        docked: 'top',
+                                        id: 'sliderHappySad',
+                                        width: '',
+                                        clearIcon: false,
+                                        label: '',
+                                        labelAlign: 'top',
+                                        value: [
+                                            0
+                                        ],
+                                        maxValue: 5,
+                                        minValue: -5
                                     }
                                 ]
                             },
                             {
-                                xtype: 'image',
+                                xtype: 'label',
                                 docked: 'left',
-                                height: 70,
-                                id: 'sadFacePic',
-                                styleHtmlContent: true,
-                                width: 70,
-                                src: 'Emoticons/centered/sad.png'
+                                html: 'Sad',
+                                padding: '0 0 0 10'
                             },
                             {
-                                xtype: 'image',
+                                xtype: 'label',
                                 docked: 'right',
-                                height: 70,
-                                width: 70,
-                                src: 'Emoticons/centered/happy.png'
-                            },
-                            {
-                                xtype: 'sliderfield',
-                                docked: 'bottom',
-                                id: 'sliderHappySad',
-                                width: '',
-                                clearIcon: false,
-                                label: '',
-                                labelAlign: 'top',
-                                value: [
-                                    0
-                                ],
-                                maxValue: 5,
-                                minValue: -5
+                                html: 'Happy',
+                                padding: '0 10 0 0'
                             }
                         ]
                     },
                     {
                         xtype: 'container',
+                        margin: '10 0 0 0',
                         width: '',
                         items: [
                             {
@@ -163,148 +165,150 @@ Ext.define('TranSafe.view.surveyPanel', {
                                 docked: 'top',
                                 items: [
                                     {
-                                        xtype: 'label',
-                                        docked: 'left',
-                                        html: 'Bored',
-                                        padding: '0 0 0 10'
+                                        xtype: 'image',
+                                        docked: 'right',
+                                        height: 70,
+                                        width: 70,
+                                        src: 'Emoticons/centered/excited.png'
                                     },
                                     {
-                                        xtype: 'label',
-                                        docked: 'right',
-                                        html: 'Excited',
-                                        padding: '0 10 0 0'
+                                        xtype: 'image',
+                                        docked: 'left',
+                                        height: 70,
+                                        width: 70,
+                                        src: 'Emoticons/centered/bored.png'
+                                    },
+                                    {
+                                        xtype: 'sliderfield',
+                                        docked: 'top',
+                                        id: 'sliderExcitedBored',
+                                        width: '',
+                                        clearIcon: false,
+                                        label: '',
+                                        labelAlign: 'top',
+                                        value: [
+                                            0
+                                        ],
+                                        maxValue: 5,
+                                        minValue: -5
                                     }
                                 ]
                             },
                             {
-                                xtype: 'image',
-                                docked: 'right',
-                                height: 70,
-                                width: 70,
-                                src: 'Emoticons/centered/excited.png'
-                            },
-                            {
-                                xtype: 'image',
+                                xtype: 'label',
                                 docked: 'left',
-                                height: 70,
-                                width: 70,
-                                src: 'Emoticons/centered/bored.png'
+                                html: 'Bored',
+                                padding: '0 0 0 10'
                             },
                             {
-                                xtype: 'sliderfield',
-                                docked: 'top',
-                                id: 'sliderExcitedBored',
-                                width: '',
-                                clearIcon: false,
-                                label: '',
-                                labelAlign: 'top',
-                                value: [
-                                    0
-                                ],
-                                maxValue: 5,
-                                minValue: -5
+                                xtype: 'label',
+                                docked: 'right',
+                                html: 'Excited',
+                                padding: '0 10 0 0'
                             }
                         ]
                     },
                     {
                         xtype: 'container',
+                        margin: '10 0 10 0',
                         items: [
                             {
                                 xtype: 'container',
                                 docked: 'top',
                                 items: [
                                     {
-                                        xtype: 'label',
-                                        docked: 'left',
-                                        html: 'Scared',
-                                        padding: '0 0 0 10'
+                                        xtype: 'image',
+                                        docked: 'right',
+                                        height: 70,
+                                        width: 70,
+                                        src: 'Emoticons/centered/safe.png'
                                     },
                                     {
-                                        xtype: 'label',
-                                        docked: 'right',
-                                        html: 'Safe',
-                                        padding: '0 10 0 0'
+                                        xtype: 'image',
+                                        docked: 'left',
+                                        height: 70,
+                                        width: 70,
+                                        src: 'Emoticons/centered/scared.png'
+                                    },
+                                    {
+                                        xtype: 'sliderfield',
+                                        docked: 'top',
+                                        id: 'sliderSafeScared',
+                                        width: '',
+                                        clearIcon: false,
+                                        label: '',
+                                        labelAlign: 'top',
+                                        value: [
+                                            0
+                                        ],
+                                        maxValue: 5,
+                                        minValue: -5
                                     }
                                 ]
                             },
                             {
-                                xtype: 'image',
-                                docked: 'right',
-                                height: 70,
-                                width: 70,
-                                src: 'Emoticons/centered/safe.png'
-                            },
-                            {
-                                xtype: 'image',
+                                xtype: 'label',
                                 docked: 'left',
-                                height: 70,
-                                width: 70,
-                                src: 'Emoticons/centered/scared.png'
+                                html: 'Scared',
+                                padding: '0 0 0 10'
                             },
                             {
-                                xtype: 'sliderfield',
-                                docked: 'top',
-                                id: 'sliderSafeScared',
-                                width: '',
-                                clearIcon: false,
-                                label: '',
-                                labelAlign: 'top',
-                                value: [
-                                    0
-                                ],
-                                maxValue: 5,
-                                minValue: -5
+                                xtype: 'label',
+                                docked: 'right',
+                                html: 'Safe',
+                                padding: '0 10 0 0'
                             }
                         ]
                     },
                     {
                         xtype: 'container',
+                        margin: '10 0 0 0',
                         items: [
                             {
                                 xtype: 'container',
                                 docked: 'top',
                                 items: [
                                     {
-                                        xtype: 'label',
-                                        docked: 'left',
-                                        html: 'Angry',
-                                        padding: '0 0 0 10'
+                                        xtype: 'image',
+                                        docked: 'right',
+                                        height: 70,
+                                        width: 70,
+                                        src: 'Emoticons/centered/peaceful.png'
                                     },
                                     {
-                                        xtype: 'label',
-                                        docked: 'right',
-                                        html: 'Peaceful',
-                                        padding: '0 10 0 0'
+                                        xtype: 'image',
+                                        docked: 'left',
+                                        height: 70,
+                                        width: 70,
+                                        src: 'Emoticons/centered/angry.png'
+                                    },
+                                    {
+                                        xtype: 'sliderfield',
+                                        docked: 'top',
+                                        id: 'sliderPeacefulAngry',
+                                        width: '',
+                                        clearIcon: false,
+                                        label: '',
+                                        labelAlign: 'top',
+                                        value: [
+                                            0
+                                        ],
+                                        maxValue: 5,
+                                        minValue: -5
                                     }
                                 ]
                             },
                             {
-                                xtype: 'image',
-                                docked: 'right',
-                                height: 70,
-                                width: 70,
-                                src: 'Emoticons/centered/peaceful.png'
-                            },
-                            {
-                                xtype: 'image',
+                                xtype: 'label',
                                 docked: 'left',
-                                height: 70,
-                                width: 70,
-                                src: 'Emoticons/centered/angry.png'
+                                html: 'Angry',
+                                padding: '0 0 0 10'
                             },
                             {
-                                xtype: 'sliderfield',
-                                docked: 'top',
-                                id: 'sliderPeacefulAngry',
-                                width: '',
-                                clearIcon: false,
-                                label: '',
-                                labelAlign: 'top',
-                                value: [
-                                    0
-                                ],
-                                maxValue: 5,
-                                minValue: -5
+                                xtype: 'label',
+                                docked: 'right',
+                                html: 'Peaceful',
+                                padding: '0 10 0 0'
                             }
                         ]
                     },
@@ -315,7 +319,6 @@ Ext.define('TranSafe.view.surveyPanel', {
             },
             {
                 xtype: 'container',
-                docked: 'bottom',
                 items: [
                     {
                         xtype: 'button',
@@ -327,7 +330,6 @@ Ext.define('TranSafe.view.surveyPanel', {
 
 
                         },
-                        docked: 'bottom',
                         itemId: 'mybutton2',
                         ui: 'forward',
                         text: 'Next'

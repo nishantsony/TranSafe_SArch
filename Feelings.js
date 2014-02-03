@@ -27,26 +27,26 @@ function setFeelings(feelingsValues, value){
 }
 
 function HAPPY_TO_SERVER(){
-    return HAPPY_INDEX+1;
+    return 'Happy';
 }
 function SAD_TO_SERVER(){
-    return SAD_INDEX+1;
+    return 'Sad';
 }
 function EXCITED_TO_SERVER(){
-    return EXCITED_INDEX+1;
+    return 'Excited';
 }
 function BORED_TO_SERVER(){
-    return BORED_INDEX+1;
+    return 'Bored';
 }
 function SAFE_TO_SERVER(){
-    return SAFE_INDEX+1;
+    return 'Safe';
 }
 function SCARED_TO_SERVER(){
-    return HAPPY_INDEX+1;
+    return 'Scared';
 }
 function PEACEFUL_TO_SERVER(){
-    return PEACEFUL_INDEX+1;
+    return 'Peaceful';
 }
 function ANGRY_TO_SERVER(){
-    return ANGRY_INDEX+1;
+    return 'Angry';
 }

@@ -34,7 +34,9 @@
                     "userConfig": {
                         "height": 200,
                         "mapOptions": [
-                            "{}"
+                            "{",
+                            "    zoom: 19",
+                            "}"
                         ],
                         "useCurrentLocation": true
                     },
@@ -56,7 +58,7 @@
                 "hideOnMaskTap": false,
                 "itemId": "mylist",
                 "store": "FS",
-                "title": "Locations NearBy"
+                "title": "Choose where you are"
             },
             "designerId": "346f3943-73aa-4272-9e42-5d3d64d91c39",
             "cn": [

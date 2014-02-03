@@ -18,11 +18,10 @@ Ext.define('TranSafe.view.SignUpPanel', {
     alias: 'widget.signuppanel',
 
     requires: [
-        'Ext.Label',
+        'Ext.Button',
+        'Ext.form.FieldSet',
         'Ext.field.Password',
-        'Ext.Container',
-        'Ext.field.Radio',
-        'Ext.Button'
+        'Ext.field.Radio'
     ],
 
     config: {
@@ -30,79 +29,6 @@ Ext.define('TranSafe.view.SignUpPanel', {
         style: 'background-color: #FFF',
         modal: false,
         items: [
-            {
-                xtype: 'label',
-                docked: 'top',
-                html: 'Please, choose your login and password'
-            },
-            {
-                xtype: 'textfield',
-                border: 1,
-                id: 'signUpUsernameField',
-                style: '\'border-color: blue; border-style: solid;\',',
-                label: 'Username'
-            },
-            {
-                xtype: 'passwordfield',
-                border: 1,
-                id: 'signUpPasswordField',
-                style: '\'border-color: blue; border-style: solid;\',',
-                label: 'Password'
-            },
-            {
-                xtype: 'label',
-                html: 'Tell us about yourself'
-            },
-            {
-                xtype: 'textfield',
-                border: 1,
-                id: 'emailField',
-                padding: '',
-                style: '\'border-color: blue; border-style: solid;\'',
-                label: 'Email'
-            },
-            {
-                xtype: 'container',
-                items: [
-                    {
-                        xtype: 'radiofield',
-                        docked: 'left',
-                        minWidth: '50%',
-                        label: 'Male',
-                        labelWidth: '60%',
-                        name: 'gender',
-                        value: 'male'
-                    },
-                    {
-                        xtype: 'radiofield',
-                        centered: false,
-                        docked: 'right',
-                        minWidth: '50%',
-                        label: 'Female',
-                        labelAlign: 'right',
-                        labelWidth: '40%',
-                        labelWrap: true,
-                        name: 'gender',
-                        value: 'female'
-                    }
-                ]
-            },
-            {
-                xtype: 'textfield',
-                border: 1,
-                id: 'ageField',
-                padding: '',
-                style: '\'border-color: blue; border-style: solid;\',',
-                label: 'Age',
-                ui: 'number'
-            },
-            {
-                xtype: 'textfield',
-                border: 1,
-                id: 'occupationField',
-                style: '\'border-color: blue; border-style: solid;\',',
-                label: 'Role'
-            },
             {
                 xtype: 'button',
                 handler: function(button, e) {
@@ -161,6 +87,89 @@ Ext.define('TranSafe.view.SignUpPanel', {
                 docked: 'bottom',
                 ui: 'action-round',
                 text: 'Submit'
+            },
+            {
+                xtype: 'fieldset',
+                title: 'Choose login and password',
+                items: [
+                    {
+                        xtype: 'textfield',
+                        border: 1,
+                        id: 'signUpUsernameField',
+                        style: '\'border-color: blue; border-style: solid;\',',
+                        label: 'Login',
+                        labelWidth: '35%'
+                    },
+                    {
+                        xtype: 'passwordfield',
+                        border: 1,
+                        id: 'signUpPasswordField',
+                        style: '\'border-color: blue; border-style: solid;\',',
+                        label: 'Password',
+                        labelWidth: '35%'
+                    }
+                ]
+            },
+            {
+                xtype: 'fieldset',
+                title: 'Tell us about yourself',
+                items: [
+                    {
+                        xtype: 'textfield',
+                        border: 1,
+                        id: 'emailField',
+                        padding: '',
+                        style: '\'border-color: blue; border-style: solid;\'',
+                        label: 'Email'
+                    },
+                    {
+                        xtype: 'textfield',
+                        border: 1,
+                        id: 'ageField',
+                        padding: '',
+                        style: '\'border-color: blue; border-style: solid;\',',
+                        label: 'Age',
+                        ui: 'number'
+                    },
+                    {
+                        xtype: 'textfield',
+                        border: 1,
+                        id: 'occupationField',
+                        style: '\'border-color: blue; border-style: solid;\',',
+                        label: 'Role'
+                    },
+                    {
+                        xtype: 'container',
+                        border: 1,
+                        items: [
+                            {
+                                xtype: 'radiofield',
+                                border: 1,
+                                docked: 'left',
+                                minWidth: '50%',
+                                style: '\'border-color: blue; border-style: solid;\',',
+                                label: 'Male',
+                                labelWidth: '60%',
+                                name: 'gender',
+                                value: 'male'
+                            },
+                            {
+                                xtype: 'radiofield',
+                                border: 1,
+                                centered: false,
+                                docked: 'right',
+                                minWidth: '50%',
+                                style: '\'border-color: blue; border-style: solid;\',',
+                                label: 'Female',
+                                labelAlign: 'right',
+                                labelWidth: '50%',
+                                labelWrap: true,
+                                name: 'gender',
+                                value: 'female'
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     }

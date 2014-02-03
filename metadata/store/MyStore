@@ -7,6 +7,7 @@
     "codeClass": null,
     "userConfig": {
         "autoLoad": true,
+        "data": null,
         "designer|userClassName": "MyStore",
         "model": "pieModel",
         "storeId": "MyStore"
@@ -21,7 +22,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "url": "http://115.146.86.216:8080/TransNet/services/SurveyBO/SumTypeOfFeelingAnonymous?location=By%20Korea"
+                "url": "http://115.146.86.216:8080/TransNet/rest/getjson/SumTypeOfFeelingAnonymous?location=location1"
             },
             "designerId": "4b80327c-3ee4-4137-bca5-c81f4528877a",
             "cn": [
@@ -33,7 +34,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "rootProperty": ""
+                        "rootProperty": null
                     },
                     "designerId": "bc35d1d9-16a7-493e-a464-7374d110f49a"
                 }

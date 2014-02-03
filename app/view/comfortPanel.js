@@ -157,45 +157,45 @@ Ext.define('TranSafe.view.comfortPanel', {
                     }
                     console.log(feelingsValues);
                     console.log(chosenVenue);
-                    console.log(HAPPY_TO_SERVER()+'|'+feelingsValues[HAPPY_INDEX] + '|' +
-                    SAD_TO_SERVER()+'|'+feelingsValues[SAD_INDEX] + '|' +
-                    EXCITED_TO_SERVER()+'|'+feelingsValues[EXCITED_INDEX] + '|' +
+                    console.log(localStorage.getItem('ifLogged') + ', ' + localStorage.getItem('username'));
+                    console.log(SAD_TO_SERVER()+'|'+feelingsValues[SAD_INDEX] + '|' +
+                    HAPPY_TO_SERVER()+'|'+feelingsValues[HAPPY_INDEX] + '|' +
                     BORED_TO_SERVER()+'|'+feelingsValues[BORED_INDEX] + '|' +
-                    SAFE_TO_SERVER()+'|'+feelingsValues[SAFE_INDEX] + '|' +
+                    EXCITED_TO_SERVER()+'|'+feelingsValues[EXCITED_INDEX] + '|' +
                     SCARED_TO_SERVER()+'|'+feelingsValues[SCARED_INDEX] + '|' +
-                    PEACEFUL_TO_SERVER()+'|'+feelingsValues[PEACEFUL_INDEX] + '|' +
-                    ANGRY_TO_SERVER()+'|'+feelingsValues[ANGRY_INDEX]);
+                    SAFE_TO_SERVER()+'|'+feelingsValues[SAFE_INDEX] + '|' +
+                    ANGRY_TO_SERVER()+'|'+feelingsValues[ANGRY_INDEX] + '|' +
+                    PEACEFUL_TO_SERVER()+'|'+feelingsValues[PEACEFUL_INDEX]);
 
-                    // registered logged in users
-                    if(localStorage.getItem('ifLogged') != 'Invalid User' || localStorage.getItem('ifLogged') !==0){
+                    // anonimous users
+                    if(localStorage.getItem('ifLogged') == 'Invalid User' | localStorage.getItem('ifLogged') === '' | localStorage.getItem('ifLogged') == 'null' | localStorage.getItem('ifLogged') === null){
                         Ext.data.JsonP.request({
 
-                            url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/SaveSurveyDistinctive',
+                            url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/SaveSurveyAnonymous',
                             params: {
                                 timestamp : timestamp,
                                 location: chosenVenue,
-                                feeling: HAPPY_TO_SERVER()+'|'+feelingsValues[HAPPY_INDEX] + '|' +
-                                SAD_TO_SERVER()+'|'+feelingsValues[SAD_INDEX] + '|' +
-                                EXCITED_TO_SERVER()+'|'+feelingsValues[EXCITED_INDEX] + '|' +
+                                feeling: SAD_TO_SERVER()+'|'+feelingsValues[SAD_INDEX] + '|' +
+                                HAPPY_TO_SERVER()+'|'+feelingsValues[HAPPY_INDEX] + '|' +
                                 BORED_TO_SERVER()+'|'+feelingsValues[BORED_INDEX] + '|' +
-                                SAFE_TO_SERVER()+'|'+feelingsValues[SAFE_INDEX] + '|' +
+                                EXCITED_TO_SERVER()+'|'+feelingsValues[EXCITED_INDEX] + '|' +
                                 SCARED_TO_SERVER()+'|'+feelingsValues[SCARED_INDEX] + '|' +
-                                PEACEFUL_TO_SERVER()+'|'+feelingsValues[PEACEFUL_INDEX] + '|' +
-                                ANGRY_TO_SERVER()+'|'+feelingsValues[ANGRY_INDEX],
-                                username: localStorage.getItem('username'),
-                                token: localStorage.getItem('ifLogged'),
+                                SAFE_TO_SERVER()+'|'+feelingsValues[SAFE_INDEX] + '|' +
+                                ANGRY_TO_SERVER()+'|'+feelingsValues[ANGRY_INDEX] + '|' +
+                                PEACEFUL_TO_SERVER()+'|'+feelingsValues[PEACEFUL_INDEX],
                                 format: 'json',
                                 response: 'application/jsonp'
                             },
                             callbackKey: 'callback',
                             success: function (response) {
-                                alert('Working!');
+                                alert('Thank you!');
                                 console.log(response);
 
-                                //                          Ext.Viewport.setActiveItem('surveypanel',{
-                                //                             type: "slide",
-                                //                             direction: "left"
-                                //                         });
+                                Ext.Viewport.setActiveItem('statistics',{
+                                    type: "slide",
+                                    direction: "left"
+                                });
+                                //                         window.location = 'user_stats/piechart.html';
                             },
                             failure: function (response) {
                                 alert('Not working!');
@@ -206,34 +206,37 @@ Ext.define('TranSafe.view.comfortPanel', {
                             }
                         });
                     }
-                    // anonimous users
+
                     else{
+                        // registered logged in users
                         Ext.data.JsonP.request({
 
-                            url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/SaveSurveyAnonymous',
+                            url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/SaveSurveyDistinctive',
                             params: {
                                 timestamp : timestamp,
                                 location: chosenVenue,
-                                feeling: HAPPY_TO_SERVER()+'|'+feelingsValues[HAPPY_INDEX] + '|' +
-                                SAD_TO_SERVER()+'|'+feelingsValues[SAD_INDEX] + '|' +
-                                EXCITED_TO_SERVER()+'|'+feelingsValues[EXCITED_INDEX] + '|' +
+                                feeling:  SAD_TO_SERVER()+'|'+feelingsValues[SAD_INDEX] + '|' +
+                                HAPPY_TO_SERVER()+'|'+feelingsValues[HAPPY_INDEX] + '|' +
                                 BORED_TO_SERVER()+'|'+feelingsValues[BORED_INDEX] + '|' +
-                                SAFE_TO_SERVER()+'|'+feelingsValues[SAFE_INDEX] + '|' +
+                                EXCITED_TO_SERVER()+'|'+feelingsValues[EXCITED_INDEX] + '|' +
                                 SCARED_TO_SERVER()+'|'+feelingsValues[SCARED_INDEX] + '|' +
-                                PEACEFUL_TO_SERVER()+'|'+feelingsValues[PEACEFUL_INDEX] + '|' +
-                                ANGRY_TO_SERVER()+'|'+feelingsValues[ANGRY_INDEX],
+                                SAFE_TO_SERVER()+'|'+feelingsValues[SAFE_INDEX] + '|' +
+                                ANGRY_TO_SERVER()+'|'+feelingsValues[ANGRY_INDEX] + '|' +
+                                PEACEFUL_TO_SERVER()+'|'+feelingsValues[PEACEFUL_INDEX],
+                                username: localStorage.getItem('username'),
+                                token: localStorage.getItem('ifLogged'),
                                 format: 'json',
                                 response: 'application/jsonp'
                             },
                             callbackKey: 'callback',
                             success: function (response) {
-                                alert('Working!');
+                                alert('Thank you!');
                                 console.log(response);
 
-                                //                          Ext.Viewport.setActiveItem('surveypanel',{
-                                //                             type: "slide",
-                                //                             direction: "left"
-                                //                         });
+                                Ext.Viewport.setActiveItem('statistics',{
+                                    type: "slide",
+                                    direction: "left"
+                                });
                             },
                             failure: function (response) {
                                 alert('Not working!');
@@ -243,6 +246,7 @@ Ext.define('TranSafe.view.comfortPanel', {
                                 alert(data);
                             }
                         });
+
                     }
                 },
                 docked: 'bottom',

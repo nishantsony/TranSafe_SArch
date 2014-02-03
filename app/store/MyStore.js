@@ -28,10 +28,9 @@ Ext.define('TranSafe.store.MyStore', {
         storeId: 'MyStore',
         proxy: {
             type: 'jsonp',
-            url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/SumTypeOfFeelingAnonymous?location=By%20Korea',
+            url: 'http://115.146.86.216:8080/TransNet/rest/getjson/SumTypeOfFeelingAnonymous?location=location1',
             reader: {
-                type: 'json',
-                rootProperty: ''
+                type: 'json'
             }
         }
     }

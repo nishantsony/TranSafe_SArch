@@ -18,7 +18,7 @@ Ext.define('TranSafe.view.SignInPanel', {
     alias: 'widget.signinpanel',
 
     requires: [
-        'Ext.Label',
+        'Ext.form.FieldSet',
         'Ext.field.Password',
         'Ext.Button'
     ],
@@ -27,23 +27,25 @@ Ext.define('TranSafe.view.SignInPanel', {
         style: 'background-color: #FFF',
         items: [
             {
-                xtype: 'label',
-                html: 'Please, authorise'
-            },
-            {
-                xtype: 'textfield',
-                border: 1,
-                id: 'signInUsernameField',
-                padding: 2,
-                style: '\'border-color: blue; border-style: solid;\',',
-                label: 'Login'
-            },
-            {
-                xtype: 'passwordfield',
-                border: 1,
-                id: 'signInPasswordField',
-                style: '\'border-color: blue; border-style: solid;\',',
-                label: 'Password'
+                xtype: 'fieldset',
+                title: 'Please, authorise',
+                items: [
+                    {
+                        xtype: 'textfield',
+                        border: 1,
+                        id: 'signInUsernameField',
+                        padding: 2,
+                        style: '\'border-color: blue; border-style: solid;\',',
+                        label: 'Login'
+                    },
+                    {
+                        xtype: 'passwordfield',
+                        border: 1,
+                        id: 'signInPasswordField',
+                        style: '\'border-color: blue; border-style: solid;\',',
+                        label: 'Password'
+                    }
+                ]
             },
             {
                 xtype: 'button',
@@ -56,6 +58,8 @@ Ext.define('TranSafe.view.SignInPanel', {
                     Ext.data.JsonP.request({
 
                         url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/Login',
+                        // method: 'POST',
+                        // dataType: 'json',
                         params: {
                             username: username,
                             pass: pass,
@@ -66,9 +70,15 @@ Ext.define('TranSafe.view.SignInPanel', {
                         success: function (response) {
                             alert('Working!');
                             console.log(response);
-                            localStorage.setItem('ifLogged', response['return']);
-                            localStorage.setItem('username', username);
-                            console.log(localStorage.getItem('ifLogged'));
+                            console.log(response.responseText);
+                            if(response['return'] === undefined)
+                            return;
+                            if(response['return'] != 'Invalid User' || response['return'] !== undefined || response.responseBytes !== null){
+                                console.log(response['return']);
+                                localStorage.setItem('ifLogged', response['return']);
+                                localStorage.setItem('username', username);
+                                console.log(localStorage.getItem('ifLogged'));
+                            }
 
                             Ext.Viewport.setActiveItem('surveypanel',{
                                 type: "slide",
