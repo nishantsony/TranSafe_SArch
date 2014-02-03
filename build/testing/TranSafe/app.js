@@ -37410,6 +37410,173 @@ Ext.define('Ext.ComponentQuery', {
 });
 
 /**
+ * @class Ext.Decorator
+ * @extends Ext.Component
+ *
+ * In a few words, a Decorator is a Component that wraps around another Component. A typical example of a Decorator is a
+ * {@link Ext.field.Field Field}. A form field is nothing more than a decorator around another component, and gives the
+ * component a label, as well as extra styling to make it look good in a form.
+ *
+ * A Decorator can be thought of as a lightweight Container that has only one child item, and no layout overhead.
+ * The look and feel of decorators can be styled purely in CSS.
+ *
+ * Another powerful feature that Decorator provides is config proxying. For example: all config items of a
+ * {@link Ext.slider.Slider Slider} also exist in a {@link Ext.field.Slider Slider Field} for API convenience.
+ * The {@link Ext.field.Slider Slider Field} simply proxies all corresponding getters and setters
+ * to the actual {@link Ext.slider.Slider Slider} instance. Writing out all the setters and getters to do that is a tedious task
+ * and a waste of code space. Instead, when you sub-class Ext.Decorator, all you need to do is to specify those config items
+ * that you want to proxy to the Component using a special 'proxyConfig' class property. Here's how it may look like
+ * in a Slider Field class:
+ *
+ *     Ext.define('My.field.Slider', {
+ *         extend: 'Ext.Decorator',
+ *
+ *         config: {
+ *             component: {
+ *                 xtype: 'slider'
+ *             }
+ *         },
+ *
+ *         proxyConfig: {
+ *             minValue: 0,
+ *             maxValue: 100,
+ *             increment: 1
+ *         }
+ *
+ *         // ...
+ *     });
+ *
+ * Once `My.field.Slider` class is created, it will have all setters and getters methods for all items listed in `proxyConfig`
+ * automatically generated. These methods all proxy to the same method names that exist within the Component instance.
+ */
+Ext.define('Ext.Decorator', {
+    extend:  Ext.Component ,
+
+    isDecorator: true,
+
+    config: {
+        /**
+         * @cfg {Object} component The config object to factory the Component that this Decorator wraps around
+         */
+        component: {}
+    },
+
+    statics: {
+        generateProxySetter: function(name) {
+            return function(value) {
+                var component = this.getComponent();
+                component[name].call(component, value);
+
+                return this;
+            }
+        },
+        generateProxyGetter: function(name) {
+            return function() {
+                var component = this.getComponent();
+                return component[name].call(component);
+            }
+        }
+    },
+
+    onClassExtended: function(Class, members) {
+        if (!members.hasOwnProperty('proxyConfig')) {
+            return;
+        }
+
+        var ExtClass = Ext.Class,
+            proxyConfig = members.proxyConfig,
+            config = members.config;
+
+        members.config = (config) ? Ext.applyIf(config, proxyConfig) : proxyConfig;
+
+        var name, nameMap, setName, getName;
+
+        for (name in proxyConfig) {
+            if (proxyConfig.hasOwnProperty(name)) {
+                nameMap = ExtClass.getConfigNameMap(name);
+                setName = nameMap.set;
+                getName = nameMap.get;
+
+                members[setName] = this.generateProxySetter(setName);
+                members[getName] = this.generateProxyGetter(getName);
+            }
+        }
+    },
+
+    // @private
+    applyComponent: function(config) {
+        return Ext.factory(config, Ext.Component);
+    },
+
+    // @private
+    updateComponent: function(newComponent, oldComponent) {
+        if (oldComponent) {
+            if (this.isRendered() && oldComponent.setRendered(false)) {
+                oldComponent.fireAction('renderedchange', [this, oldComponent, false],
+                    'doUnsetComponent', this, { args: [oldComponent] });
+            }
+            else {
+                this.doUnsetComponent(oldComponent);
+            }
+        }
+
+        if (newComponent) {
+            if (this.isRendered() && newComponent.setRendered(true)) {
+                newComponent.fireAction('renderedchange', [this, newComponent, true],
+                    'doSetComponent', this, { args: [newComponent] });
+            }
+            else {
+                this.doSetComponent(newComponent);
+            }
+        }
+    },
+
+    // @private
+    doUnsetComponent: function(component) {
+        if (component.renderElement.dom) {
+            component.setLayoutSizeFlags(0);
+            this.innerElement.dom.removeChild(component.renderElement.dom);
+        }
+    },
+
+    // @private
+    doSetComponent: function(component) {
+        if (component.renderElement.dom) {
+            component.setLayoutSizeFlags(this.getSizeFlags());
+            this.innerElement.dom.appendChild(component.renderElement.dom);
+        }
+    },
+
+    // @private
+    setRendered: function(rendered) {
+        var component;
+
+        if (this.callParent(arguments)) {
+            component = this.getComponent();
+
+            if (component) {
+                component.setRendered(rendered);
+            }
+
+            return true;
+        }
+
+        return false;
+    },
+
+    // @private
+    setDisabled: function(disabled) {
+        this.callParent(arguments);
+        this.getComponent().setDisabled(disabled);
+    },
+
+    destroy: function() {
+        Ext.destroy(this.getComponent());
+        this.callParent();
+    }
+});
+
+/**
  * This is a simple way to add an image of any size to your application and have it participate in the layout system
  * like any other component. This component typically takes between 1 and 3 configurations - a {@link #src}, and
  * optionally a {@link #height} and a {@link #width}:
@@ -37647,6 +37814,29 @@ Ext.define('Ext.Img', {
         delete this.imageElement;
 
         this.callParent();
+    }
+});
+
+/**
+ * A simple label component which allows you to insert content using {@link #html} configuration.
+ *
+ *     @example miniphone
+ *     Ext.Viewport.add({
+ *         xtype: 'label',
+ *         html: 'My label!'
+ *     });
+ */
+Ext.define('Ext.Label', {
+    extend:  Ext.Component ,
+    xtype: 'label',
+
+    config: {
+        baseCls: Ext.baseCSSPrefix + 'label'
+
+        /**
+         * @cfg {String} html
+         * The label of this component.
+         */
     }
 });
 
@@ -38202,6 +38392,1726 @@ Ext.define('Ext.Toolbar', {
      */
 
 }, function() {
+});
+
+
+/**
+ * @private
+ */
+Ext.define('Ext.field.Input', {
+    extend:  Ext.Component ,
+    xtype : 'input',
+
+    /**
+     * @event clearicontap
+     * Fires whenever the clear icon is tapped.
+     * @param {Ext.field.Input} this
+     * @param {Ext.EventObject} e The event object
+     */
+
+    /**
+     * @event masktap
+     * @preventable doMaskTap
+     * Fires whenever a mask is tapped.
+     * @param {Ext.field.Input} this
+     * @param {Ext.EventObject} e The event object.
+     */
+
+    /**
+     * @event focus
+     * @preventable doFocus
+     * Fires whenever the input get focus.
+     * @param {Ext.EventObject} e The event object.
+     */
+
+    /**
+     * @event blur
+     * @preventable doBlur
+     * Fires whenever the input loses focus.
+     * @param {Ext.EventObject} e The event object.
+     */
+
+    /**
+     * @event click
+     * Fires whenever the input is clicked.
+     * @param {Ext.EventObject} e The event object.
+     */
+
+    /**
+     * @event keyup
+     * Fires whenever keyup is detected.
+     * @param {Ext.EventObject} e The event object.
+     */
+
+    /**
+     * @event paste
+     * Fires whenever paste is detected.
+     * @param {Ext.EventObject} e The event object.
+     */
+
+    /**
+     * @event mousedown
+     * Fires whenever the input has a mousedown occur.
+     * @param {Ext.EventObject} e The event object.
+     */
+
+    /**
+     * @property {String} tag The el tag.
+     * @private
+     */
+    tag: 'input',
+
+    cachedConfig: {
+        /**
+         * @cfg {String} cls The `className` to be applied to this input.
+         * @accessor
+         */
+        cls: Ext.baseCSSPrefix + 'form-field',
+
+        /**
+         * @cfg {String} focusCls The CSS class to use when the field receives focus.
+         * @accessor
+         */
+        focusCls: Ext.baseCSSPrefix + 'field-focus',
+
+        // @private
+        maskCls: Ext.baseCSSPrefix + 'field-mask',
+
+        /**
+          * @cfg {String/Boolean} useMask
+         * `true` to use a mask on this field, or `auto` to automatically select when you should use it.
+         * @private
+         * @accessor
+         */
+        useMask: 'auto',
+
+        /**
+         * @cfg {String} type The type attribute for input fields -- e.g. radio, text, password.
+         *
+         * If you want to use a `file` input, please use the {@link Ext.field.File} component instead.
+         * @accessor
+         */
+        type: 'text',
+
+        /**
+         * @cfg {Boolean} checked `true` if the checkbox should render initially checked.
+         * @accessor
+         */
+        checked: false
+    },
+
+    config: {
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        baseCls: Ext.baseCSSPrefix + 'field-input',
+
+        /**
+         * @cfg {String} name The field's HTML name attribute.
+         * __Note:__ This property must be set if this field is to be automatically included with
+         * {@link Ext.form.Panel#method-submit form submit()}.
+         * @accessor
+         */
+        name: null,
+
+        /**
+         * @cfg {Mixed} value A value to initialize this field with.
+         * @accessor
+         */
+        value: null,
+
+        /**
+         * @property {Boolean} `true` if the field currently has focus.
+         * @accessor
+         */
+        isFocused: false,
+
+        /**
+         * @cfg {Number} tabIndex The `tabIndex` for this field.
+         *
+         * __Note:__ This only applies to fields that are rendered, not those which are built via `applyTo`.
+         * @accessor
+         */
+        tabIndex: null,
+
+        /**
+         * @cfg {String} placeHolder A string value displayed in the input (if supported) when the control is empty.
+         * @accessor
+         */
+        placeHolder: null,
+
+        /**
+         * @cfg {Number} [minValue=undefined] The minimum value that this Number field can accept (defaults to `undefined`, e.g. no minimum).
+         * @accessor
+         */
+        minValue: null,
+
+        /**
+         * @cfg {Number} [maxValue=undefined] The maximum value that this Number field can accept (defaults to `undefined`, e.g. no maximum).
+         * @accessor
+         */
+        maxValue: null,
+
+        /**
+         * @cfg {Number} [stepValue=undefined] The amount by which the field is incremented or decremented each time the spinner is tapped.
+         * Defaults to `undefined`, which means that the field goes up or down by 1 each time the spinner is tapped.
+         * @accessor
+         */
+        stepValue: null,
+
+        /**
+         * @cfg {Number} [maxLength=0] The maximum number of permitted input characters.
+         * @accessor
+         */
+        maxLength: null,
+
+        /**
+         * @cfg {Boolean} [autoComplete=undefined]
+         * `true` to set the field's DOM element `autocomplete` attribute to `"on"`, `false` to set to `"off"`. Defaults to `undefined`, leaving the attribute unset.
+         * @accessor
+         */
+        autoComplete: null,
+
+        /**
+         * @cfg {Boolean} [autoCapitalize=undefined]
+         * `true` to set the field's DOM element `autocapitalize` attribute to `"on"`, `false` to set to `"off"`. Defaults to `undefined`, leaving the attribute unset
+         * @accessor
+         */
+        autoCapitalize: null,
+
+        /**
+         * `true` to set the field DOM element `autocorrect` attribute to `"on"`, `false` to set to `"off"`. Defaults to `undefined`, leaving the attribute unset.
+         * @cfg {Boolean} autoCorrect
+         * @accessor
+         */
+        autoCorrect: null,
+
+        /**
+         * @cfg {Boolean} [readOnly=undefined]
+         * `true` to set the field DOM element `readonly` attribute to `"true"`. Defaults to `undefined`, leaving the attribute unset.
+         * @accessor
+         */
+        readOnly: null,
+
+        /**
+         * @cfg {Number} [maxRows=undefined]
+         * Sets the field DOM element `maxRows` attribute. Defaults to `undefined`, leaving the attribute unset.
+         * @accessor
+         */
+        maxRows: null,
+
+        /**
+         * @cfg {String} pattern The value for the HTML5 `pattern` attribute.
+         * You can use this to change which keyboard layout will be used.
+         *
+         *     Ext.define('Ux.field.Pattern', {
+         *         extend : 'Ext.field.Text',
+         *         xtype  : 'patternfield',
+         *
+         *         config : {
+         *             component : {
+         *                 pattern : '[0-9]*'
+         *             }
+         *         }
+         *     });
+         *
+         * Even though it extends {@link Ext.field.Text}, it will display the number keyboard.
+         *
+         * @accessor
+         */
+        pattern: null,
+
+        /**
+         * @cfg {Boolean} [disabled=false] `true` to disable the field.
+         *
+         * Be aware that conformant with the [HTML specification](http://www.w3.org/TR/html401/interact/forms.html),
+         * disabled Fields will not be {@link Ext.form.Panel#method-submit submitted}.
+         * @accessor
+         */
+
+        /**
+         * @cfg {Mixed} startValue
+         * The value that the Field had at the time it was last focused. This is the value that is passed
+         * to the {@link Ext.field.Text#change} event which is fired if the value has been changed when the Field is blurred.
+         *
+         * __This will be `undefined` until the Field has been visited.__ Compare {@link #originalValue}.
+         * @accessor
+         */
+        startValue: false,
+
+        /**
+         * @cfg {Boolean} fastFocus
+         *
+         * Enable Fast Input Focusing on iOS, using this workaround will stop some touchstart events in order to prevent
+         * delayed focus issues.
+         *
+         * @accessor
+         */
+        fastFocus: true
+    },
+
+    /**
+     * @cfg {String/Number} originalValue The original value when the input is rendered.
+     * @private
+     */
+
+    // @private
+    getTemplate: function() {
+        var items = [
+            {
+                reference: 'input',
+                tag: this.tag
+            },
+            {
+                reference: 'mask',
+                classList: [this.config.maskCls]
+            },
+            {
+                reference: 'clearIcon',
+                cls: 'x-clear-icon'
+            }
+        ];
+
+        return items;
+    },
+
+    initElement: function() {
+        var me = this;
+
+        me.callParent();
+
+        me.input.on({
+            scope: me,
+
+            keyup: 'onKeyUp',
+            keydown: 'onKeyDown',
+            focus: 'onFocus',
+            blur: 'onBlur',
+            input: 'onInput',
+            paste: 'onPaste',
+            tap: 'onInputTap'
+        });
+
+        me.mask.on({
+            scope: me,
+            tap: 'onMaskTap'
+        });
+
+        if (me.clearIcon) {
+            me.clearIcon.on({
+                tap: 'onClearIconTap',
+                touchstart: 'onClearIconPress',
+                touchend: 'onClearIconRelease',
+                scope: me
+            });
+        }
+
+        // Hack for IE10. Seems like keyup event is not fired for 'enter' keyboard button, so we use keypress event instead to handle enter.
+        if(Ext.browser.is.ie && Ext.browser.version.major >=10){
+            me.input.on({
+                scope: me,
+                keypress: 'onKeyPress'
+            });
+        }
+    },
+
+    updateFastFocus: function(newValue) {
+       // This is used to prevent 300ms delayed focus bug on iOS
+       if (newValue) {
+           if (this.getFastFocus() && Ext.os.is.iOS) {
+               this.input.on({
+                   scope: this,
+                   touchstart: "onTouchStart"
+               });
+           }
+       } else {
+           this.input.un({
+               scope: this,
+               touchstart: "onTouchStart"
+           });
+       }
+    },
+
+    /**
+     * Manual Max Length processing is required for the stock "Browser" on Android
+     * @private
+     * @return {Boolean} 'true' if non-chrome browser is detected on Android
+     */
+    useManualMaxLength: function() {
+        return Boolean((Ext.os.is.Android && !Ext.browser.is.Chrome));
+    },
+
+    applyUseMask: function(useMask) {
+        if (useMask === 'auto') {
+            useMask = Ext.os.is.iOS && Ext.os.version.lt('5');
+        }
+
+        return Boolean(useMask);
+    },
+
+    /**
+     * Updates the useMask configuration
+     */
+    updateUseMask: function(newUseMask) {
+        this.mask[newUseMask ? 'show' : 'hide']();
+    },
+
+    updatePattern : function (pattern) {
+        this.updateFieldAttribute('pattern', pattern);
+    },
+
+    /**
+     * Helper method to update a specified attribute on the `fieldEl`, or remove the attribute all together.
+     * @private
+     */
+    updateFieldAttribute: function(attribute, newValue) {
+        var input = this.input;
+
+        if (!Ext.isEmpty(newValue, true)) {
+            input.dom.setAttribute(attribute, newValue);
+        } else {
+            input.dom.removeAttribute(attribute);
+        }
+    },
+
+    /**
+     * Updates the {@link #cls} configuration.
+     */
+    updateCls: function(newCls, oldCls) {
+        this.input.addCls(Ext.baseCSSPrefix + 'input-el');
+        this.input.replaceCls(oldCls, newCls);
+    },
+
+    /**
+     * Updates the type attribute with the {@link #type} configuration.
+     * @private
+     */
+    updateType: function(newType, oldType) {
+        var prefix = Ext.baseCSSPrefix + 'input-';
+
+        this.input.replaceCls(prefix + oldType, prefix + newType);
+        this.updateFieldAttribute('type', newType);
+    },
+
+    /**
+     * Updates the name attribute with the {@link #name} configuration.
+     * @private
+     */
+    updateName: function(newName) {
+        this.updateFieldAttribute('name', newName);
+    },
+
+    /**
+     * Returns the field data value.
+     * @return {Mixed} value The field value.
+     */
+    getValue: function() {
+        var input = this.input;
+
+        if (input) {
+            this._value = input.dom.value;
+        }
+
+        return this._value;
+    },
+
+    // @private
+    applyValue: function(value) {
+        return (Ext.isEmpty(value)) ? '' : value;
+    },
+
+    /**
+     * Updates the {@link #value} configuration.
+     * @private
+     */
+    updateValue: function(newValue) {
+        var input = this.input;
+
+        if (input) {
+            input.dom.value = newValue;
+        }
+    },
+
+    setValue: function(newValue) {
+        var oldValue = this._value;
+
+        this.updateValue(this.applyValue(newValue));
+
+        newValue = this.getValue();
+
+        if (String(newValue) != String(oldValue) && this.initialized) {
+            this.onChange(this, newValue, oldValue);
+        }
+
+        return this;
+    },
+
+    // @private
+    applyTabIndex: function(tabIndex) {
+        if (tabIndex !== null && typeof tabIndex != 'number') {
+            throw new Error("Ext.field.Field: [applyTabIndex] trying to pass a value which is not a number");
+        }
+        return tabIndex;
+    },
+
+    /**
+     * Updates the tabIndex attribute with the {@link #tabIndex} configuration
+     * @private
+     */
+    updateTabIndex: function(newTabIndex) {
+        this.updateFieldAttribute('tabIndex', newTabIndex);
+    },
+
+    // @private
+    testAutoFn: function(value) {
+        return [true, 'on'].indexOf(value) !== -1;
+    },
+
+    applyMaxLength: function(maxLength) {
+        if (maxLength !== null && typeof maxLength != 'number') {
+            throw new Error("Ext.field.Text: [applyMaxLength] trying to pass a value which is not a number");
+        }
+        return maxLength;
+    },
+
+    /**
+     * Updates the `maxlength` attribute with the {@link #maxLength} configuration.
+     * @private
+     */
+    updateMaxLength: function(newMaxLength) {
+        if (!this.useManualMaxLength()) {
+            this.updateFieldAttribute('maxlength', newMaxLength);
+        }
+    },
+
+    /**
+     * Updates the `placeholder` attribute with the {@link #placeHolder} configuration.
+     * @private
+     */
+    updatePlaceHolder: function(newPlaceHolder) {
+        this.updateFieldAttribute('placeholder', newPlaceHolder);
+    },
+
+    // @private
+    applyAutoComplete: function(autoComplete) {
+        return this.testAutoFn(autoComplete);
+    },
+
+    /**
+     * Updates the `autocomplete` attribute with the {@link #autoComplete} configuration.
+     * @private
+     */
+    updateAutoComplete: function(newAutoComplete) {
+        var value = newAutoComplete ? 'on' : 'off';
+        this.updateFieldAttribute('autocomplete', value);
+    },
+
+    // @private
+    applyAutoCapitalize: function(autoCapitalize) {
+        return this.testAutoFn(autoCapitalize);
+    },
+
+    /**
+     * Updates the `autocapitalize` attribute with the {@link #autoCapitalize} configuration.
+     * @private
+     */
+    updateAutoCapitalize: function(newAutoCapitalize) {
+        var value = newAutoCapitalize ? 'on' : 'off';
+        this.updateFieldAttribute('autocapitalize', value);
+    },
+
+    // @private
+    applyAutoCorrect: function(autoCorrect) {
+        return this.testAutoFn(autoCorrect);
+    },
+
+    /**
+     * Updates the `autocorrect` attribute with the {@link #autoCorrect} configuration.
+     * @private
+     */
+    updateAutoCorrect: function(newAutoCorrect) {
+        var value = newAutoCorrect ? 'on' : 'off';
+        this.updateFieldAttribute('autocorrect', value);
+    },
+
+    /**
+     * Updates the `min` attribute with the {@link #minValue} configuration.
+     * @private
+     */
+    updateMinValue: function(newMinValue) {
+        this.updateFieldAttribute('min', newMinValue);
+    },
+
+    /**
+     * Updates the `max` attribute with the {@link #maxValue} configuration.
+     * @private
+     */
+    updateMaxValue: function(newMaxValue) {
+        this.updateFieldAttribute('max', newMaxValue);
+    },
+
+    /**
+     * Updates the `step` attribute with the {@link #stepValue} configuration
+     * @private
+     */
+    updateStepValue: function(newStepValue) {
+        this.updateFieldAttribute('step', newStepValue);
+    },
+
+    // @private
+    checkedRe: /^(true|1|on)/i,
+
+    /**
+     * Returns the `checked` value of this field
+     * @return {Mixed} value The field value
+     */
+    getChecked: function() {
+        var el = this.input,
+            checked;
+
+        if (el) {
+            checked = el.dom.checked;
+            this._checked = checked;
+        }
+
+        return checked;
+    },
+
+    // @private
+    applyChecked: function(checked) {
+        return !!this.checkedRe.test(String(checked));
+    },
+
+    setChecked: function(newChecked) {
+        this.updateChecked(this.applyChecked(newChecked));
+        this._checked = newChecked;
+    },
+
+    /**
+     * Updates the `autocorrect` attribute with the {@link #autoCorrect} configuration
+     * @private
+     */
+    updateChecked: function(newChecked) {
+        this.input.dom.checked = newChecked;
+    },
+
+    /**
+     * Updates the `readonly` attribute with the {@link #readOnly} configuration
+     * @private
+     */
+    updateReadOnly: function(readOnly) {
+        this.updateFieldAttribute('readonly', readOnly ? true : null);
+    },
+
+    // @private
+    applyMaxRows: function(maxRows) {
+        if (maxRows !== null && typeof maxRows !== 'number') {
+            throw new Error("Ext.field.Input: [applyMaxRows] trying to pass a value which is not a number");
+        }
+
+        return maxRows;
+    },
+
+    updateMaxRows: function(newRows) {
+        this.updateFieldAttribute('rows', newRows);
+    },
+
+    doSetDisabled: function(disabled) {
+        this.callParent(arguments);
+
+        if (Ext.browser.is.Safari && !Ext.os.is.BlackBerry) {
+            this.input.dom.tabIndex = (disabled) ? -1 : 0;
+        }
+
+        this.input.dom.disabled = (Ext.browser.is.Safari && !Ext.os.is.BlackBerry) ? false : disabled;
+
+        if (!disabled) {
+            this.blur();
+        }
+    },
+
+    /**
+     * Returns `true` if the value of this Field has been changed from its original value.
+     * Will return `false` if the field is disabled or has not been rendered yet.
+     * @return {Boolean}
+     */
+    isDirty: function() {
+        if (this.getDisabled()) {
+            return false;
+        }
+
+        return String(this.getValue()) !== String(this.originalValue);
+    },
+
+    /**
+     * Resets the current field value to the original value.
+     */
+    reset: function() {
+        this.setValue(this.originalValue);
+    },
+
+    // @private
+    onInputTap: function(e) {
+        this.fireAction('inputtap', [this, e], 'doInputTap');
+    },
+
+    // @private
+    doInputTap: function(me, e) {
+        if (me.getDisabled()) {
+            return false;
+        }
+
+        // Fast focus switching
+        if (this.getFastFocus() && Ext.os.is.iOS) {
+            me.focus();
+        }
+    },
+
+    // @private
+    onMaskTap: function(e) {
+        this.fireAction('masktap', [this, e], 'doMaskTap');
+    },
+
+    // @private
+    doMaskTap: function(me, e) {
+        if (me.getDisabled()) {
+            return false;
+        }
+
+        me.focus();
+    },
+
+    // @private
+    showMask: function() {
+        if (this.getUseMask()) {
+            this.mask.setStyle('display', 'block');
+        }
+    },
+
+    // @private
+    hideMask: function() {
+        if (this.getUseMask()) {
+            this.mask.setStyle('display', 'none');
+        }
+    },
+
+    /**
+     * Attempts to set the field as the active input focus.
+     * @return {Ext.field.Input} this
+     */
+    focus: function() {
+        var me = this,
+            el = me.input;
+
+        if (el && el.dom.focus) {
+            el.dom.focus();
+        }
+        return me;
+    },
+
+    /**
+     * Attempts to forcefully blur input focus for the field.
+     * @return {Ext.field.Input} this
+     * @chainable
+     */
+    blur: function() {
+        var me = this,
+            el = this.input;
+
+        if (el && el.dom.blur) {
+            el.dom.blur();
+        }
+        return me;
+    },
+
+    /**
+     * Attempts to forcefully select all the contents of the input field.
+     * @return {Ext.field.Input} this
+     * @chainable
+     */
+    select: function() {
+        var me = this,
+            el = me.input;
+
+        if (el && el.dom.setSelectionRange) {
+            el.dom.setSelectionRange(0, 9999);
+        }
+        return me;
+    },
+
+    onFocus: function(e) {
+        this.fireAction('focus', [e], 'doFocus');
+    },
+
+    // @private
+    doFocus: function(e) {
+        var me = this;
+
+        me.hideMask();
+
+        if (!me.getIsFocused()) {
+            me.setStartValue(me.getValue());
+        }
+        me.setIsFocused(true);
+    },
+
+    onTouchStart: function(e) {
+        // This will prevent 300ms delayed focus from occurring on iOS
+        if(document.activeElement != e.target) {
+            e.preventDefault();
+        }
+    },
+
+    onBlur: function(e) {
+        this.fireAction('blur', [e], 'doBlur');
+    },
+
+    // @private
+    doBlur: function(e) {
+        var me = this,
+            value = me.getValue(),
+            startValue = me.getStartValue();
+
+        me.showMask();
+
+        me.setIsFocused(false);
+
+        if (String(value) != String(startValue)) {
+            me.onChange(me, value, startValue);
+        }
+
+    },
+
+    // @private
+    onClearIconTap: function(e) {
+        this.fireEvent('clearicontap', this, e);
+
+        //focus the field after cleartap happens, but only on android.
+        //this is to stop the keyboard from hiding. TOUCH-2064
+        if (Ext.os.is.Android) {
+            this.focus();
+        }
+    },
+
+    onClearIconPress: function() {
+        this.clearIcon.addCls(Ext.baseCSSPrefix + 'pressing');
+    },
+
+    onClearIconRelease: function() {
+        this.clearIcon.removeCls(Ext.baseCSSPrefix + 'pressing');
+    },
+
+    onClick: function(e) {
+        this.fireEvent('click', e);
+    },
+
+    onChange: function(me, value, startValue) {
+        if (this.useManualMaxLength()) {
+            this.trimValueToMaxLength();
+        }
+        this.fireEvent('change', me, value, startValue);
+    },
+
+    onPaste: function(e) {
+        if (this.useManualMaxLength()) {
+            this.trimValueToMaxLength();
+        }
+        this.fireEvent('paste', e);
+    },
+
+    onKeyUp: function(e) {
+        if (this.useManualMaxLength()) {
+            this.trimValueToMaxLength();
+        }
+        this.fireEvent('keyup', e);
+    },
+
+    onKeyDown: function() {
+        // tell the class to ignore the input event. this happens when we want to listen to the field change
+        // when the input autocompletes
+        this.ignoreInput = true;
+    },
+
+    onInput: function(e) {
+        var me = this;
+
+        // if we should ignore input, stop now.
+        if (me.ignoreInput) {
+            me.ignoreInput = false;
+            return;
+        }
+
+        // set a timeout for 10ms to check if we want to stop the input event.
+        // if not, then continue with the event (keyup)
+        setTimeout(function() {
+            if (!me.ignoreInput) {
+                me.fireEvent('keyup', e);
+                me.ignoreInput = false;
+            }
+        }, 10);
+    },
+
+    // Hack for IE10 mobile. Handle pressing 'enter' button and fire keyup event in this case.
+    onKeyPress: function(e) {
+        if(e.browserEvent.keyCode == 13){
+            this.fireEvent('keyup', e);
+        }
+    },
+
+    onMouseDown: function(e) {
+        this.fireEvent('mousedown', e);
+    },
+
+    trimValueToMaxLength: function() {
+        var maxLength = this.getMaxLength();
+        if (maxLength) {
+            var value = this.getValue();
+            if (value.length > this.getMaxLength()) {
+                this.setValue(value.slice(0, maxLength));
+            }
+        }
+    }
+});
+
+/**
+ * @aside guide forms
+ *
+ * Field is the base class for all form fields used in Sencha Touch. It provides a lot of shared functionality to all
+ * field subclasses (for example labels, simple validation, {@link #clearIcon clearing} and tab index management), but
+ * is rarely used directly. Instead, it is much more common to use one of the field subclasses:
+ *
+ *     xtype            Class
+ *     ---------------------------------------
+ *     textfield        {@link Ext.field.Text}
+ *     numberfield      {@link Ext.field.Number}
+ *     textareafield    {@link Ext.field.TextArea}
+ *     hiddenfield      {@link Ext.field.Hidden}
+ *     radiofield       {@link Ext.field.Radio}
+ *     filefield        {@link Ext.field.File}
+ *     checkboxfield    {@link Ext.field.Checkbox}
+ *     selectfield      {@link Ext.field.Select}
+ *     togglefield      {@link Ext.field.Toggle}
+ *     fieldset         {@link Ext.form.FieldSet}
+ *
+ * Fields are normally used within the context of a form and/or fieldset. See the {@link Ext.form.Panel FormPanel}
+ * and {@link Ext.form.FieldSet FieldSet} docs for examples on how to put those together, or the list of links above
+ * for usage of individual field types. If you wish to create your own Field subclasses you can extend this class,
+ * though it is sometimes more useful to extend {@link Ext.field.Text} as this provides additional text entry
+ * functionality.
+ */
+Ext.define('Ext.field.Field', {
+    extend:  Ext.Decorator ,
+    alternateClassName: 'Ext.form.Field',
+    xtype: 'field',
+               
+                         
+      
+
+    /**
+     * Set to `true` on all Ext.field.Field subclasses. This is used by {@link Ext.form.Panel#getValues} to determine which
+     * components inside a form are fields.
+     * @property isField
+     * @type Boolean
+     */
+    isField: true,
+
+    // @private
+    isFormField: true,
+
+    config: {
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        baseCls: Ext.baseCSSPrefix + 'field',
+
+        /**
+         * The label of this field
+         * @cfg {String} label
+         * @accessor
+         */
+        label: null,
+
+        /**
+         * @cfg {String} labelAlign The position to render the label relative to the field input.
+         * Available options are: 'top', 'left', 'bottom' and 'right'
+         * @accessor
+         */
+        labelAlign: 'left',
+
+        /**
+         * @cfg {Number/String} labelWidth The width to make this field's label.
+         * @accessor
+         */
+        labelWidth: '30%',
+
+        /**
+         * @cfg {Boolean} labelWrap `true` to allow the label to wrap. If set to `false`, the label will be truncated with
+         * an ellipsis.
+         * @accessor
+         */
+        labelWrap: false,
+
+        /**
+         * @cfg {Boolean} clearIcon `true` to use a clear icon in this field.
+         * @accessor
+         */
+        clearIcon: null,
+
+        /**
+         * @cfg {Boolean} required `true` to make this field required.
+         *
+         * __Note:__ this only causes a visual indication.
+         *
+         * Doesn't prevent user from submitting the form.
+         * @accessor
+         */
+        required: false,
+
+        /**
+         * The label Element associated with this Field.
+         *
+         * __Note:__ Only available if a {@link #label} is specified.
+         * @type Ext.Element
+         * @property labelEl
+         * @deprecated 2.0
+         */
+
+        /**
+         * @cfg {String} [inputType='text'] The type attribute for input fields -- e.g. radio, text, password, file.
+         * The types 'file' and 'password' must be used to render those field types currently -- there are
+         * no separate Ext components for those.
+         * @deprecated 2.0 Please use `input.type` instead.
+         * @accessor
+         */
+        inputType: null,
+
+        /**
+         * @cfg {String} name The field's HTML name attribute.
+         *
+         * __Note:__ this property must be set if this field is to be automatically included with.
+         * {@link Ext.form.Panel#method-submit form submit()}.
+         * @accessor
+         */
+        name: null,
+
+        /**
+         * @cfg {Mixed} value A value to initialize this field with.
+         * @accessor
+         */
+        value: null,
+
+        /**
+         * @cfg {Number} tabIndex The `tabIndex` for this field. Note this only applies to fields that are rendered,
+         * not those which are built via `applyTo`.
+         * @accessor
+         */
+        tabIndex: null
+
+        /**
+         * @cfg {Object} component The inner component for this field.
+         */
+
+        /**
+         * @cfg {Boolean} fullscreen
+         * @hide
+         */
+    },
+
+    platformConfig: [{
+        theme: ['Windows', 'MountainView', 'Blackberry', 'Tizen'],
+        labelAlign: 'top'
+    }],
+
+    cachedConfig: {
+        /**
+         * @cfg {String} labelCls Optional CSS class to add to the Label element.
+         * @accessor
+         */
+        labelCls: null,
+
+        /**
+         * @cfg {String} requiredCls The `className` to be applied to this Field when the {@link #required} configuration is set to `true`.
+         * @accessor
+         */
+        requiredCls: Ext.baseCSSPrefix + 'field-required',
+
+        /**
+         * @cfg {String} inputCls CSS class to add to the input element of this fields {@link #component}
+         */
+        inputCls: null
+    },
+
+    /**
+     * @cfg {Boolean} isFocused
+     * `true` if this field is currently focused.
+     * @private
+     */
+
+    getElementConfig: function() {
+        var prefix = Ext.baseCSSPrefix;
+
+        return {
+            reference: 'element',
+            className: 'x-container',
+            children: [
+                {
+                    reference: 'label',
+                    cls: prefix + 'form-label',
+                    children: [{
+                        reference: 'labelspan',
+                        tag: 'span'
+                    }]
+                },
+                {
+                    reference: 'innerElement',
+                    cls: prefix + 'component-outer'
+                }
+            ]
+        };
+    },
+
+    // @private
+    updateLabel: function(newLabel, oldLabel) {
+        var renderElement = this.renderElement,
+            prefix = Ext.baseCSSPrefix;
+
+        if (newLabel) {
+            this.labelspan.setHtml(newLabel);
+            renderElement.addCls(prefix + 'field-labeled');
+        } else {
+            renderElement.removeCls(prefix + 'field-labeled');
+        }
+    },
+
+    // @private
+    updateLabelAlign: function(newLabelAlign, oldLabelAlign) {
+        var renderElement = this.renderElement,
+            prefix = Ext.baseCSSPrefix;
+
+        if (newLabelAlign) {
+            renderElement.addCls(prefix + 'label-align-' + newLabelAlign);
+
+            if (newLabelAlign == "top" || newLabelAlign == "bottom") {
+                this.label.setWidth('100%');
+            } else {
+                this.updateLabelWidth(this.getLabelWidth());
+            }
+        }
+
+        if (oldLabelAlign) {
+            renderElement.removeCls(prefix + 'label-align-' + oldLabelAlign);
+        }
+    },
+
+    // @private
+    updateLabelCls: function(newLabelCls, oldLabelCls) {
+        if (newLabelCls) {
+            this.label.addCls(newLabelCls);
+        }
+
+        if (oldLabelCls) {
+            this.label.removeCls(oldLabelCls);
+        }
+    },
+
+    // @private
+    updateLabelWidth: function(newLabelWidth) {
+        var labelAlign = this.getLabelAlign();
+
+        if (newLabelWidth) {
+            if (labelAlign == "top" || labelAlign == "bottom") {
+                this.label.setWidth('100%');
+            } else {
+                this.label.setWidth(newLabelWidth);
+            }
+        }
+    },
+
+    // @private
+    updateLabelWrap: function(newLabelWrap, oldLabelWrap) {
+        var cls = Ext.baseCSSPrefix + 'form-label-nowrap';
+
+        if (!newLabelWrap) {
+            this.addCls(cls);
+        } else {
+            this.removeCls(cls);
+        }
+    },
+
+    /**
+     * Updates the {@link #required} configuration.
+     * @private
+     */
+    updateRequired: function(newRequired) {
+        this.renderElement[newRequired ? 'addCls' : 'removeCls'](this.getRequiredCls());
+    },
+
+    /**
+     * Updates the {@link #required} configuration
+     * @private
+     */
+    updateRequiredCls: function(newRequiredCls, oldRequiredCls) {
+        if (this.getRequired()) {
+            this.renderElement.replaceCls(oldRequiredCls, newRequiredCls);
+        }
+    },
+
+    // @private
+    initialize: function() {
+        var me = this;
+        me.callParent();
+
+        me.doInitValue();
+    },
+
+    /**
+     * @private
+     */
+    doInitValue: function() {
+        /**
+         * @property {Mixed} originalValue
+         * The original value of the field as configured in the {@link #value} configuration.
+         * setting is `true`.
+         */
+        this.originalValue = this.getInitialConfig().value;
+    },
+
+    /**
+     * Resets the current field value back to the original value on this field when it was created.
+     *
+     *     // This will create a field with an original value
+     *     var field = Ext.Viewport.add({
+     *         xtype: 'textfield',
+     *         value: 'first value'
+     *     });
+     *
+     *     // Update the value
+     *     field.setValue('new value');
+     *
+     *     // Now you can reset it back to the `first value`
+     *     field.reset();
+     *
+     * @return {Ext.field.Field} this
+     */
+    reset: function() {
+        this.setValue(this.originalValue);
+
+        return this;
+    },
+
+    /**
+     * Resets the field's {@link #originalValue} property so it matches the current {@link #getValue value}. This is
+     * called by {@link Ext.form.Panel}.{@link Ext.form.Panel#setValues setValues} if the form's
+     * {@link Ext.form.Panel#trackResetOnLoad trackResetOnLoad} property is set to true.
+     */
+    resetOriginalValue: function() {
+        this.originalValue = this.getValue();
+    },
+
+    /**
+     * Returns `true` if the value of this Field has been changed from its {@link #originalValue}.
+     * Will return `false` if the field is disabled or has not been rendered yet.
+     *
+     * @return {Boolean} `true` if this field has been changed from its original value (and
+     * is not disabled), `false` otherwise.
+     */
+    isDirty: function() {
+        return false;
+    }
+}, function() {
+});
+
+/**
+ * @aside guide forms
+ *
+ * The text field is the basis for most of the input fields in Sencha Touch. It provides a baseline of shared
+ * functionality such as input validation, standard events, state management and look and feel. Typically we create
+ * text fields inside a form, like this:
+ *
+ *     @example
+ *     Ext.create('Ext.form.Panel', {
+ *         fullscreen: true,
+ *         items: [
+ *             {
+ *                 xtype: 'fieldset',
+ *                 title: 'Enter your name',
+ *                 items: [
+ *                     {
+ *                         xtype: 'textfield',
+ *                         label: 'First Name',
+ *                         name: 'firstName'
+ *                     },
+ *                     {
+ *                         xtype: 'textfield',
+ *                         label: 'Last Name',
+ *                         name: 'lastName'
+ *                     }
+ *                 ]
+ *             }
+ *         ]
+ *     });
+ *
+ * This creates two text fields inside a form. Text Fields can also be created outside of a Form, like this:
+ *
+ *     Ext.create('Ext.field.Text', {
+ *         label: 'Your Name',
+ *         value: 'Ed Spencer'
+ *     });
+ *
+ * ## Configuring
+ *
+ * Text field offers several configuration options, including {@link #placeHolder}, {@link #maxLength},
+ * {@link #autoComplete}, {@link #autoCapitalize} and {@link #autoCorrect}. For example, here is how we would configure
+ * a text field to have a maximum length of 10 characters, with placeholder text that disappears when the field is
+ * focused:
+ *
+ *     Ext.create('Ext.field.Text', {
+ *         label: 'Username',
+ *         maxLength: 10,
+ *         placeHolder: 'Enter your username'
+ *     });
+ *
+ * The autoComplete, autoCapitalize and autoCorrect configs simply set those attributes on the text field and allow the
+ * native browser to provide those capabilities. For example, to enable auto complete and auto correct, simply
+ * configure your text field like this:
+ *
+ *     Ext.create('Ext.field.Text', {
+ *         label: 'Username',
+ *         autoComplete: true,
+ *         autoCorrect: true
+ *     });
+ *
+ * These configurations will be picked up by the native browser, which will enable the options at the OS level.
+ *
+ * Text field inherits from {@link Ext.field.Field}, which is the base class for all fields in Sencha Touch and provides
+ * a lot of shared functionality for all fields, including setting values, clearing and basic validation. See the
+ * {@link Ext.field.Field} documentation to see how to leverage its capabilities.
+ */
+Ext.define('Ext.field.Text', {
+    extend:  Ext.field.Field ,
+    xtype: 'textfield',
+    alternateClassName: 'Ext.form.Text',
+
+    /**
+     * @event focus
+     * Fires when this field receives input focus
+     * @param {Ext.field.Text} this This field
+     * @param {Ext.event.Event} e
+     */
+
+    /**
+     * @event blur
+     * Fires when this field loses input focus
+     * @param {Ext.field.Text} this This field
+     * @param {Ext.event.Event} e
+     */
+
+    /**
+     * @event paste
+     * Fires when this field is pasted.
+     * @param {Ext.field.Text} this This field
+     * @param {Ext.event.Event} e
+     */
+
+    /**
+     * @event mousedown
+     * Fires when this field receives a mousedown
+     * @param {Ext.field.Text} this This field
+     * @param {Ext.event.Event} e
+     */
+
+    /**
+     * @event keyup
+     * @preventable doKeyUp
+     * Fires when a key is released on the input element
+     * @param {Ext.field.Text} this This field
+     * @param {Ext.event.Event} e
+     */
+
+    /**
+     * @event clearicontap
+     * @preventable doClearIconTap
+     * Fires when the clear icon is tapped
+     * @param {Ext.field.Text} this This field
+     * @param {Ext.event.Event} e
+     */
+
+    /**
+     * @event change
+     * Fires just before the field blurs if the field value has changed
+     * @param {Ext.field.Text} this This field
+     * @param {Mixed} newValue The new value
+     * @param {Mixed} oldValue The original value
+     */
+
+    /**
+     * @event action
+     * @preventable doAction
+     * Fires whenever the return key or go is pressed. FormPanel listeners
+     * for this event, and submits itself whenever it fires. Also note
+     * that this event bubbles up to parent containers.
+     * @param {Ext.field.Text} this This field
+     * @param {Mixed} e The key event object
+     */
+
+    config: {
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        ui: 'text',
+
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        clearIcon: true,
+
+        /**
+         * @cfg {String} placeHolder A string value displayed in the input (if supported) when the control is empty.
+         * @accessor
+         */
+        placeHolder: null,
+
+        /**
+         * @cfg {Number} maxLength The maximum number of permitted input characters.
+         * @accessor
+         */
+        maxLength: null,
+
+        /**
+         * True to set the field's DOM element autocomplete attribute to "on", false to set to "off".
+         * @cfg {Boolean} autoComplete
+         * @accessor
+         */
+        autoComplete: null,
+
+        /**
+         * True to set the field's DOM element autocapitalize attribute to "on", false to set to "off".
+         * @cfg {Boolean} autoCapitalize
+         * @accessor
+         */
+        autoCapitalize: null,
+
+        /**
+         * True to set the field DOM element autocorrect attribute to "on", false to set to "off".
+         * @cfg {Boolean} autoCorrect
+         * @accessor
+         */
+        autoCorrect: null,
+
+        /**
+         * True to set the field DOM element readonly attribute to true.
+         * @cfg {Boolean} readOnly
+         * @accessor
+         */
+        readOnly: null,
+
+        /**
+         * @cfg {Object} component The inner component for this field, which defaults to an input text.
+         * @accessor
+         */
+        component: {
+            xtype: 'input',
+            type: 'text',
+            fastFocus: true
+        },
+
+        bubbleEvents: ['action']
+    },
+
+    // @private
+    initialize: function() {
+        var me = this;
+
+        me.callParent();
+
+        me.getComponent().on({
+            scope: this,
+
+            keyup       : 'onKeyUp',
+            change      : 'onChange',
+            focus       : 'onFocus',
+            blur        : 'onBlur',
+            paste       : 'onPaste',
+            mousedown   : 'onMouseDown',
+            clearicontap: 'onClearIconTap'
+        });
+
+        // set the originalValue of the textfield, if one exists
+        me.originalValue = me.getValue() || "";
+        me.getComponent().originalValue = me.originalValue;
+
+        me.syncEmptyCls();
+    },
+
+    syncEmptyCls: function() {
+        var empty = (this._value) ? this._value.length : false,
+            cls = Ext.baseCSSPrefix + 'empty';
+
+        if (empty) {
+            this.removeCls(cls);
+        } else {
+            this.addCls(cls);
+        }
+    },
+
+    // @private
+    updateValue: function(newValue) {
+        var component  = this.getComponent(),
+            // allows newValue to be zero but not undefined or null (other falsey values)
+            valueValid = newValue !== undefined && newValue !== null && newValue !== "";
+
+        if (component) {
+            component.setValue(newValue);
+        }
+
+        this[valueValid && this.isDirty() ? 'showClearIcon' : 'hideClearIcon']();
+
+        this.syncEmptyCls();
+    },
+
+    getValue: function() {
+        var me = this;
+
+        me._value = me.getComponent().getValue();
+
+        me.syncEmptyCls();
+
+        return me._value;
+    },
+
+    // @private
+    updatePlaceHolder: function(newPlaceHolder) {
+        this.getComponent().setPlaceHolder(newPlaceHolder);
+    },
+
+    // @private
+    updateMaxLength: function(newMaxLength) {
+        this.getComponent().setMaxLength(newMaxLength);
+    },
+
+    // @private
+    updateAutoComplete: function(newAutoComplete) {
+        this.getComponent().setAutoComplete(newAutoComplete);
+    },
+
+    // @private
+    updateAutoCapitalize: function(newAutoCapitalize) {
+        this.getComponent().setAutoCapitalize(newAutoCapitalize);
+    },
+
+    // @private
+    updateAutoCorrect: function(newAutoCorrect) {
+        this.getComponent().setAutoCorrect(newAutoCorrect);
+    },
+
+    // @private
+    updateReadOnly: function(newReadOnly) {
+        if (newReadOnly) {
+            this.hideClearIcon();
+        } else {
+            this.showClearIcon();
+        }
+
+        this.getComponent().setReadOnly(newReadOnly);
+    },
+
+    // @private
+    updateInputType: function(newInputType) {
+        var component = this.getComponent();
+        if (component) {
+            component.setType(newInputType);
+        }
+    },
+
+    // @private
+    updateName: function(newName) {
+        var component = this.getComponent();
+        if (component) {
+            component.setName(newName);
+        }
+    },
+
+    // @private
+    updateTabIndex: function(newTabIndex) {
+        var component = this.getComponent();
+        if (component) {
+            component.setTabIndex(newTabIndex);
+        }
+    },
+
+    /**
+     * Updates the {@link #inputCls} configuration on this fields {@link #component}
+     * @private
+     */
+    updateInputCls: function(newInputCls, oldInputCls) {
+        var component = this.getComponent();
+        if (component) {
+            component.replaceCls(oldInputCls, newInputCls);
+        }
+    },
+
+    doSetDisabled: function(disabled) {
+        var me = this;
+
+        me.callParent(arguments);
+
+        var component = me.getComponent();
+        if (component) {
+            component.setDisabled(disabled);
+        }
+
+        if (disabled) {
+            me.hideClearIcon();
+        } else {
+            me.showClearIcon();
+        }
+    },
+
+    // @private
+    showClearIcon: function() {
+        var me         = this,
+            value      = me.getValue(),
+            // allows value to be zero but not undefined or null (other falsey values)
+            valueValid = value !== undefined && value !== null && value !== "";
+
+        if (me.getClearIcon() && !me.getDisabled() && !me.getReadOnly() && valueValid) {
+            me.element.addCls(Ext.baseCSSPrefix + 'field-clearable');
+        }
+
+        return me;
+    },
+
+    // @private
+    hideClearIcon: function() {
+        if (this.getClearIcon()) {
+            this.element.removeCls(Ext.baseCSSPrefix + 'field-clearable');
+        }
+    },
+
+    onKeyUp: function(e) {
+        this.fireAction('keyup', [this, e], 'doKeyUp');
+    },
+
+    /**
+     * Called when a key has been pressed in the `<input>`
+     * @private
+     */
+    doKeyUp: function(me, e) {
+        // getValue to ensure that we are in sync with the dom
+        var value      = me.getValue(),
+            // allows value to be zero but not undefined or null (other falsey values)
+            valueValid = value !== undefined && value !== null && value !== "";
+
+        this[valueValid ? 'showClearIcon' : 'hideClearIcon']();
+
+        if (e.browserEvent.keyCode === 13) {
+            me.fireAction('action', [me, e], 'doAction');
+        }
+    },
+
+    doAction: function() {
+        this.blur();
+    },
+
+    onClearIconTap: function(e) {
+        this.fireAction('clearicontap', [this, e], 'doClearIconTap');
+    },
+
+    // @private
+    doClearIconTap: function(me, e) {
+        me.setValue('');
+
+        //sync with the input
+        me.getValue();
+    },
+
+    onChange: function(me, value, startValue) {
+        me.fireEvent('change', this, value, startValue);
+    },
+
+    onFocus: function(e) {
+        this.addCls(Ext.baseCSSPrefix + 'field-focused');
+        this.isFocused = true;
+        this.fireEvent('focus', this, e);
+    },
+
+    onBlur: function(e) {
+        var me = this;
+
+        this.removeCls(Ext.baseCSSPrefix + 'field-focused');
+        this.isFocused = false;
+
+        me.fireEvent('blur', me, e);
+
+        setTimeout(function() {
+            me.isFocused = false;
+        }, 50);
+    },
+
+    onPaste: function(e) {
+        this.fireEvent('paste', this, e);
+    },
+
+    onMouseDown: function(e) {
+        this.fireEvent('mousedown', this, e);
+    },
+
+    /**
+     * Attempts to set the field as the active input focus.
+     * @return {Ext.field.Text} This field
+     */
+    focus: function() {
+        this.getComponent().focus();
+        return this;
+    },
+
+    /**
+     * Attempts to forcefully blur input focus for the field.
+     * @return {Ext.field.Text} This field
+     */
+    blur: function() {
+        this.getComponent().blur();
+        return this;
+    },
+
+    /**
+     * Attempts to forcefully select all the contents of the input field.
+     * @return {Ext.field.Text} this
+     */
+    select: function() {
+        this.getComponent().select();
+        return this;
+    },
+
+    resetOriginalValue: function() {
+        this.callParent();
+        var component = this.getComponent();
+        if(component && component.hasOwnProperty("originalValue")) {
+            this.getComponent().originalValue = this.originalValue;
+        }
+        this.reset();
+    },
+
+    reset: function() {
+        this.getComponent().reset();
+
+        //we need to call this to sync the input with this field
+        this.getValue();
+
+        this[this.isDirty() ? 'showClearIcon' : 'hideClearIcon']();
+    },
+
+    isDirty: function() {
+        var component = this.getComponent();
+        if (component) {
+            return component.isDirty();
+        }
+        return false;
+    }
 });
 
 
@@ -62932,6 +64842,1514 @@ Ext.define('Ext.event.recognizer.Tap', {
 });
 
 /**
+ * @aside guide forms
+ *
+ * The checkbox field is an enhanced version of the native browser checkbox and is great for enabling your user to
+ * choose one or more items from a set (for example choosing toppings for a pizza order). It works like any other
+ * {@link Ext.field.Field field} and is usually found in the context of a form:
+ *
+ * ## Example
+ *
+ *     @example miniphone preview
+ *     var form = Ext.create('Ext.form.Panel', {
+ *         fullscreen: true,
+ *         items: [
+ *             {
+ *                 xtype: 'checkboxfield',
+ *                 name : 'tomato',
+ *                 label: 'Tomato',
+ *                 value: 'tomato',
+ *                 checked: true
+ *             },
+ *             {
+ *                 xtype: 'checkboxfield',
+ *                 name : 'salami',
+ *                 label: 'Salami'
+ *             },
+ *             {
+ *                 xtype: 'toolbar',
+ *                 docked: 'bottom',
+ *                 items: [
+ *                     { xtype: 'spacer' },
+ *                     {
+ *                         text: 'getValues',
+ *                         handler: function() {
+ *                             var form = Ext.ComponentQuery.query('formpanel')[0],
+ *                                 values = form.getValues();
+ *
+ *                             Ext.Msg.alert(null,
+ *                                 "Tomato: " + ((values.tomato) ? "yes" : "no") +
+ *                                 "<br />Salami: " + ((values.salami) ? "yes" : "no")
+ *                             );
+ *                         }
+ *                     },
+ *                     { xtype: 'spacer' }
+ *                 ]
+ *             }
+ *         ]
+ *     });
+ *
+ *
+ * The form above contains two check boxes - one for Tomato, one for Salami. We configured the Tomato checkbox to be
+ * checked immediately on load, and the Salami checkbox to be unchecked. We also specified an optional text
+ * {@link #value} that will be sent when we submit the form. We can get this value using the Form's
+ * {@link Ext.form.Panel#getValues getValues} function, or have it sent as part of the data that is sent when the
+ * form is submitted:
+ *
+ *     form.getValues(); //contains a key called 'tomato' if the Tomato field is still checked
+ *     form.submit(); //will send 'tomato' in the form submission data
+ *
+ */
+Ext.define('Ext.field.Checkbox', {
+    extend:  Ext.field.Field ,
+    alternateClassName: 'Ext.form.Checkbox',
+
+    xtype: 'checkboxfield',
+    qsaLeftRe: /[\[]/g,
+    qsaRightRe: /[\]]/g,
+
+    isCheckbox: true,
+
+    /**
+     * @event change
+     * Fires just before the field blurs if the field value has changed.
+     * @param {Ext.field.Checkbox} this This field.
+     * @param {Boolean} newValue The new value.
+     * @param {Boolean} oldValue The original value.
+     */
+
+    /**
+     * @event check
+     * Fires when the checkbox is checked.
+     * @param {Ext.field.Checkbox} this This checkbox.
+     * @param {Ext.EventObject} e This event object.
+     */
+
+    /**
+     * @event uncheck
+     * Fires when the checkbox is unchecked.
+     * @param {Ext.field.Checkbox} this This checkbox.
+     * @param {Ext.EventObject} e This event object.
+     */
+
+    config: {
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        ui: 'checkbox',
+
+        /**
+         * @cfg {String} value The string value to submit if the item is in a checked state.
+         * @accessor
+         */
+        value: '',
+
+        /**
+         * @cfg {Boolean} checked `true` if the checkbox should render initially checked.
+         * @accessor
+         */
+        checked: false,
+
+        /**
+         * @cfg {Number} tabIndex
+         * @hide
+         */
+        tabIndex: -1,
+
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        component: {
+            xtype: 'input',
+            type: 'checkbox',
+            useMask: true,
+            cls: Ext.baseCSSPrefix + 'input-checkbox'
+        }
+
+        /**
+         * @cfg {Boolean} labelMaskTap
+         * @private
+         */
+    },
+
+    platformConfig: [{
+        theme: ['Windows', 'Blackberry', 'Tizen'],
+        labelAlign: 'left'
+    }],
+
+    // @private
+    initialize: function() {
+        var me = this,
+            component = me.getComponent();
+
+        me.callParent();
+
+        component.on({
+            scope: me,
+            order: 'before',
+            masktap: 'onMaskTap'
+        });
+
+        component.doMaskTap = Ext.emptyFn;
+
+        me.label.on({
+            scope: me,
+            tap: 'onMaskTap'
+        });
+    },
+
+    // @private
+    doInitValue: function() {
+        var me = this,
+            initialConfig = me.getInitialConfig();
+
+        // you can have a value or checked config, but checked get priority
+        if (initialConfig.hasOwnProperty('value')) {
+            me.originalState = initialConfig.value;
+        }
+
+        if (initialConfig.hasOwnProperty('checked')) {
+            me.originalState = initialConfig.checked;
+        }
+
+        me.callParent(arguments);
+    },
+
+    // @private
+    updateInputType: function(newInputType) {
+        var component = this.getComponent();
+        if (component) {
+            component.setType(newInputType);
+        }
+    },
+
+    // @private
+    updateName: function(newName) {
+        var component = this.getComponent();
+        if (component) {
+            component.setName(newName);
+        }
+    },
+
+    /**
+     * Returns the field checked value.
+     * @return {Mixed} The field value.
+     */
+    getChecked: function() {
+        // we need to get the latest value from the {@link #input} and then update the value
+        this._checked = this.getComponent().getChecked();
+        return this._checked;
+    },
+
+    /**
+     * Returns the submit value for the checkbox which can be used when submitting forms.
+     * @return {Boolean/String} value The value of {@link #value} or `true`, if {@link #checked}.
+     */
+    getSubmitValue: function() {
+        return (this.getChecked()) ? Ext.isEmpty(this._value) ? true : this._value : null;
+    },
+
+    setChecked: function(newChecked) {
+        this.updateChecked(newChecked);
+        this._checked = newChecked;
+    },
+
+    updateChecked: function(newChecked) {
+        this.getComponent().setChecked(newChecked);
+
+        // only call onChange (which fires events) if the component has been initialized
+        if (this.initialized) {
+            this.onChange();
+        }
+    },
+
+    // @private
+    onMaskTap: function(component, e) {
+        var me = this,
+            dom = me.getComponent().input.dom;
+
+        if (me.getDisabled()) {
+            return false;
+        }
+
+        //we must manually update the input dom with the new checked value
+        dom.checked = !dom.checked;
+
+        me.onChange(e);
+
+        //return false so the mask does not disappear
+        return false;
+    },
+
+    /**
+     * Fires the `check` or `uncheck` event when the checked value of this component changes.
+     * @private
+     */
+    onChange: function(e) {
+        var me = this,
+            oldChecked = me._checked,
+            newChecked = me.getChecked();
+
+        // only fire the event when the value changes
+        if (oldChecked != newChecked) {
+            if (newChecked) {
+                me.fireEvent('check', me, e);
+            } else {
+                me.fireEvent('uncheck', me, e);
+            }
+
+            me.fireEvent('change', me, newChecked, oldChecked);
+        }
+    },
+
+    /**
+     * @method
+     * Method called when this {@link Ext.field.Checkbox} has been checked.
+     */
+    doChecked: Ext.emptyFn,
+
+    /**
+     * @method
+     * Method called when this {@link Ext.field.Checkbox} has been unchecked.
+     */
+    doUnChecked: Ext.emptyFn,
+
+    /**
+     * Returns the checked state of the checkbox.
+     * @return {Boolean} `true` if checked, `false` otherwise.
+     */
+    isChecked: function() {
+        return this.getChecked();
+    },
+
+    /**
+     * Set the checked state of the checkbox to `true`.
+     * @return {Ext.field.Checkbox} This checkbox.
+     */
+    check: function() {
+        return this.setChecked(true);
+    },
+
+    /**
+     * Set the checked state of the checkbox to `false`.
+     * @return {Ext.field.Checkbox} This checkbox.
+     */
+    uncheck: function() {
+        return this.setChecked(false);
+    },
+
+    getSameGroupFields: function() {
+        var me = this,
+            component = me.up('formpanel') || me.up('fieldset'),
+            name = me.getName(),
+            replaceLeft = me.qsaLeftRe,
+            replaceRight = me.qsaRightRe,
+            //handle baseCls with multiple class values
+            baseCls = me.getBaseCls().split(' ').join('.'),
+            components = [],
+            elements, element, i, ln;
+
+        if (!component) {
+            Ext.Logger.warn('Ext.field.Radio components must always be descendants of an Ext.form.Panel or Ext.form.FieldSet.');
+            component = Ext.Viewport;
+        }
+
+        // This is to handle ComponentQuery's lack of handling [name=foo[bar]] properly
+        name = name.replace(replaceLeft, '\\[');
+        name = name.replace(replaceRight, '\\]');
+
+        elements = Ext.query('[name=' + name + ']', component.element.dom);
+        ln = elements.length;
+        for (i = 0; i < ln; i++) {
+            element = elements[i];
+            element = Ext.fly(element).up('.' + baseCls);
+            if (element && element.id) {
+                components.push(Ext.getCmp(element.id));
+            }
+        }
+        return components;
+    },
+
+    /**
+     * Returns an array of values from the checkboxes in the group that are checked.
+     * @return {Array}
+     */
+    getGroupValues: function() {
+        var values = [];
+
+        this.getSameGroupFields().forEach(function(field) {
+            if (field.getChecked()) {
+                values.push(field.getValue());
+            }
+        });
+
+        return values;
+    },
+
+    /**
+     * Set the status of all matched checkboxes in the same group to checked.
+     * @param {Array} values An array of values.
+     * @return {Ext.field.Checkbox} This checkbox.
+     */
+    setGroupValues: function(values) {
+        this.getSameGroupFields().forEach(function(field) {
+            field.setChecked((values.indexOf(field.getValue()) !== -1));
+        });
+
+        return this;
+    },
+
+    /**
+     * Resets the status of all matched checkboxes in the same group to checked.
+     * @return {Ext.field.Checkbox} This checkbox.
+     */
+    resetGroupValues: function() {
+        this.getSameGroupFields().forEach(function(field) {
+            field.setChecked(field.originalState);
+        });
+
+        return this;
+    },
+
+    reset: function() {
+        this.setChecked(this.originalState);
+        return this;
+    }
+});
+
+/**
+ * @aside guide forms
+ *
+ * The Password field creates a password input and is usually created inside a form. Because it creates a password
+ * field, when the user enters text it will show up as stars. Aside from that, the password field is just a normal text
+ * field. Here's an example of how to use it in a form:
+ *
+ *     @example
+ *     Ext.create('Ext.form.Panel', {
+ *         fullscreen: true,
+ *         items: [
+ *             {
+ *                 xtype: 'fieldset',
+ *                 title: 'Register',
+ *                 items: [
+ *                     {
+ *                         xtype: 'emailfield',
+ *                         label: 'Email',
+ *                         name: 'email'
+ *                     },
+ *                     {
+ *                         xtype: 'passwordfield',
+ *                         label: 'Password',
+ *                         name: 'password'
+ *                     }
+ *                 ]
+ *             }
+ *         ]
+ *     });
+ *
+ * Or on its own, outside of a form:
+ *
+ *     Ext.create('Ext.field.Password', {
+ *         label: 'Password',
+ *         value: 'existingPassword'
+ *     });
+ *
+ * Because the password field inherits from {@link Ext.field.Text textfield} it gains all of the functionality that text
+ * fields provide, including getting and setting the value at runtime, validations and various events that are fired as
+ * the user interacts with the component. Check out the {@link Ext.field.Text} docs to see the additional functionality
+ * available.
+ */
+Ext.define('Ext.field.Password', {
+    extend:  Ext.field.Text ,
+    xtype: 'passwordfield',
+    alternateClassName: 'Ext.form.Password',
+
+    config: {
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        autoCapitalize: false,
+
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        component: {
+	        type: 'password'
+	    }
+    }
+});
+
+/**
+ * @aside guide forms
+ *
+ * The radio field is an enhanced version of the native browser radio controls and is a good way of allowing your user
+ * to choose one option out of a selection of several (for example, choosing a favorite color):
+ *
+ *     @example
+ *     var form = Ext.create('Ext.form.Panel', {
+ *         fullscreen: true,
+ *         items: [
+ *             {
+ *                 xtype: 'radiofield',
+ *                 name : 'color',
+ *                 value: 'red',
+ *                 label: 'Red',
+ *                 checked: true
+ *             },
+ *             {
+ *                 xtype: 'radiofield',
+ *                 name : 'color',
+ *                 value: 'green',
+ *                 label: 'Green'
+ *             },
+ *             {
+ *                 xtype: 'radiofield',
+ *                 name : 'color',
+ *                 value: 'blue',
+ *                 label: 'Blue'
+ *             }
+ *         ]
+ *     });
+ *
+ * Above we created a simple form which allows the user to pick a color from the options red, green and blue. Because
+ * we gave each of the fields above the same {@link #name}, the radio field ensures that only one of them can be
+ * checked at a time. When we come to get the values out of the form again or submit it to the server, only 1 value
+ * will be sent for each group of radio fields with the same name:
+ *
+ *     form.getValues(); //looks like {color: 'red'}
+ *     form.submit(); //sends a single field back to the server (in this case color: red)
+ *
+ */
+Ext.define('Ext.field.Radio', {
+    extend:  Ext.field.Checkbox ,
+    xtype: 'radiofield',
+    alternateClassName: 'Ext.form.Radio',
+
+    isRadio: true,
+
+    config: {
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        ui: 'radio',
+
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        component: {
+            type: 'radio',
+            cls: Ext.baseCSSPrefix + 'input-radio'
+        }
+    },
+
+    getValue: function() {
+        return (typeof this._value === 'undefined') ? null : this._value;
+    },
+
+    setValue: function(value) {
+        this._value = value;
+        return this;
+    },
+
+    getSubmitValue: function() {
+        var value = this._value;
+        if (typeof value == "undefined" || value == null) {
+            value = true;
+        }
+        return (this.getChecked()) ? value : null;
+    },
+
+    updateChecked: function(newChecked) {
+        this.getComponent().setChecked(newChecked);
+
+        if (this.initialized) {
+            this.refreshGroupValues();
+        }
+    },
+
+    // @private
+    onMaskTap: function(component, e) {
+        var me = this,
+            dom = me.getComponent().input.dom;
+
+        if (me.getDisabled()) {
+            return false;
+        }
+
+        if (!me.getChecked()) {
+            dom.checked = true;
+        }
+
+        me.refreshGroupValues();
+
+        //return false so the mask does not disappear
+        return false;
+    },
+
+    /**
+     * Returns the selected value if this radio is part of a group (other radio fields with the same name, in the same FormPanel),
+     * @return {String}
+     */
+    getGroupValue: function() {
+        var fields = this.getSameGroupFields(),
+            ln = fields.length,
+            i = 0,
+            field;
+
+        for (; i < ln; i++) {
+            field = fields[i];
+            if (field.getChecked()) {
+                return field.getValue();
+            }
+        }
+
+        return null;
+    },
+
+    /**
+     * Set the matched radio field's status (that has the same value as the given string) to checked.
+     * @param {String} value The value of the radio field to check.
+     * @return {Ext.field.Radio} The field that is checked.
+     */
+    setGroupValue: function(value) {
+        var fields = this.getSameGroupFields(),
+            ln = fields.length,
+            i = 0,
+            field;
+
+        for (; i < ln; i++) {
+            field = fields[i];
+            if (field.getValue() === value) {
+                field.setChecked(true);
+                return field;
+            }
+        }
+    },
+
+    /**
+     * Loops through each of the fields this radiofield is linked to (has the same name) and
+     * calls `onChange` on those fields so the appropriate event is fired.
+     * @private
+     */
+    refreshGroupValues: function() {
+        var fields = this.getSameGroupFields(),
+            ln = fields.length,
+            i = 0,
+            field;
+
+        for (; i < ln; i++) {
+            field = fields[i];
+            field.onChange();
+        }
+    }
+});
+
+/**
+ * @private
+ * Utility class used by Ext.slider.Slider - should never need to be used directly.
+ */
+Ext.define('Ext.slider.Thumb', {
+    extend:  Ext.Component ,
+    xtype : 'thumb',
+
+    config: {
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        baseCls: Ext.baseCSSPrefix + 'thumb',
+
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        draggable: {
+            direction: 'horizontal'
+        }
+    },
+
+    // Strange issue where the thumbs translation value is not being set when it is not visible. Happens when the thumb 
+    // is contained within a modal panel.
+    platformConfig: [{
+        platform: ['ie10'],
+        draggable: {
+            translatable: {
+                translationMethod: 'csstransform'
+            }
+        }
+    }],
+
+    elementWidth: 0,
+
+    initialize: function() {
+        this.callParent();
+
+        this.getDraggable().onBefore({
+            dragstart: 'onDragStart',
+            drag: 'onDrag',
+            dragend: 'onDragEnd',
+            scope: this
+        });
+
+        this.element.on('resize', 'onElementResize', this);
+    },
+
+    onDragStart: function() {
+        if (this.isDisabled()) {
+            return false;
+        }
+
+        this.relayEvent(arguments);
+    },
+
+    onDrag: function() {
+        if (this.isDisabled()) {
+            return false;
+        }
+
+        this.relayEvent(arguments);
+    },
+
+    onDragEnd: function() {
+        if (this.isDisabled()) {
+            return false;
+        }
+
+        this.relayEvent(arguments);
+    },
+
+    onElementResize: function(element, info) {
+        this.elementWidth = info.width;
+    },
+
+    getElementWidth: function() {
+        return this.elementWidth;
+    }
+});
+
+/**
+ * Utility class used by Ext.field.Slider.
+ * @private
+ */
+Ext.define('Ext.slider.Slider', {
+    extend:  Ext.Container ,
+    xtype: 'slider',
+
+               
+                           
+                               
+      
+
+    /**
+    * @event change
+    * Fires when the value changes
+    * @param {Ext.slider.Slider} this
+    * @param {Ext.slider.Thumb} thumb The thumb being changed
+    * @param {Number} newValue The new value
+    * @param {Number} oldValue The old value
+    */
+
+    /**
+    * @event dragstart
+    * Fires when the slider thumb starts a drag
+    * @param {Ext.slider.Slider} this
+    * @param {Ext.slider.Thumb} thumb The thumb being dragged
+    * @param {Array} value The start value
+    * @param {Ext.EventObject} e
+    */
+
+    /**
+    * @event drag
+    * Fires when the slider thumb starts a drag
+    * @param {Ext.slider.Slider} this
+    * @param {Ext.slider.Thumb} thumb The thumb being dragged
+    * @param {Ext.EventObject} e
+    */
+
+    /**
+    * @event dragend
+    * Fires when the slider thumb starts a drag
+    * @param {Ext.slider.Slider} this
+    * @param {Ext.slider.Thumb} thumb The thumb being dragged
+    * @param {Array} value The end value
+    * @param {Ext.EventObject} e
+    */
+    config: {
+        baseCls: 'x-slider',
+
+        /**
+         * @cfg {Object} thumbConfig The config object to factory {@link Ext.slider.Thumb} instances
+         * @accessor
+         */
+        thumbConfig: {
+            draggable: {
+                translatable: {
+                    easingX: {
+                        duration: 300,
+                        type: 'ease-out'
+                    }
+                }
+            }
+        },
+
+        /**
+         * @cfg {Number} increment The increment by which to snap each thumb when its value changes. Any thumb movement
+         * will be snapped to the nearest value that is a multiple of the increment (e.g. if increment is 10 and the user
+         * tries to move the thumb to 67, it will be snapped to 70 instead)
+         * @accessor
+         */
+        increment : 1,
+
+        /**
+         * @cfg {Number/Number[]} value The value(s) of this slider's thumbs. If you pass
+         * a number, it will assume you have just 1 thumb.
+         * @accessor
+         */
+        value: 0,
+
+        /**
+         * @cfg {Number} minValue The lowest value any thumb on this slider can be set to.
+         * @accessor
+         */
+        minValue: 0,
+
+        /**
+         * @cfg {Number} maxValue The highest value any thumb on this slider can be set to.
+         * @accessor
+         */
+        maxValue: 100,
+
+        /**
+         * @cfg {Boolean} allowThumbsOverlapping Whether or not to allow multiple thumbs to overlap each other.
+         * Setting this to true guarantees the ability to select every possible value in between {@link #minValue}
+         * and {@link #maxValue} that satisfies {@link #increment}
+         * @accessor
+         */
+        allowThumbsOverlapping: false,
+
+        /**
+         * @cfg {Boolean/Object} animation
+         * The animation to use when moving the slider. Possible properties are:
+         *
+         * - duration
+         * - easingX
+         * - easingY
+         *
+         * @accessor
+         */
+        animation: true,
+
+        /**
+         * Will make this field read only, meaning it cannot be changed with used interaction.
+         * @cfg {Boolean} readOnly
+         * @accessor
+         */
+        readOnly: false
+    },
+
+    /**
+     * @cfg {Number/Number[]} values Alias to {@link #value}
+     */
+
+    elementWidth: 0,
+
+    offsetValueRatio: 0,
+
+    activeThumb: null,
+
+    constructor: function(config) {
+        config = config || {};
+
+        if (config.hasOwnProperty('values')) {
+            config.value = config.values;
+        }
+
+        this.callParent([config]);
+    },
+
+    // @private
+    initialize: function() {
+        var element = this.element;
+
+        this.callParent();
+
+        element.on({
+            scope: this,
+            tap: 'onTap',
+            resize: 'onResize'
+        });
+
+        this.on({
+            scope: this,
+            delegate: '> thumb',
+            tap: 'onTap',
+            dragstart: 'onThumbDragStart',
+            drag: 'onThumbDrag',
+            dragend: 'onThumbDragEnd'
+        });
+
+        var thumb = this.getThumb(0);
+        if(thumb) {
+            thumb.on('resize', 'onThumbResize', this);
+        }
+    },
+
+    /**
+     * @private
+     */
+    factoryThumb: function() {
+        return Ext.factory(this.getThumbConfig(), Ext.slider.Thumb);
+    },
+
+    /**
+     * Returns the Thumb instances bound to this Slider
+     * @return {Ext.slider.Thumb[]} The thumb instances
+     */
+    getThumbs: function() {
+        return this.innerItems;
+    },
+
+    /**
+     * Returns the Thumb instance bound to this Slider
+     * @param {Number} [index=0] The index of Thumb to return.
+     * @return {Ext.slider.Thumb} The thumb instance
+     */
+    getThumb: function(index) {
+        if (typeof index != 'number') {
+            index = 0;
+        }
+
+        return this.innerItems[index];
+    },
+
+    refreshOffsetValueRatio: function() {
+        var valueRange = this.getMaxValue() - this.getMinValue(),
+            trackWidth = this.elementWidth - this.thumbWidth;
+
+        this.offsetValueRatio = trackWidth / valueRange;
+    },
+
+    onThumbResize: function(){
+        var thumb = this.getThumb(0);
+        if (thumb) {
+            this.thumbWidth = thumb.getElementWidth();
+        }
+        this.refresh();
+    },
+
+    onResize: function(element, info) {
+        this.elementWidth = info.width;
+        this.refresh();
+    },
+
+    refresh: function() {
+        this.refreshValue();
+    },
+
+    setActiveThumb: function(thumb) {
+        var oldActiveThumb = this.activeThumb;
+
+        if (oldActiveThumb && oldActiveThumb !== thumb) {
+            oldActiveThumb.setZIndex(null);
+        }
+
+        this.activeThumb = thumb;
+        thumb.setZIndex(2);
+
+        return this;
+    },
+
+    onThumbDragStart: function(thumb, e) {
+        if (e.absDeltaX <= e.absDeltaY || this.getReadOnly()) {
+            return false;
+        }
+        else {
+            e.stopPropagation();
+        }
+
+        if (this.getAllowThumbsOverlapping()) {
+            this.setActiveThumb(thumb);
+        }
+
+        this.dragStartValue = this.getValue()[this.getThumbIndex(thumb)];
+        this.fireEvent('dragstart', this, thumb, this.dragStartValue, e);
+    },
+
+    onThumbDrag: function(thumb, e, offsetX) {
+        var index = this.getThumbIndex(thumb),
+            offsetValueRatio = this.offsetValueRatio,
+            constrainedValue = this.constrainValue(this.getMinValue() + offsetX / offsetValueRatio);
+
+        e.stopPropagation();
+
+        this.setIndexValue(index, constrainedValue);
+
+        this.fireEvent('drag', this, thumb, this.getValue(), e);
+
+        return false;
+    },
+
+    setIndexValue: function(index, value, animation) {
+        var thumb = this.getThumb(index),
+            values = this.getValue(),
+            minValue = this.getMinValue(),
+            offsetValueRatio = this.offsetValueRatio,
+            increment = this.getIncrement(),
+            draggable = thumb.getDraggable();
+
+        draggable.setOffset((value - minValue) * offsetValueRatio, null, animation);
+
+        values[index] = minValue + Math.round((draggable.offset.x / offsetValueRatio) / increment) * increment;
+    },
+
+    onThumbDragEnd: function(thumb, e) {
+        this.refreshThumbConstraints(thumb);
+        var index = this.getThumbIndex(thumb),
+            newValue = this.getValue()[index],
+            oldValue = this.dragStartValue;
+
+        this.fireEvent('dragend', this, thumb, this.getValue(), e);
+        if (oldValue !== newValue) {
+            this.fireEvent('change', this, thumb, newValue, oldValue);
+        }
+    },
+
+    getThumbIndex: function(thumb) {
+        return this.getThumbs().indexOf(thumb);
+    },
+
+    refreshThumbConstraints: function(thumb) {
+        var allowThumbsOverlapping = this.getAllowThumbsOverlapping(),
+            offsetX = thumb.getDraggable().getOffset().x,
+            thumbs = this.getThumbs(),
+            index = this.getThumbIndex(thumb),
+            previousThumb = thumbs[index - 1],
+            nextThumb = thumbs[index + 1],
+            thumbWidth = this.thumbWidth;
+
+        if (previousThumb) {
+            previousThumb.getDraggable().addExtraConstraint({
+                max: {
+                    x: offsetX - ((allowThumbsOverlapping) ? 0 : thumbWidth)
+                }
+            });
+        }
+
+        if (nextThumb) {
+            nextThumb.getDraggable().addExtraConstraint({
+                min: {
+                    x: offsetX + ((allowThumbsOverlapping) ? 0 : thumbWidth)
+                }
+            });
+        }
+    },
+
+    // @private
+    onTap: function(e) {
+        if (this.isDisabled()) {
+            return;
+        }
+
+        var targetElement = Ext.get(e.target);
+
+        if (!targetElement || (Ext.browser.engineName == 'WebKit' && targetElement.hasCls('x-thumb'))) {
+            return;
+        }
+
+        var touchPointX = e.touch.point.x,
+            element = this.element,
+            elementX = element.getX(),
+            offset = touchPointX - elementX - (this.thumbWidth / 2),
+            value = this.constrainValue(this.getMinValue() + offset / this.offsetValueRatio),
+            values = this.getValue(),
+            minDistance = Infinity,
+            ln = values.length,
+            i, absDistance, testValue, closestIndex, oldValue, thumb;
+
+        if (ln === 1) {
+            closestIndex = 0;
+        }
+        else {
+            for (i = 0; i < ln; i++) {
+                testValue = values[i];
+                absDistance = Math.abs(testValue - value);
+
+                if (absDistance < minDistance) {
+                    minDistance = absDistance;
+                    closestIndex = i;
+                }
+            }
+        }
+
+        oldValue = values[closestIndex];
+        thumb = this.getThumb(closestIndex);
+
+        this.setIndexValue(closestIndex, value, this.getAnimation());
+        this.refreshThumbConstraints(thumb);
+
+        if (oldValue !== value) {
+            this.fireEvent('change', this, thumb, value, oldValue);
+        }
+    },
+
+    // @private
+    updateThumbs: function(newThumbs) {
+        this.add(newThumbs);
+    },
+
+    applyValue: function(value) {
+        var values = Ext.Array.from(value || 0),
+            filteredValues = [],
+            previousFilteredValue = this.getMinValue(),
+            filteredValue, i, ln;
+
+        for (i = 0,ln = values.length; i < ln; i++) {
+            filteredValue = this.constrainValue(values[i]);
+
+            if (filteredValue < previousFilteredValue) {
+                Ext.Logger.warn("Invalid values of '"+Ext.encode(values)+"', values at smaller indexes must " +
+                    "be smaller than or equal to values at greater indexes");
+                filteredValue = previousFilteredValue;
+            }
+
+            filteredValues.push(filteredValue);
+
+            previousFilteredValue = filteredValue;
+        }
+
+        return filteredValues;
+    },
+
+    /**
+     * Updates the sliders thumbs with their new value(s)
+     */
+    updateValue: function(newValue, oldValue) {
+        var thumbs = this.getThumbs(),
+            ln = newValue.length,
+            minValue = this.getMinValue(),
+            offset = this.offsetValueRatio,
+            i;
+
+        this.setThumbsCount(ln);
+
+        for (i = 0; i < ln; i++) {
+            thumbs[i].getDraggable().setExtraConstraint(null).setOffset((newValue[i] - minValue) * offset);
+        }
+
+        for (i = 0; i < ln; i++) {
+            this.refreshThumbConstraints(thumbs[i]);
+        }
+    },
+
+    /**
+     * @private
+     */
+    refreshValue: function() {
+        this.refreshOffsetValueRatio();
+
+        this.setValue(this.getValue());
+    },
+
+    /**
+     * @private
+     * Takes a desired value of a thumb and returns the nearest snap value. e.g if minValue = 0, maxValue = 100, increment = 10 and we
+     * pass a value of 67 here, the returned value will be 70. The returned number is constrained within {@link #minValue} and {@link #maxValue},
+     * so in the above example 68 would be returned if {@link #maxValue} was set to 68.
+     * @param {Number} value The value to snap
+     * @return {Number} The snapped value
+     */
+    constrainValue: function(value) {
+        var me = this,
+            minValue  = me.getMinValue(),
+            maxValue  = me.getMaxValue(),
+            increment = me.getIncrement(),
+            remainder;
+
+        value = parseFloat(value);
+
+        if (isNaN(value)) {
+            value = minValue;
+        }
+
+        remainder = (value - minValue) % increment;
+        value -= remainder;
+
+        if (Math.abs(remainder) >= (increment / 2)) {
+            value += (remainder > 0) ? increment : -increment;
+        }
+
+        value = Math.max(minValue, value);
+        value = Math.min(maxValue, value);
+
+        return value;
+    },
+
+    setThumbsCount: function(count) {
+        var thumbs = this.getThumbs(),
+            thumbsCount = thumbs.length,
+            i, ln, thumb;
+
+        if (thumbsCount > count) {
+            for (i = 0,ln = thumbsCount - count; i < ln; i++) {
+                thumb = thumbs[thumbs.length - 1];
+                thumb.destroy();
+            }
+        }
+        else if (thumbsCount < count) {
+            for (i = 0,ln = count - thumbsCount; i < ln; i++) {
+                this.add(this.factoryThumb());
+            }
+        }
+
+        return this;
+    },
+
+    /**
+     * Convenience method. Calls {@link #setValue}.
+     */
+    setValues: function(value) {
+        this.setValue(value);
+    },
+
+    /**
+     * Convenience method. Calls {@link #getValue}.
+     * @return {Object}
+     */
+    getValues: function() {
+        return this.getValue();
+    },
+
+    /**
+     * Sets the {@link #increment} configuration.
+     * @param {Number} increment
+     * @return {Number}
+     */
+    applyIncrement: function(increment) {
+        if (increment === 0) {
+            increment = 1;
+        }
+
+        return Math.abs(increment);
+    },
+
+    // @private
+    updateAllowThumbsOverlapping: function(newValue, oldValue) {
+        if (typeof oldValue != 'undefined') {
+            this.refreshValue();
+        }
+    },
+
+    // @private
+    updateMinValue: function(newValue, oldValue) {
+        if (typeof oldValue != 'undefined') {
+            this.refreshValue();
+        }
+    },
+
+    // @private
+    updateMaxValue: function(newValue, oldValue) {
+        if (typeof oldValue != 'undefined') {
+            this.refreshValue();
+        }
+    },
+
+    // @private
+    updateIncrement: function(newValue, oldValue) {
+        if (typeof oldValue != 'undefined') {
+            this.refreshValue();
+        }
+    },
+
+    doSetDisabled: function(disabled) {
+        this.callParent(arguments);
+
+        var items = this.getItems().items,
+            ln = items.length,
+            i;
+
+        for (i = 0; i < ln; i++) {
+            items[i].setDisabled(disabled);
+        }
+    }
+
+}, function() {
+});
+
+/**
+ * @aside guide forms
+ *
+ * The slider is a way to allow the user to select a value from a given numerical range. You might use it for choosing
+ * a percentage, combine two of them to get min and max values, or use three of them to specify the hex values for a
+ * color. Each slider contains a single 'thumb' that can be dragged along the slider's length to change the value.
+ * Sliders are equally useful inside {@link Ext.form.Panel forms} and standalone. Here's how to quickly create a
+ * slider in form, in this case enabling a user to choose a percentage:
+ *
+ *     @example
+ *     Ext.create('Ext.form.Panel', {
+ *         fullscreen: true,
+ *         items: [
+ *             {
+ *                 xtype: 'sliderfield',
+ *                 label: 'Percentage',
+ *                 value: 50,
+ *                 minValue: 0,
+ *                 maxValue: 100
+ *             }
+ *         ]
+ *     });
+ *
+ * In this case we set a starting value of 50%, and defined the min and max values to be 0 and 100 respectively, giving
+ * us a percentage slider. Because this is such a common use case, the defaults for {@link #minValue} and
+ * {@link #maxValue} are already set to 0 and 100 so in the example above they could be removed.
+ *
+ * It's often useful to render sliders outside the context of a form panel too. In this example we create a slider that
+ * allows a user to choose the waist measurement of a pair of jeans. Let's say the online store we're making this for
+ * sells jeans with waist sizes from 24 inches to 60 inches in 2 inch increments - here's how we might achieve that:
+ *
+ *     @example
+ *     Ext.create('Ext.form.Panel', {
+ *         fullscreen: true,
+ *         items: [
+ *             {
+ *                 xtype: 'sliderfield',
+ *                 label: 'Waist Measurement',
+ *                 minValue: 24,
+ *                 maxValue: 60,
+ *                 increment: 2,
+ *                 value: 32
+ *             }
+ *         ]
+ *     });
+ *
+ * Now that we've got our slider, we can ask it what value it currently has and listen to events that it fires. For
+ * example, if we wanted our app to show different images for different sizes, we can listen to the {@link #change}
+ * event to be informed whenever the slider is moved:
+ *
+ *     slider.on('change', function(field, newValue) {
+ *         if (newValue[0] > 40) {
+ *             imgComponent.setSrc('large.png');
+ *         } else {
+ *             imgComponent.setSrc('small.png');
+ *         }
+ *     }, this);
+ *
+ * Here we listened to the {@link #change} event on the slider and updated the background image of an
+ * {@link Ext.Img image component} based on what size the user selected. Of course, you can use any logic inside your
+ * event listener.
+ */
+Ext.define('Ext.field.Slider', {
+    extend  :  Ext.field.Field ,
+    xtype   : 'sliderfield',
+                                    
+    alternateClassName: 'Ext.form.Slider',
+
+    /**
+     * @event change
+     * Fires when an option selection has changed.
+     * @param {Ext.field.Slider} me
+     * @param {Ext.slider.Slider} sl Slider Component.
+     * @param {Ext.slider.Thumb} thumb
+     * @param {Number} newValue The new value of this thumb.
+     * @param {Number} oldValue The old value of this thumb.
+     */
+
+    /**
+    * @event dragstart
+    * Fires when the slider thumb starts a drag operation.
+    * @param {Ext.field.Slider} this
+    * @param {Ext.slider.Slider} sl Slider Component.
+    * @param {Ext.slider.Thumb} thumb The thumb being dragged.
+    * @param {Array} value The start value.
+    * @param {Ext.EventObject} e
+    */
+
+    /**
+    * @event drag
+    * Fires when the slider thumb starts a drag operation.
+    * @param {Ext.field.Slider} this
+    * @param {Ext.slider.Slider} sl Slider Component.
+    * @param {Ext.slider.Thumb} thumb The thumb being dragged.
+    * @param {Ext.EventObject} e
+    */
+
+    /**
+    * @event dragend
+    * Fires when the slider thumb ends a drag operation.
+    * @param {Ext.field.Slider} this
+    * @param {Ext.slider.Slider} sl Slider Component.
+    * @param {Ext.slider.Thumb} thumb The thumb being dragged.
+    * @param {Array} value The end value.
+    * @param {Ext.EventObject} e
+    */
+
+    config: {
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        cls: Ext.baseCSSPrefix + 'slider-field',
+
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        tabIndex: -1,
+
+        /**
+         * Will make this field read only, meaning it cannot be changed with used interaction.
+         * @cfg {Boolean} readOnly
+         * @accessor
+         */
+        readOnly: false
+    },
+
+    proxyConfig: {
+
+        /**
+         * @inheritdoc Ext.slider.Slider#increment
+         * @cfg {Number} increment
+         * @accessor
+         */
+        increment : 1,
+
+        /**
+         * @inheritdoc Ext.slider.Slider#value
+         * @cfg {Number/Number[]} value
+         * @accessor
+         */
+        value: 0,
+
+        /**
+         * @inheritdoc Ext.slider.Slider#minValue
+         * @cfg {Number} minValue
+         * @accessor
+         */
+        minValue: 0,
+
+        /**
+         * @inheritdoc Ext.slider.Slider#maxValue
+         * @cfg {Number} maxValue
+         * @accessor
+         */
+        maxValue: 100
+    },
+
+    /**
+     * @inheritdoc Ext.slider.Slider#values
+     * @cfg {Number/Number[]} values
+     */
+
+    constructor: function(config) {
+        config = config || {};
+
+        if (config.hasOwnProperty('values')) {
+            config.value = config.values;
+        }
+
+        this.callParent([config]);
+        this.updateMultipleState();
+    },
+
+    // @private
+    initialize: function() {
+        this.callParent();
+
+        this.getComponent().on({
+            scope: this,
+
+            change: 'onSliderChange',
+            dragstart: 'onSliderDragStart',
+            drag: 'onSliderDrag',
+            dragend: 'onSliderDragEnd'
+        });
+    },
+
+    // @private
+    applyComponent: function(config) {
+        return Ext.factory(config, Ext.slider.Slider);
+    },
+
+    // @private
+    updateComponent: function(component) {
+        this.callSuper(arguments);
+
+        component.setMinValue(this.getMinValue());
+        component.setMaxValue(this.getMaxValue());
+    },
+
+    onSliderChange: function() {
+        this.fireEvent.apply(this, [].concat('change', this, Array.prototype.slice.call(arguments)));
+    },
+
+    onSliderDragStart: function() {
+        this.fireEvent.apply(this, [].concat('dragstart', this, Array.prototype.slice.call(arguments)));
+    },
+
+    onSliderDrag: function() {
+        this.fireEvent.apply(this, [].concat('drag', this, Array.prototype.slice.call(arguments)));
+    },
+
+    onSliderDragEnd: function() {
+        this.fireEvent.apply(this, [].concat('dragend', this, Array.prototype.slice.call(arguments)));
+    },
+
+    /**
+     * Convenience method. Calls {@link #setValue}.
+     * @param {Object} value
+     */
+    setValues: function(value) {
+        this.setValue(value);
+        this.updateMultipleState();
+    },
+
+    /**
+     * Convenience method. Calls {@link #getValue}
+     * @return {Object}
+     */
+    getValues: function() {
+        return this.getValue();
+    },
+
+    reset: function() {
+        var config = this.config,
+            initialValue = (this.config.hasOwnProperty('values')) ? config.values : config.value;
+
+        this.setValue(initialValue);
+    },
+
+    doSetDisabled: function(disabled) {
+        this.callParent(arguments);
+
+        this.getComponent().setDisabled(disabled);
+    },
+
+    updateReadOnly: function(newValue) {
+        this.getComponent().setReadOnly(newValue);
+    },
+
+    isDirty : function () {
+        if (this.getDisabled()) {
+            return false;
+        }
+
+        return this.getValue() !== this.originalValue;
+    },
+
+    updateMultipleState: function() {
+        var value = this.getValue();
+        if (value && value.length > 1) {
+            this.addCls(Ext.baseCSSPrefix + 'slider-multiple');
+        }
+    }
+});
+
+/**
  * @private
  */
 Ext.define('Ext.fx.runner.Css', {
@@ -67026,6 +70444,41 @@ Ext.define('Ext.viewport.Viewport', {
  */
 
 /*
+ * File: app/model/newVenue.js
+ *
+ * This file was generated by Sencha Architect version 3.0.2.
+ * http://www.sencha.com/products/architect/
+ *
+ * This file requires use of the Sencha Touch 2.3.x library, under independent license.
+ * License of Sencha Architect does not include license for Sencha Touch 2.3.x. For more
+ * details see http://www.sencha.com/license or contact license@sencha.com.
+ *
+ * This file will be auto-generated each and everytime you save your project.
+ *
+ * Do NOT hand edit this file.
+ */
+
+Ext.define('TranSafe.model.newVenue', {
+    extend:  Ext.data.Model ,
+
+               
+                        
+      
+
+    config: {
+        fields: [
+            {
+                name: 'Name',
+                type: 'string'
+            },
+            {
+                name: 'Location'
+            }
+        ]
+    }
+});
+
+/*
  * File: app/view/MyNavigationView.js
  *
  * This file was generated by Sencha Architect version 3.0.2.
@@ -67053,6 +70506,7 @@ Ext.define('TranSafe.view.MyNavigationView', {
       
 
     config: {
+        style: 'background-color: #FFF',
         items: [
             {
                 xtype: 'container',
@@ -67071,6 +70525,7 @@ Ext.define('TranSafe.view.MyNavigationView', {
             {
                 xtype: 'list',
                 title: 'Locations NearBy',
+                itemId: 'mylist',
                 hideOnMaskTap: false,
                 allowDeselect: true,
                 itemTpl: [
@@ -67116,6 +70571,7 @@ Ext.define('TranSafe.view.MyPanel', {
     config: {
         cls: 'home',
         html: '<h1>Welcome to TranSafe</h1><p>Synopsis</p><h2>TranSafe (0.0.1)</h2>',
+        style: 'background-color: #FFF',
         items: [
             {
                 xtype: 'image',
@@ -67130,13 +70586,14 @@ Ext.define('TranSafe.view.MyPanel', {
                         xtype: 'button',
                         handler: function(button, e) {
                             //Ext.Viewport.add(Ext.create('TranSafe.view.MyNavigationView'));
+                            console.log('The user is ' + localStorage.getItem('ifLogged'));
                             Ext.Viewport.setActiveItem('mynavigationview',{
                                 type: "slide",
                                 direction: "left"
                             });
 
                         },
-                        docked: 'bottom',
+                        docked: 'right',
                         id: 'start',
                         ui: 'action-round',
                         text: 'Continue'
@@ -67144,14 +70601,14 @@ Ext.define('TranSafe.view.MyPanel', {
                     {
                         xtype: 'button',
                         handler: function(button, e) {
-                            //Ext.Viewport.add(Ext.create('TranSafe.view.MyNavigationView'));
-                            Ext.Viewport.setActiveItem('addVenuePanel',{
+                            //Ext.Viewport.add(Ext.create('TranSafe.view.addVenuePanel'));
+                            Ext.Viewport.setActiveItem('surveypanel',{
                                 type: "slide",
                                 direction: "left"
                             });
 
                         },
-                        docked: 'bottom',
+                        docked: 'left',
                         itemId: 'addVenue',
                         ui: 'action-round',
                         text: 'Add venue'
@@ -67182,11 +70639,84 @@ Ext.define('TranSafe.controller.MyController', {
     extend:  Ext.app.Controller ,
 
     config: {
+        refs: {
+            venueLblSurvey: 'label#venueLblSurvey',
+            surveyPanel: 'panel#surveyPanel',
+            greetingLabel: 'label#greetingLabel',
+            signInBtn: 'button#signInBtn',
+            signUpBtn: 'button#signUpBtn',
+            signOutBtn: 'button#signOutBtn'
+        },
+
+        control: {
+            "list": {
+                itemtap: 'onListItemTap'
+            },
+            "panel": {
+                activate: 'onPanelActivate'
+            },
+            "#surveyPanel": {
+                activate: 'onSurveyPanelActivate'
+            }
+        }
+    },
+
+    onListItemTap: function(dataview, index, target, record, e, eOpts) {
+        console.log(record.get('name'));
+         Ext.Viewport.setActiveItem('surveypanel',{
+                                    type: "slide",
+                                    direction: "left"
+                                });
+        console.log(this.getVenueLblSurvey().setHtml('You are at ' + record.get('name')));
+    },
+
+    onPanelActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
+        // console.log('logged status is: ' + localStorage.getItem('ifLogged'));
+        // if(localStorage.getItem('ifLogged') == 1){
+        //     var username = localStorage.getItem('username');
+        //     console.log('name: ' + username);
+        //     this.getGreetingLabel().setHtml('Hello, ' + username);
+        //     this.getGreetingLabel().show();
+        //     this.getSignOutBtn().show();
+        //     this.getSignInBtn().hide();
+        //     this.getSignUpBtn().hide();
+        // }
+        // else{
+        //     if(localStorage.getItem('ifLogged') === 0){
+        //     this.getGreetingLabel().hide();
+        //     this.getSignOutBtn().hide();
+        //     this.getSignInBtn().show();
+        //     this.getSignUpBtn().show();
+        //     }
+        // }
+    },
+
+    onSurveyPanelActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
+        console.log('Survey panel activated');
+        console.log('logged status is: ' + localStorage.getItem('ifLogged'));
+        if(localStorage.getItem('ifLogged') == 1){
+            var username = localStorage.getItem('username');
+            console.log('name: ' + username);
+            this.getGreetingLabel().setHtml('Hello, ' + username);
+            this.getGreetingLabel().show();
+            this.getSignOutBtn().show();
+            this.getSignInBtn().hide();
+            this.getSignUpBtn().hide();
+        }
+        else{
+            if(localStorage.getItem('ifLogged') === 0){
+            this.getGreetingLabel().hide();
+            this.getSignOutBtn().hide();
+            this.getSignInBtn().show();
+            this.getSignUpBtn().show();
+            }
+        }
     }
+
 });
 
 /*
- * File: app/view/addVenuePanel.js
+ * File: app/view/surveyPanel.js
  *
  * This file was generated by Sencha Architect version 3.0.2.
  * http://www.sencha.com/products/architect/
@@ -67200,7 +70730,737 @@ Ext.define('TranSafe.controller.MyController', {
  * Do NOT hand edit this file.
  */
 
-Ext.define('TranSafe.view.addVenuePanel', {
+Ext.define('TranSafe.view.surveyPanel', {
+    extend:  Ext.Panel ,
+    alias: 'widget.surveypanel',
+
+               
+                        
+                     
+                    
+                  
+                          
+      
+
+    config: {
+        id: 'surveyPanel',
+        style: 'background-color: #FFF',
+        items: [
+            {
+                xtype: 'container',
+                docked: 'top',
+                items: [
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            //Ext.Viewport.add(Ext.create('TranSafe.view.MyNavigationView'));
+                            Ext.Viewport.setActiveItem('signuppanel',{
+                                type: "slide",
+                                direction: "left"
+                            });
+
+                        },
+                        docked: 'right',
+                        id: 'signUpBtn',
+                        ui: 'action-round',
+                        text: 'Sign up'
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            //Ext.Viewport.add(Ext.create('TranSafe.view.MyNavigationView'));
+                            Ext.Viewport.setActiveItem('signinpanel',{
+                                type: "slide",
+                                direction: "left"
+                            });
+
+                        },
+                        docked: 'right',
+                        id: 'signInBtn',
+                        ui: 'action-round',
+                        text: 'Sign in'
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            localStorage.setItem('ifLogged', 0);
+                            localStorage.setItem('username','');
+                            console.log('signing out');
+                            Ext.Viewport.setActiveItem('surveypanel',{
+                                type: "slide",
+                                direction: "left"
+                            });
+                            window.location.reload();
+                        },
+                        docked: 'right',
+                        hidden: true,
+                        id: 'signOutBtn',
+                        ui: 'action-round',
+                        text: 'Sign out'
+                    },
+                    {
+                        xtype: 'label',
+                        docked: 'right',
+                        hidden: true,
+                        html: 'Hello, username',
+                        id: 'greetingLabel'
+                    }
+                ]
+            },
+            {
+                xtype: 'label',
+                docked: 'top',
+                html: 'Venue: ',
+                id: 'venueLblSurvey'
+            },
+            {
+                xtype: 'container',
+                docked: 'top',
+                items: [
+                    {
+                        xtype: 'container',
+                        docked: 'top',
+                        items: [
+                            {
+                                xtype: 'image',
+                                docked: 'left',
+                                height: 70,
+                                styleHtmlContent: true,
+                                width: 50,
+                                src: 'Emoticons/emotion_sad.jpg'
+                            },
+                            {
+                                xtype: 'image',
+                                docked: 'right',
+                                height: 70,
+                                width: 50,
+                                src: 'Emoticons/emotion_happy_notext.png'
+                            },
+                            {
+                                xtype: 'sliderfield',
+                                docked: 'top',
+                                id: 'sliderHappySad',
+                                width: '',
+                                clearIcon: false,
+                                label: '',
+                                labelAlign: 'top',
+                                value: [
+                                    0
+                                ],
+                                maxValue: 5,
+                                minValue: -5
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'container',
+                        width: '',
+                        items: [
+                            {
+                                xtype: 'image',
+                                docked: 'right',
+                                height: 70,
+                                width: 50,
+                                src: 'Emoticons/emotion_excited.jpg'
+                            },
+                            {
+                                xtype: 'image',
+                                docked: 'left',
+                                height: 70,
+                                width: 48,
+                                src: 'Emoticons/emotion_bored.jpg'
+                            },
+                            {
+                                xtype: 'sliderfield',
+                                docked: 'top',
+                                id: 'sliderExcitedBored',
+                                width: '',
+                                clearIcon: false,
+                                label: '',
+                                labelAlign: 'top',
+                                value: [
+                                    0
+                                ],
+                                maxValue: 5,
+                                minValue: -5
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'container',
+                        items: [
+                            {
+                                xtype: 'image',
+                                docked: 'right',
+                                height: 70,
+                                width: 50,
+                                src: 'Emoticons/emotion_safe.jpg'
+                            },
+                            {
+                                xtype: 'image',
+                                docked: 'left',
+                                height: 70,
+                                width: 48,
+                                src: 'Emoticons/emotion_scared.jpg'
+                            },
+                            {
+                                xtype: 'sliderfield',
+                                docked: 'top',
+                                id: 'sliderSafeScared',
+                                width: '',
+                                clearIcon: false,
+                                label: '',
+                                labelAlign: 'top',
+                                value: [
+                                    0
+                                ],
+                                maxValue: 5,
+                                minValue: -5
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'container',
+                        items: [
+                            {
+                                xtype: 'image',
+                                docked: 'right',
+                                height: 70,
+                                width: 50,
+                                src: 'Emoticons/emotion_peaceful.jpg'
+                            },
+                            {
+                                xtype: 'image',
+                                docked: 'left',
+                                height: 70,
+                                width: 48,
+                                src: 'Emoticons/emotion_angry.jpg'
+                            },
+                            {
+                                xtype: 'sliderfield',
+                                docked: 'top',
+                                id: 'sliderPeacefulAngry',
+                                width: '',
+                                clearIcon: false,
+                                label: '',
+                                labelAlign: 'top',
+                                value: [
+                                    0
+                                ],
+                                maxValue: 5,
+                                minValue: -5
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'label'
+                    }
+                ]
+            },
+            {
+                xtype: 'container',
+                docked: 'bottom',
+                items: [
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            Ext.Viewport.setActiveItem('comfortPanel',{
+                                type: "slide",
+                                direction: "left"
+                            });
+
+
+                        },
+                        docked: 'bottom',
+                        itemId: 'mybutton2',
+                        ui: 'forward',
+                        text: 'Next'
+                    }
+                ]
+            }
+        ]
+    }
+
+});
+
+/*
+ * File: app/view/SignUpPanel.js
+ *
+ * This file was generated by Sencha Architect version 3.0.2.
+ * http://www.sencha.com/products/architect/
+ *
+ * This file requires use of the Sencha Touch 2.3.x library, under independent license.
+ * License of Sencha Architect does not include license for Sencha Touch 2.3.x. For more
+ * details see http://www.sencha.com/license or contact license@sencha.com.
+ *
+ * This file will be auto-generated each and everytime you save your project.
+ *
+ * Do NOT hand edit this file.
+ */
+
+Ext.define('TranSafe.view.SignUpPanel', {
+    extend:  Ext.Panel ,
+    alias: 'widget.signuppanel',
+
+               
+                    
+                             
+                        
+                          
+                    
+      
+
+    config: {
+        id: 'signinpanel',
+        style: 'background-color: #FFF',
+        modal: false,
+        items: [
+            {
+                xtype: 'label',
+                docked: 'top',
+                html: 'Please, choose your login and password'
+            },
+            {
+                xtype: 'textfield',
+                border: 1,
+                id: 'signUpUsernameField',
+                style: '\'border-color: blue; border-style: solid;\',',
+                label: 'Username'
+            },
+            {
+                xtype: 'passwordfield',
+                border: 1,
+                id: 'signUpPasswordField',
+                style: '\'border-color: blue; border-style: solid;\',',
+                label: 'Password'
+            },
+            {
+                xtype: 'label',
+                html: 'Tell us about yourself'
+            },
+            {
+                xtype: 'textfield',
+                border: 1,
+                id: 'emailField',
+                padding: '',
+                style: '\'border-color: blue; border-style: solid;\'',
+                label: 'Email'
+            },
+            {
+                xtype: 'container',
+                items: [
+                    {
+                        xtype: 'radiofield',
+                        docked: 'left',
+                        minWidth: '50%',
+                        label: 'Male',
+                        labelWidth: '60%',
+                        name: 'gender',
+                        value: 'male'
+                    },
+                    {
+                        xtype: 'radiofield',
+                        centered: false,
+                        docked: 'right',
+                        minWidth: '50%',
+                        label: 'Female',
+                        labelAlign: 'right',
+                        labelWidth: '40%',
+                        labelWrap: true,
+                        name: 'gender',
+                        value: 'female'
+                    }
+                ]
+            },
+            {
+                xtype: 'textfield',
+                border: 1,
+                id: 'ageField',
+                padding: '',
+                style: '\'border-color: blue; border-style: solid;\',',
+                label: 'Age',
+                ui: 'number'
+            },
+            {
+                xtype: 'textfield',
+                border: 1,
+                id: 'occupationField',
+                style: '\'border-color: blue; border-style: solid;\',',
+                label: 'Role'
+            },
+            {
+                xtype: 'button',
+                handler: function(button, e) {
+                    var login = Ext.getCmp('signUpUsernameField').getValue();
+                    var pass = Ext.getCmp('signUpPasswordField').getValue();
+                    var email = Ext.getCmp('emailField').getValue();
+                    var gender = Ext.ComponentQuery.query('radiofield[name=gender]')[0].getGroupValue();
+                    var age = Ext.getCmp('ageField').getValue();
+                    var role = Ext.getCmp('occupationField').getValue();
+                    console.log('Username: ' + login);
+                    console.log('Password: ' + pass);
+                    console.log('email: ' + email);
+                    console.log('age: ' + age);
+                    console.log('occupation: ' + role);
+                    console.log('gender: ' + gender);
+
+                    Ext.data.JsonP.request({
+
+                        url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/CreateUser',
+                        params: {
+                            format: 'json',
+                            response: 'application/jsonp',
+                            userdetails: login,
+                            userdetails: pass,
+                            userdetails: email,
+                            userdetails: gender,
+                            userdetails: age,
+                            userdetails: role
+                        },
+                        callbackKey: 'callback',
+                        success: function (response) {
+                            alert('Working!');
+                            console.log(response);
+                        },
+                        failure: function (response) {
+                            alert('Not working!');
+                            console.log(response);
+                        },
+                        callback: function(successful, data){
+                            alert(data);
+                        }
+                    });
+
+                    Ext.Viewport.setActiveItem('surveypanel',{
+                        type: "slide",
+                        direction: "left"
+                    });
+                },
+                docked: 'bottom',
+                ui: 'action-round',
+                text: 'Submit'
+            }
+        ]
+    }
+
+});
+
+/*
+ * File: app/view/SignInPanel.js
+ *
+ * This file was generated by Sencha Architect version 3.0.2.
+ * http://www.sencha.com/products/architect/
+ *
+ * This file requires use of the Sencha Touch 2.3.x library, under independent license.
+ * License of Sencha Architect does not include license for Sencha Touch 2.3.x. For more
+ * details see http://www.sencha.com/license or contact license@sencha.com.
+ *
+ * This file will be auto-generated each and everytime you save your project.
+ *
+ * Do NOT hand edit this file.
+ */
+
+Ext.define('TranSafe.view.SignInPanel', {
+    extend:  Ext.Panel ,
+    alias: 'widget.signinpanel',
+
+               
+                    
+                             
+                    
+      
+
+    config: {
+        style: 'background-color: #FFF',
+        items: [
+            {
+                xtype: 'label',
+                html: 'Please, authorise'
+            },
+            {
+                xtype: 'textfield',
+                border: 1,
+                id: 'signInUsernameField',
+                padding: 2,
+                style: '\'border-color: blue; border-style: solid;\',',
+                label: 'Login'
+            },
+            {
+                xtype: 'passwordfield',
+                border: 1,
+                id: 'signInPasswordField',
+                style: '\'border-color: blue; border-style: solid;\',',
+                label: 'Password'
+            },
+            {
+                xtype: 'button',
+                handler: function(button, e) {
+                    var username = Ext.getCmp('signInUsernameField').getValue();
+                    var pass = Ext.getCmp('signInPasswordField').getValue();
+                    console.log('Username: ' + username );
+                    console.log('Password: ' + pass );
+
+                    Ext.data.JsonP.request({
+
+                        url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/Login',
+                        params: {
+                            username: username,
+                            pass: pass,
+                            format: 'json',
+                            response: 'application/jsonp'
+                        },
+                        callbackKey: 'callback',
+                        success: function (response) {
+                            alert('Working!');
+                            console.log(response);
+                            localStorage.setItem('ifLogged', response['return']);
+                            localStorage.setItem('username', username);
+                            console.log(localStorage.getItem('ifLogged'));
+
+                            Ext.Viewport.setActiveItem('surveypanel',{
+                                type: "slide",
+                                direction: "left"
+                            });
+                        },
+                        failure: function (response) {
+                            alert('Not working!');
+                            console.log(response);
+                        },
+                        callback: function(successful, data){
+                            alert(data);
+                        }
+                    });
+
+                },
+                docked: 'bottom',
+                ui: 'action-round',
+                text: 'Submit'
+            }
+        ]
+    }
+
+});
+
+/*
+ * File: app/view/comfortPanel.js
+ *
+ * This file was generated by Sencha Architect version 3.0.2.
+ * http://www.sencha.com/products/architect/
+ *
+ * This file requires use of the Sencha Touch 2.3.x library, under independent license.
+ * License of Sencha Architect does not include license for Sencha Touch 2.3.x. For more
+ * details see http://www.sencha.com/license or contact license@sencha.com.
+ *
+ * This file will be auto-generated each and everytime you save your project.
+ *
+ * Do NOT hand edit this file.
+ */
+
+Ext.define('TranSafe.view.comfortPanel', {
+    extend:  Ext.Panel ,
+    alias: 'widget.comfortPanel',
+
+               
+                        
+                           
+                    
+                    
+      
+
+    config: {
+        style: 'background-color: #FFF',
+        styleHtmlContent: true,
+        scrollable: true,
+        items: [
+            {
+                xtype: 'container',
+                centered: false,
+                items: [
+                    {
+                        xtype: 'container',
+                        items: [
+                            {
+                                xtype: 'sliderfield',
+                                minWidth: '70%',
+                                styleHtmlContent: true,
+                                clearIcon: false,
+                                label: '',
+                                value: [
+                                    5
+                                ],
+                                maxValue: 10
+                            },
+                            {
+                                xtype: 'label',
+                                docked: 'left',
+                                html: 'Hot',
+                                style: 'color:red;',
+                                styleHtmlContent: true
+                            },
+                            {
+                                xtype: 'label',
+                                docked: 'right',
+                                html: 'Cold',
+                                styleHtmlContent: true
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'container',
+                        items: [
+                            {
+                                xtype: 'sliderfield',
+                                minWidth: '',
+                                styleHtmlContent: true,
+                                label: '',
+                                value: [
+                                    5
+                                ],
+                                maxValue: 10
+                            },
+                            {
+                                xtype: 'label',
+                                docked: 'left',
+                                html: 'Noisy',
+                                styleHtmlContent: true
+                            },
+                            {
+                                xtype: 'label',
+                                docked: 'right',
+                                html: 'Quiet',
+                                styleHtmlContent: true
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'container',
+                        items: [
+                            {
+                                xtype: 'sliderfield',
+                                styleHtmlContent: true,
+                                label: '',
+                                value: [
+                                    5
+                                ],
+                                maxValue: 10
+                            },
+                            {
+                                xtype: 'label',
+                                docked: 'left',
+                                html: 'Crowded',
+                                styleHtmlContent: true
+                            },
+                            {
+                                xtype: 'label',
+                                docked: 'right',
+                                html: 'Empty',
+                                styleHtmlContent: true
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'label',
+                        centered: false,
+                        docked: 'top',
+                        html: 'Are you Comfortable?'
+                    }
+                ]
+            },
+            {
+                xtype: 'sliderfield',
+                label: 'Comfort Level',
+                labelAlign: 'top',
+                value: [
+                    50
+                ]
+            },
+            {
+                xtype: 'button',
+                handler: function(button, e) {
+                    var currentdate = new Date();
+                    var timestamp = currentdate.getFullYear() + "-"+(currentdate.getMonth()+1)  + "-" + currentdate.getDate() + "%20"  + currentdate.getHours() + "-"  + currentdate.getMinutes() + "-" + currentdate.getSeconds();
+                    var chosenVenue = Ext.getCmp('venueLblSurvey').getHtml();
+                    chosenVenue = chosenVenue.replace('You are at ','');
+                    /*	getting feelings' values.
+                    *	if < 0 this is a negative feeling Sad rather than Happy, Angry rather than Peacful etc.
+                    *	for this we calculate |val| and store it in an array along with all the others.
+                    *	if = 0 this is neutral
+                    *	if > 0 this is a positive feeling
+                    */
+                    var tempFeelingArray = new Array();
+                    tempFeelingArray.push(Ext.getCmp('sliderHappySad').getValue()[0]);
+                    tempFeelingArray.push(Ext.getCmp('sliderExcitedBored').getValue()[0]);
+                    tempFeelingArray.push(Ext.getCmp('sliderSafeScared').getValue()[0]);
+                    tempFeelingArray.push(Ext.getCmp('sliderPeacefulAngry').getValue()[0]);
+                    var feelingsValues = new Array();
+                    console.log(tempFeelingArray);
+                    for(var i = 0; i < 4; i++){
+                        feelingsValues=setFeelings(feelingsValues, tempFeelingArray[i]);
+                    }
+                    console.log(feelingsValues);
+                    console.log(chosenVenue);
+                    Ext.data.JsonP.request({
+
+                        url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/SaveSurverWithoutPersonalDetails',
+                        params: {
+                            survey: timestamp,
+                            survey: chosenVenue,
+                            feeling: HAPPY_TO_SERVER()+'|'+feelingsValues[HAPPY_INDEX],
+                            feeling: SAD_TO_SERVER()+'|'+feelingsValues[SAD_INDEX],
+                            feeling: EXCITED_TO_SERVER()+'|'+feelingsValues[EXCITED_INDEX],
+                            feeling: BORED_TO_SERVER()+'|'+feelingsValues[BORED_INDEX],
+                            feeling: SAFE_TO_SERVER()+'|'+feelingsValues[SAFE_INDEX],
+                            feeling: SCARED_TO_SERVER()+'|'+feelingsValues[SCARED_INDEX],
+                            feeling: PEACEFUL_TO_SERVER()+'|'+feelingsValues[PEACEFUL_INDEX],
+                            feeling: ANGRY_TO_SERVER()+'|'+feelingsValues[ANGRY_INDEX],
+                            format: 'json',
+                            response: 'application/jsonp'
+                        },
+                        callbackKey: 'callback',
+                        success: function (response) {
+                            alert('Working!');
+                            console.log(response);
+
+                            //                          Ext.Viewport.setActiveItem('surveypanel',{
+                            //                             type: "slide",
+                            //                             direction: "left"
+                            //                         });
+                        },
+                        failure: function (response) {
+                            alert('Not working!');
+                            console.log(response);
+                        },
+                        callback: function(successful, data){
+                            alert(data);
+                        }
+                    });
+                },
+                docked: 'bottom',
+                itemId: 'mybutton8',
+                ui: 'confirm',
+                text: 'Submit'
+            }
+        ]
+    }
+
+});
+
+/*
+ * File: app/view/MyPanel1.js
+ *
+ * This file was generated by Sencha Architect version 3.0.2.
+ * http://www.sencha.com/products/architect/
+ *
+ * This file requires use of the Sencha Touch 2.3.x library, under independent license.
+ * License of Sencha Architect does not include license for Sencha Touch 2.3.x. For more
+ * details see http://www.sencha.com/license or contact license@sencha.com.
+ *
+ * This file will be auto-generated each and everytime you save your project.
+ *
+ * Do NOT hand edit this file.
+ */
+
+Ext.define('TranSafe.view.MyPanel1', {
     extend:  Ext.Panel ,
 
     config: {
@@ -67316,12 +71576,20 @@ Ext.Loader.setConfig({
 
 
 Ext.application({
+    models: [
+        'newVenue'
+    ],
     stores: [
         'FS'
     ],
     views: [
         'MyPanel',
-        'addVenuePanel'
+        'surveyPanel',
+        'MyNavigationView',
+        'SignUpPanel',
+        'SignInPanel',
+        'comfortPanel',
+        'MyPanel1'
     ],
     controllers: [
         'MyController'
@@ -67336,5 +71604,5 @@ Ext.application({
 });
 
 // @tag full-page
-// @require /Users/Stoneman/Github/transurvey/TranSafe_SArch/app.js
+// @require C:\Users\Mars Dela Pena\Documents\GitHub\TranSafe_SArch\app.js
 

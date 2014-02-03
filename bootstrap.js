@@ -514,6 +514,17 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.layout.wrapper.BoxDock": [],
   "Ext.layout.wrapper.Dock": [],
   "Ext.layout.wrapper.Inner": [],
+  "Ext.log.Base": [],
+  "Ext.log.Logger": [],
+  "Ext.log.filter.Filter": [],
+  "Ext.log.filter.Priority": [],
+  "Ext.log.formatter.Default": [],
+  "Ext.log.formatter.Formatter": [],
+  "Ext.log.formatter.Identity": [],
+  "Ext.log.writer.Console": [],
+  "Ext.log.writer.DocumentTitle": [],
+  "Ext.log.writer.Remote": [],
+  "Ext.log.writer.Writer": [],
   "Ext.mixin.Bindable": [],
   "Ext.mixin.Filterable": [],
   "Ext.mixin.Mixin": [],
@@ -647,6 +658,10 @@ Ext.ClassManager.addNameAlternateMappings({
   "TranSafe.view.MyFormPanel": [],
   "TranSafe.view.MyNavigationView": [],
   "TranSafe.view.MyPanel": [],
+  "TranSafe.view.MyPanel1": [],
+  "TranSafe.view.SignInPanel": [],
+  "TranSafe.view.SignUpPanel": [],
+  "TranSafe.view.comfortPanel": [],
   "TranSafe.view.surveyPanel": []
 });
 Ext.ClassManager.addNameAliasMappings({
@@ -1226,6 +1241,17 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.wrapper.BoxDock": [],
   "Ext.layout.wrapper.Dock": [],
   "Ext.layout.wrapper.Inner": [],
+  "Ext.log.Base": [],
+  "Ext.log.Logger": [],
+  "Ext.log.filter.Filter": [],
+  "Ext.log.filter.Priority": [],
+  "Ext.log.formatter.Default": [],
+  "Ext.log.formatter.Formatter": [],
+  "Ext.log.formatter.Identity": [],
+  "Ext.log.writer.Console": [],
+  "Ext.log.writer.DocumentTitle": [],
+  "Ext.log.writer.Remote": [],
+  "Ext.log.writer.Writer": [],
   "Ext.mixin.Bindable": [],
   "Ext.mixin.Filterable": [],
   "Ext.mixin.Mixin": [],
@@ -1379,6 +1405,16 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.mynavigationview"
   ],
   "TranSafe.view.MyPanel": [],
+  "TranSafe.view.MyPanel1": [],
+  "TranSafe.view.SignInPanel": [
+    "widget.signinpanel"
+  ],
+  "TranSafe.view.SignUpPanel": [
+    "widget.signuppanel"
+  ],
+  "TranSafe.view.comfortPanel": [
+    "widget.comfortPanel"
+  ],
   "TranSafe.view.surveyPanel": [
     "widget.surveypanel"
   ]

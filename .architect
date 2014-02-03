@@ -349,6 +349,9 @@
                 }
             ]
         },
+        "82fd1066-6171-40ed-b267-90775437efd2": {
+            "id": "82fd1066-6171-40ed-b267-90775437efd2"
+        },
         "73fecb4d-dbdc-4b9b-9a7c-71100b0c50f9": {
             "id": "73fecb4d-dbdc-4b9b-9a7c-71100b0c50f9",
             "expanded": false,
@@ -490,15 +493,17 @@
             "f37bfdef-55aa-498b-8f01-c777f12666db",
             "84a0048a-1dd5-4977-a25f-8ec8d96cd0a4",
             "091b688f-f7ac-4980-832e-4ff6d8a7f271",
-            "23ac6a21-268e-429c-9f79-b0b7b7010bc8"
+            "23ac6a21-268e-429c-9f79-b0b7b7010bc8",
+            "73fecb4d-dbdc-4b9b-9a7c-71100b0c50f9",
+            "82fd1066-6171-40ed-b267-90775437efd2"
         ]
     },
     "canvasState": {
-        "topInstance": "b7ba1fa6-6778-43e0-a6b4-09767da752c8"
+        "topInstance": "82fd1066-6171-40ed-b267-90775437efd2"
     },
     "inspectorState": {
-        "topInstance": "b7ba1fa6-6778-43e0-a6b4-09767da752c8",
-        "selectedInstance": "26cd6e2c-68d8-4557-9a69-eca590863464"
+        "topInstance": null,
+        "selectedInstance": null
     },
     "codeState": {
         "topInstance": null

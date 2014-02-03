@@ -29,7 +29,7 @@ Ext.define('TranSafe.store.FS', {
         storeId: 'FS',
         proxy: {
             type: 'jsonp',
-            url: 'https://api.foursquare.com/v2/venues/search?ll='+lt+','+lng+'&radius=1000&client_id=FHGRALBMIKR04JREC02GPFOJFXNEDXVFJ0LCUM5J025YRFHY&client_secret=2BTYTCA4NIKM0EXVVKQ2NFQRXYPJ252RO4EDB0GVLTLMOLBI',
+            url: 'https://api.foursquare.com/v2/venues/search?ll=40.7,-74&client_id=FHGRALBMIKR04JREC02GPFOJFXNEDXVFJ0LCUM5J025YRFHY&client_secret=2BTYTCA4NIKM0EXVVKQ2NFQRXYPJ252RO4EDB0GVLTLMOLBI',
             reader: {
                 type: 'json',
                 rootProperty: 'response.groups[0].items'
