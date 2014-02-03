@@ -25,8 +25,8 @@
         "buildShouldOverwriteIndex": true,
         "generateArchitectVersion": true,
         "lastBuildSelection": {
-            "value": "webBuild",
-            "display": "Build web app"
+            "value": "iosBuild",
+            "display": "Build iOS app"
         },
         "displayfield-ExtBox1-1387-inputEl": "Not Installed",
         "displayfield-ExtBox1-1645-inputEl": "Not Installed",
@@ -50,8 +50,7 @@
             "b7ba1fa6-6778-43e0-a6b4-09767da752c8",
             "23ac6a21-268e-429c-9f79-b0b7b7010bc8",
             "84a0048a-1dd5-4977-a25f-8ec8d96cd0a4",
-            "091b688f-f7ac-4980-832e-4ff6d8a7f271",
-            "82fd1066-6171-40ed-b267-90775437efd2"
+            "091b688f-f7ac-4980-832e-4ff6d8a7f271"
         ],
         "store": [
             "73fecb4d-dbdc-4b9b-9a7c-71100b0c50f9",
