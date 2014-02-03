@@ -22,8 +22,7 @@
             "MyNavigationView",
             "SignUpPanel",
             "SignInPanel",
-            "comfortPanel",
-            "MyPanel1"
+            "comfortPanel"
         ]
     },
     "designerId": "application"

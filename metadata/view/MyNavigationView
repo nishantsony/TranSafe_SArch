@@ -20,10 +20,134 @@
             },
             "codeClass": null,
             "userConfig": {
-                "docked": "top"
+                "docked": "top",
+                "layout": null
             },
             "designerId": "474bdd50-ffc0-463b-9c1c-7a38a7a6b034",
             "cn": [
+                {
+                    "type": "Ext.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "centered": false,
+                        "container|align": "start",
+                        "container|pack": "end",
+                        "docked": "top",
+                        "layout": "hbox",
+                        "maxHeight": 100,
+                        "style": "background-color:#006db9"
+                    },
+                    "designerId": "2664f864-d81d-4283-9b26-2e0615c27c9b",
+                    "cn": [
+                        {
+                            "type": "Ext.Img",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "centered": null,
+                                "docked": null,
+                                "height": null,
+                                "layout|flex": 1,
+                                "left": null,
+                                "margin": null,
+                                "maxHeight": null,
+                                "maxWidth": 100,
+                                "minHeight": 75,
+                                "minWidth": null,
+                                "src": "transafe_logo.png",
+                                "style": "background-color:#FFFFFF"
+                            },
+                            "designerId": "d8a755ea-0ea4-4412-b072-490ae6b1be43"
+                        },
+                        {
+                            "type": "Ext.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "centered": null,
+                                "designer|displayName": "ListViewButton",
+                                "designer|uiInterfaceName": "action",
+                                "docked": null,
+                                "icon": "icon_listview.png",
+                                "iconAlign": "center",
+                                "layout|flex": 1,
+                                "left": null,
+                                "margin": null,
+                                "maxHeight": null,
+                                "maxWidth": 200,
+                                "minHeight": 75,
+                                "minWidth": null,
+                                "padding": null,
+                                "text": "",
+                                "top": "",
+                                "ui": "action"
+                            },
+                            "designerId": "66bec4b8-d317-41b9-bfd3-75b0b910420a"
+                        },
+                        {
+                            "type": "Ext.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "centered": null,
+                                "designer|displayName": "MapViewButton",
+                                "designer|uiInterfaceName": "action",
+                                "docked": null,
+                                "icon": "icon_mapview.png",
+                                "iconAlign": "center",
+                                "layout|flex": 1,
+                                "left": null,
+                                "margin": null,
+                                "maxHeight": null,
+                                "maxWidth": 200,
+                                "minHeight": 75,
+                                "text": null,
+                                "top": null,
+                                "ui": "action"
+                            },
+                            "designerId": "d08a4b87-5089-455b-aaa4-46893119e780"
+                        },
+                        {
+                            "type": "Ext.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "centered": null,
+                                "designer|displayName": "LoginButton",
+                                "designer|uiInterfaceName": "action",
+                                "docked": null,
+                                "icon": "icon_login.png",
+                                "iconAlign": "center",
+                                "layout|flex": 1,
+                                "left": null,
+                                "margin": null,
+                                "maxHeight": null,
+                                "maxWidth": 200,
+                                "minHeight": 75,
+                                "text": null,
+                                "top": null,
+                                "ui": "action"
+                            },
+                            "designerId": "dd9563fd-5c2c-4445-9aac-ea5bce15e60f"
+                        }
+                    ]
+                },
                 {
                     "type": "Ext.Map",
                     "reference": {

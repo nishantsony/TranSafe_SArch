@@ -17,9 +17,9 @@ Ext.define('TranSafe.view.MyPanel', {
     extend: 'Ext.Panel',
 
     requires: [
-        'Ext.Img',
         'Ext.Container',
         'Ext.Button',
+        'Ext.Img',
         'TranSafe.view.MyNavigationView'
     ],
 
@@ -28,11 +28,6 @@ Ext.define('TranSafe.view.MyPanel', {
         html: '<h1>Welcome to TranSafe</h1><p>Synopsis</p><h2>TranSafe (0.0.1)</h2>',
         style: 'background-color: #FFF',
         items: [
-            {
-                xtype: 'image',
-                height: 201,
-                src: 'transafe_logo.png'
-            },
             {
                 xtype: 'container',
                 docked: 'bottom',
@@ -69,6 +64,13 @@ Ext.define('TranSafe.view.MyPanel', {
                         text: 'Add venue'
                     }
                 ]
+            },
+            {
+                xtype: 'image',
+                centered: true,
+                minHeight: 200,
+                minWidth: 200,
+                src: 'transafe_logo.png'
             }
         ]
     }

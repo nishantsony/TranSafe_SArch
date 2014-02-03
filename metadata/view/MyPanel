@@ -20,19 +20,6 @@
     "designerId": "407dbdf7-4c2d-4fcb-a2a5-e9c236cc6fca",
     "cn": [
         {
-            "type": "Ext.Img",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "height": 201,
-                "src": "transafe_logo.png"
-            },
-            "designerId": "e119bd1d-cd5d-4120-a166-59a1c4942fcd"
-        },
-        {
             "type": "Ext.Container",
             "reference": {
                 "name": "items",
@@ -130,6 +117,25 @@
                     ]
                 }
             ]
+        },
+        {
+            "type": "Ext.Img",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "centered": true,
+                "docked": null,
+                "height": null,
+                "maxHeight": null,
+                "maxWidth": null,
+                "minHeight": 200,
+                "minWidth": 200,
+                "src": "transafe_logo.png"
+            },
+            "designerId": "712ffa6c-7170-4047-b262-267d30d63f6e"
         }
     ]
 }

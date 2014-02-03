@@ -18,6 +18,9 @@ Ext.define('TranSafe.view.MyNavigationView', {
     alias: 'widget.mynavigationview',
 
     requires: [
+        'Ext.Panel',
+        'Ext.Img',
+        'Ext.Button',
         'Ext.Map',
         'Ext.dataview.List',
         'Ext.XTemplate',
@@ -32,6 +35,57 @@ Ext.define('TranSafe.view.MyNavigationView', {
                 xtype: 'container',
                 docked: 'top',
                 items: [
+                    {
+                        xtype: 'panel',
+                        centered: false,
+                        docked: 'top',
+                        maxHeight: 100,
+                        style: 'background-color:#006db9',
+                        layout: {
+                            type: 'hbox',
+                            align: 'start',
+                            pack: 'end'
+                        },
+                        items: [
+                            {
+                                xtype: 'image',
+                                flex: 1,
+                                maxWidth: 100,
+                                minHeight: 75,
+                                style: 'background-color:#FFFFFF',
+                                src: 'transafe_logo.png'
+                            },
+                            {
+                                xtype: 'button',
+                                flex: 1,
+                                maxWidth: 200,
+                                minHeight: 75,
+                                top: '',
+                                ui: 'action',
+                                icon: 'icon_listview.png',
+                                iconAlign: 'center',
+                                text: ''
+                            },
+                            {
+                                xtype: 'button',
+                                flex: 1,
+                                maxWidth: 200,
+                                minHeight: 75,
+                                ui: 'action',
+                                icon: 'icon_mapview.png',
+                                iconAlign: 'center'
+                            },
+                            {
+                                xtype: 'button',
+                                flex: 1,
+                                maxWidth: 200,
+                                minHeight: 75,
+                                ui: 'action',
+                                icon: 'icon_login.png',
+                                iconAlign: 'center'
+                            }
+                        ]
+                    },
                     {
                         xtype: 'map',
                         height: 200,

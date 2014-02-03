@@ -32,8 +32,7 @@ Ext.application({
         'MyNavigationView',
         'SignUpPanel',
         'SignInPanel',
-        'comfortPanel',
-        'MyPanel1'
+        'comfortPanel'
     ],
     controllers: [
         'MyController'
