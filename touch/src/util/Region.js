@@ -225,13 +225,12 @@ Ext.define('Ext.util.Region', {
         return (p < this.top || p > this.bottom);
     },
 
-    /**
+    /*
      * Restrict a point within the region by a certain factor.
      * @param {String} axis Optional
-     * @param {Ext.util.Point/Object} p
+     * @param {Ext.util.Point/Ext.util.Offset/Object} p
      * @param {Number} factor
-     * @return {Ext.util.Point/Object/Number}
-     * @private
+     * @return {Ext.util.Point/Ext.util.Offset/Object/Number}
      */
     restrict: function(axis, p, factor) {
         if (Ext.isObject(axis)) {

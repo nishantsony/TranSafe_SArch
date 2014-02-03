@@ -86,7 +86,7 @@
  * It has all the advantages combined from asynchronous and synchronous loading. The development flow is simple:
  *
  * ### Step 1: Start writing your application using synchronous approach. ###
- * Ext.Loader will automatically fetch all dependencies on demand as they're
+ * Ext.Loader will automatically fetch all dependencies on demand as they're 
  * needed during run-time. For example:
  *
  *     Ext.onReady(function(){
@@ -240,9 +240,7 @@
          *
          * Refer to config options of {@link Ext.Loader} for the list of possible properties.
          *
-         * @param {Object/String} name The config object to override the default values
-         * or name of a single config setting when also passing the second parameter.
-         * @param {Mixed} [value] The value for the config setting.
+         * @param {Object} config The config object to override the default values.
          * @return {Ext.Loader} this
          */
         setConfig: function(name, value) {
@@ -462,7 +460,7 @@
 
         /**
          * Maintain the queue for all dependencies. Each item in the array is an object of the format:
-         *
+         * 
          *     {
          *         requires: [...], // The required classes for this queue item
          *         callback: function() { ... } // The function to execute when all classes specified in requires exist
@@ -582,7 +580,7 @@
          * Inject a script element to document's head, call onLoad and onError accordingly
          * @private
          */
-        injectScriptElement: function(url, onLoad, onError, scope, charset) {
+        injectScriptElement: function(url, onLoad, onError, scope) {
             var script = document.createElement('script'),
                 me = this,
                 onLoadFn = function() {
@@ -604,10 +602,6 @@
                 }
             };
 
-            if (charset) {
-                script.charset = charset;
-            }
-            
             this.documentHead.appendChild(script);
 
             return script;
@@ -641,6 +635,11 @@
 
         /**
          * Load a script file, supports both asynchronous and synchronous approaches
+         *
+         * @param {String} url
+         * @param {Function} onLoad
+         * @param {Object} scope
+         * @param {Boolean} synchronous
          * @private
          */
         loadScriptFile: function(url, onLoad, onError, scope, synchronous) {
@@ -806,7 +805,7 @@
                         if (excluded[possibleClassName] !== true) {
                             references.push(possibleClassName);
 
-                            if (!Manager.isCreated(possibleClassName) && !included[possibleClassName]/* && !this.requiresMap.hasOwnProperty(possibleClassName)*/) {
+                            if (!Manager.isCreated(possibleClassName) && !included[possibleClassName]) {
                                 included[possibleClassName] = true;
                                 classNames.push(possibleClassName);
                             }
@@ -1311,7 +1310,7 @@
         path = path + "../../../";
     }
     //</debug>
-
+    
 
     Loader.setConfig({
         enabled: true,
@@ -1320,5 +1319,5 @@
             'Ext' : path + 'src'
         }
     });
-
+    
 })();

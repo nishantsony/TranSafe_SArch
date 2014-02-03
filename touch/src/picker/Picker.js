@@ -83,7 +83,7 @@ Ext.define('Ext.picker.Picker', {
     extend: 'Ext.Sheet',
     alias : 'widget.picker',
     alternateClassName: 'Ext.Picker',
-    requires: ['Ext.picker.Slot', 'Ext.TitleBar', 'Ext.data.Model', 'Ext.util.InputBlocker'],
+    requires: ['Ext.picker.Slot', 'Ext.TitleBar', 'Ext.data.Model'],
 
     isPicker: true,
 
@@ -114,7 +114,7 @@ Ext.define('Ext.picker.Picker', {
          * @cfg
          * @inheritdoc
          */
-        baseCls: Ext.baseCSSPrefix + 'picker',
+        cls: Ext.baseCSSPrefix + 'picker',
 
         /**
          * @cfg {String/Mixed} doneButton
@@ -207,8 +207,6 @@ Ext.define('Ext.picker.Picker', {
         // @private
         defaultType: 'pickerslot',
 
-        toolbarPosition: 'top',
-
         /**
          * @cfg {Ext.TitleBar/Ext.Toolbar/Object} toolbar
          * The toolbar which contains the {@link #doneButton} and {@link #cancelButton} buttons.
@@ -250,48 +248,12 @@ Ext.define('Ext.picker.Picker', {
          *
          * @accessor
          */
-        toolbar: {
-            xtype: 'titlebar'
-        }
+        toolbar: true
     },
 
-    platformConfig: [{
-        theme: ['Windows'],
-        height: '100%',
-        toolbarPosition: 'bottom',
-        toolbar: {
-            xtype: 'toolbar',
-            layout: {
-                type: 'hbox',
-                pack: 'center'
-            }
-        },
-        doneButton: {
-            iconCls: 'check2',
-            ui: 'round',
-            text: ''
-        },
-        cancelButton: {
-            iconCls: 'delete',
-            ui: 'round',
-            text: ''
-        }
-    }, {
-        theme: ['CupertinoClassic'],
-        toolbar: {
-            ui: 'black'
-        }
-    }, {
-        theme: ['MountainView'],
-        toolbarPosition: 'bottom',
-        toolbar: {
-            defaults: {
-                flex: 1
-            }
-        }
-    }],
+    initElement: function() {
+        this.callParent(arguments);
 
-    initialize: function() {
         var me = this,
             clsPrefix = Ext.baseCSSPrefix,
             innerElement = this.innerElement;
@@ -310,6 +272,11 @@ Ext.define('Ext.picker.Picker', {
             delegate: 'pickerslot',
             slotpick: 'onSlotPick'
         });
+
+        me.on({
+            scope: this,
+            show: 'onShow'
+        });
     },
 
     /**
@@ -321,7 +288,7 @@ Ext.define('Ext.picker.Picker', {
         }
 
         Ext.applyIf(config, {
-            docked: this.getToolbarPosition()
+            docked: 'top'
         });
 
         return Ext.factory(config, 'Ext.TitleBar', this.getToolbar());
@@ -491,7 +458,6 @@ Ext.define('Ext.picker.Picker', {
         }
 
         this.hide();
-        Ext.util.InputBlocker.unblockInputs();
     },
 
     /**
@@ -501,7 +467,6 @@ Ext.define('Ext.picker.Picker', {
     onCancelButtonTap: function() {
         this.fireEvent('cancel', this);
         this.hide();
-        Ext.util.InputBlocker.unblockInputs();
     },
 
     /**
@@ -512,17 +477,10 @@ Ext.define('Ext.picker.Picker', {
         this.fireEvent('pick', this, this.getValue(true), slot);
     },
 
-    show: function() {
-        if (this.getParent() === undefined) {
-            Ext.Viewport.add(this);
-        }
-
-        this.callParent(arguments);
-
+    onShow: function() {
         if (!this.isHidden()) {
             this.setValue(this._value);
         }
-        Ext.util.InputBlocker.blockInputs();
     },
 
     /**

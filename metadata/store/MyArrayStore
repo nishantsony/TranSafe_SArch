@@ -8,8 +8,18 @@
     "userConfig": {
         "data": [
             "[",
-            "    {system: 'ololo', percentage: 80},",
-            "    {system: 'mehmeh', percentage: 20}",
+            "        {Intensity: 'Sad zero', Value: 60},",
+            "        {Intensity: 'Sad one', Value: 10},",
+            "        {Intensity: 'Sad two', Value: 20},",
+            "        {Intensity: 'Sad three', Value: 40},",
+            "        {Intensity: 'Sad four', Value: 45},",
+            "        {Intensity: 'Sad five', Value: 40},",
+            "        {Intensity: 'Happy zero', Value: 60},",
+            "        {Intensity: 'Happy one', Value: 40},",
+            "        {Intensity: 'Happy two', Value: 0},",
+            "        {Intensity: 'Happy three', Value: 30},",
+            "        {Intensity: 'Happy four', Value: 4},",
+            "        {Intensity: 'Happy five', Value: 14},",
             "]"
         ],
         "designer|userClassName": "MyArrayStore",
@@ -25,9 +35,9 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "system"
+                "name": "Intensity"
             },
-            "designerId": "ea50d2ae-ac06-47d4-9390-558e979a45d6"
+            "designerId": "f75e0629-1617-4590-b6b0-21c1f9cdc816"
         },
         {
             "type": "Ext.data.Field",
@@ -37,9 +47,9 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "percentage"
+                "name": "Value"
             },
-            "designerId": "bb313a61-b162-490e-8f8a-b0183245dbe1"
+            "designerId": "c52252c6-b0f4-442b-974f-04f3eb4ee3e0"
         }
     ]
 }

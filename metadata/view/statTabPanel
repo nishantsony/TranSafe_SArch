@@ -1,0 +1,637 @@
+{
+    "type": "Ext.tab.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "stattabpanel",
+        "designer|userClassName": "statTabPanel",
+        "id": "stattabpanel",
+        "tabBarPosition": "bottom"
+    },
+    "designerId": "99b97ed8-02f6-4e37-99b3-2ea3b8e0d136",
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "tabBarPosition",
+            "type": "string"
+        }
+    ],
+    "cn": [
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout": "fit",
+                "scrollable": true,
+                "title": "Happy"
+            },
+            "designerId": "2dba668e-3a75-427a-8f52-c1c1d5bc4032",
+            "cn": [
+                {
+                    "type": "Ext.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "docked": null,
+                        "layout": "fit",
+                        "maxWidth": null,
+                        "scrollable": true
+                    },
+                    "designerId": "ab323cd1-e58b-4d72-b15f-a96c7c54c7f1",
+                    "cn": [
+                        {
+                            "type": "Ext.chart.PolarChart",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "colors": [
+                                    "[\"#115fa6\", \"#94ae0a\", \"#a61120\", \"#ff8809\", \"#ffd13e\", \"#a61187\", \"#24ad9a\", \"#7c7474\", \"#a66111\"]"
+                                ],
+                                "docked": null,
+                                "id": "happyPie",
+                                "maxWidth": "50%",
+                                "store": "MyArrayStore"
+                            },
+                            "designerId": "629caed7-841d-4407-a7f7-d54f76dcef31",
+                            "isBuiltIn": true,
+                            "iconCls": "icon-pie-chart",
+                            "autoName": "MyPieChart",
+                            "cn": [
+                                {
+                                    "type": "Ext.chart.series.Pie",
+                                    "reference": {
+                                        "name": "series",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "labelField": "Intensity",
+                                        "xField": "Value",
+                                        "yField": null
+                                    },
+                                    "designerId": "2a619c4d-5cb8-4c27-9cee-1830e0d6ec51"
+                                },
+                                {
+                                    "type": "Ext.chart.interactions.Rotate",
+                                    "reference": {
+                                        "name": "interactions",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "designerId": "1d2cd851-6f87-4ec8-95d4-bbf3b69989f7"
+                                },
+                                {
+                                    "type": "Ext.chart.Legend",
+                                    "reference": {
+                                        "name": "legend",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "id": "happyLegend"
+                                    },
+                                    "designerId": "8d272403-482b-4e54-a89c-74009fff1ea0"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.chart.PolarChart",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "colors": [
+                                    "[\"#115fa6\", \"#94ae0a\", \"#a61120\", \"#ff8809\", \"#ffd13e\", \"#a61187\", \"#24ad9a\", \"#7c7474\", \"#a66111\"]"
+                                ],
+                                "id": "happyPie1",
+                                "margin": "0 0 0 50%",
+                                "store": "anonimousArrayStore"
+                            },
+                            "designerId": "dc63178e-3cb8-4188-be56-692e4778c6af",
+                            "isBuiltIn": true,
+                            "iconCls": "icon-pie-chart",
+                            "autoName": "MyPieChart",
+                            "cn": [
+                                {
+                                    "type": "Ext.chart.series.Pie",
+                                    "reference": {
+                                        "name": "series",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "labelField": "Feeling",
+                                        "xField": "TotalValue"
+                                    },
+                                    "designerId": "5e0d24ab-51f2-4c7e-aea5-027a51c46719"
+                                },
+                                {
+                                    "type": "Ext.chart.interactions.Rotate",
+                                    "reference": {
+                                        "name": "interactions",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "designerId": "603eb631-4586-4d7a-a846-55aaa39c7b26"
+                                },
+                                {
+                                    "type": "Ext.chart.Legend",
+                                    "reference": {
+                                        "name": "legend",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "id": "happyPie1Legend"
+                                    },
+                                    "designerId": "9716580a-222e-43c2-a40f-be9d0077f43c"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout": "fit",
+                "title": "Excited"
+            },
+            "designerId": "dcb70fcd-13ec-4817-936c-4a57199eaa79",
+            "cn": [
+                {
+                    "type": "Ext.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout": "fit",
+                        "scrollable": true
+                    },
+                    "designerId": "7282ebcc-f6c2-4c20-831e-85e329d6d6fb",
+                    "cn": [
+                        {
+                            "type": "Ext.chart.PolarChart",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "colors": [
+                                    "[\"#115fa6\", \"#94ae0a\", \"#a61120\", \"#ff8809\", \"#ffd13e\", \"#a61187\", \"#24ad9a\", \"#7c7474\", \"#a66111\"]"
+                                ],
+                                "id": "excitedPie",
+                                "maxWidth": "50%",
+                                "store": "MyArrayStore"
+                            },
+                            "designerId": "34c8beff-6bbc-4a20-972d-5d2d93af31a9",
+                            "isBuiltIn": true,
+                            "iconCls": "icon-pie-chart",
+                            "autoName": "MyPieChart",
+                            "cn": [
+                                {
+                                    "type": "Ext.chart.series.Pie",
+                                    "reference": {
+                                        "name": "series",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "labelField": "Intensity",
+                                        "xField": "Value"
+                                    },
+                                    "designerId": "c0b05cc9-db5d-427d-9620-743ba70a042c"
+                                },
+                                {
+                                    "type": "Ext.chart.interactions.Rotate",
+                                    "reference": {
+                                        "name": "interactions",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "designerId": "14f3ff4f-f5d0-40e6-a46f-214971e8548f"
+                                },
+                                {
+                                    "type": "Ext.chart.Legend",
+                                    "reference": {
+                                        "name": "legend",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "id": "excitedLegend"
+                                    },
+                                    "designerId": "e79db857-1f20-48de-8801-c21535fdc031"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.chart.PolarChart",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "colors": [
+                                    "[\"#115fa6\", \"#94ae0a\", \"#a61120\", \"#ff8809\", \"#ffd13e\", \"#a61187\", \"#24ad9a\", \"#7c7474\", \"#a66111\"]"
+                                ],
+                                "id": "excitedPie1",
+                                "margin": "0 0 0 50%",
+                                "store": "anonimousArrayStore"
+                            },
+                            "designerId": "453a248f-e15d-4897-97f8-2ef47c516652",
+                            "isBuiltIn": true,
+                            "iconCls": "icon-pie-chart",
+                            "autoName": "MyPieChart",
+                            "cn": [
+                                {
+                                    "type": "Ext.chart.series.Pie",
+                                    "reference": {
+                                        "name": "series",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "labelField": "Feeling",
+                                        "xField": "TotalValue"
+                                    },
+                                    "designerId": "21d065fe-19da-41e8-aadd-30c5ba9ed64d"
+                                },
+                                {
+                                    "type": "Ext.chart.interactions.Rotate",
+                                    "reference": {
+                                        "name": "interactions",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "designerId": "3e13a68f-5393-402b-a304-9d0a22410bda"
+                                },
+                                {
+                                    "type": "Ext.chart.Legend",
+                                    "reference": {
+                                        "name": "legend",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "id": "excitedPie1Legend"
+                                    },
+                                    "designerId": "64bbf426-7bd7-4e28-80f9-4f2ace6ca29b"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout": "fit",
+                "title": "Safe"
+            },
+            "designerId": "3c8f7dc1-9150-4c5f-b130-f1e843e8e344",
+            "cn": [
+                {
+                    "type": "Ext.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout": "fit"
+                    },
+                    "designerId": "7f87894b-7385-43a9-b5ac-4a4b22b912f2",
+                    "cn": [
+                        {
+                            "type": "Ext.chart.PolarChart",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "colors": [
+                                    "[\"#115fa6\", \"#94ae0a\", \"#a61120\", \"#ff8809\", \"#ffd13e\", \"#a61187\", \"#24ad9a\", \"#7c7474\", \"#a66111\"]"
+                                ],
+                                "id": "safePie",
+                                "maxWidth": "50%",
+                                "store": "MyArrayStore"
+                            },
+                            "designerId": "0626a34e-d4de-490e-8b36-a055a64c1bce",
+                            "isBuiltIn": true,
+                            "iconCls": "icon-pie-chart",
+                            "autoName": "MyPieChart",
+                            "cn": [
+                                {
+                                    "type": "Ext.chart.series.Pie",
+                                    "reference": {
+                                        "name": "series",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "labelField": "Intensity",
+                                        "xField": "Value"
+                                    },
+                                    "designerId": "9b436bd3-6134-4ca3-a026-ed53ca43883d"
+                                },
+                                {
+                                    "type": "Ext.chart.interactions.Rotate",
+                                    "reference": {
+                                        "name": "interactions",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "designerId": "9134724d-d0c1-46bd-a99e-c4c1d415dbb0"
+                                },
+                                {
+                                    "type": "Ext.chart.Legend",
+                                    "reference": {
+                                        "name": "legend",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "id": "safeLegend"
+                                    },
+                                    "designerId": "0406b033-e3f1-4274-a9e1-223622766fc3"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.chart.PolarChart",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "colors": [
+                                    "[\"#115fa6\", \"#94ae0a\", \"#a61120\", \"#ff8809\", \"#ffd13e\", \"#a61187\", \"#24ad9a\", \"#7c7474\", \"#a66111\"]"
+                                ],
+                                "id": "safePie1",
+                                "margin": "0 0 0 50%",
+                                "store": "anonimousArrayStore"
+                            },
+                            "designerId": "119b654b-4e0e-419c-b9af-574384296065",
+                            "isBuiltIn": true,
+                            "iconCls": "icon-pie-chart",
+                            "autoName": "MyPieChart",
+                            "cn": [
+                                {
+                                    "type": "Ext.chart.series.Pie",
+                                    "reference": {
+                                        "name": "series",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "labelField": "Feeling",
+                                        "xField": "TotalValue"
+                                    },
+                                    "designerId": "e759c5a9-5cfb-408c-9521-2e48302749dd"
+                                },
+                                {
+                                    "type": "Ext.chart.interactions.Rotate",
+                                    "reference": {
+                                        "name": "interactions",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "designerId": "3e513dd6-744d-4d68-8650-fc415efbaf0c"
+                                },
+                                {
+                                    "type": "Ext.chart.Legend",
+                                    "reference": {
+                                        "name": "legend",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "id": "safePie1Legend"
+                                    },
+                                    "designerId": "bb3deb43-a883-4b7d-a183-64e73b47570e"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout": "fit",
+                "title": "Peaceful"
+            },
+            "designerId": "84de8738-ab2f-4de2-8ff3-184e4fde3241",
+            "cn": [
+                {
+                    "type": "Ext.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout": "fit"
+                    },
+                    "designerId": "a3d4d355-676e-4e6d-a420-cdf015b4a59e",
+                    "cn": [
+                        {
+                            "type": "Ext.chart.PolarChart",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "colors": [
+                                    "[\"#115fa6\", \"#94ae0a\", \"#a61120\", \"#ff8809\", \"#ffd13e\", \"#a61187\", \"#24ad9a\", \"#7c7474\", \"#a66111\"]"
+                                ],
+                                "id": "peacefulPie",
+                                "maxWidth": "50%",
+                                "store": "MyArrayStore"
+                            },
+                            "designerId": "69af5384-d862-496f-a418-942f90bf63a3",
+                            "isBuiltIn": true,
+                            "iconCls": "icon-pie-chart",
+                            "autoName": "MyPieChart",
+                            "cn": [
+                                {
+                                    "type": "Ext.chart.series.Pie",
+                                    "reference": {
+                                        "name": "series",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "labelField": "Intensity",
+                                        "xField": "Value"
+                                    },
+                                    "designerId": "cb0b9352-30a1-419f-90d1-1771853afa16"
+                                },
+                                {
+                                    "type": "Ext.chart.interactions.Rotate",
+                                    "reference": {
+                                        "name": "interactions",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "designerId": "b4f247ac-87c5-4804-bea4-48c41bb54451"
+                                },
+                                {
+                                    "type": "Ext.chart.Legend",
+                                    "reference": {
+                                        "name": "legend",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "id": "peacefulLegend"
+                                    },
+                                    "designerId": "eda033af-421a-473b-b5cd-894c5f949395"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.chart.PolarChart",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "colors": [
+                                    "[\"#115fa6\", \"#94ae0a\", \"#a61120\", \"#ff8809\", \"#ffd13e\", \"#a61187\", \"#24ad9a\", \"#7c7474\", \"#a66111\"]"
+                                ],
+                                "id": "peacfulPie1",
+                                "margin": "0 0 0 50%",
+                                "store": "anonimousArrayStore"
+                            },
+                            "designerId": "b2b8828e-d1ed-4ed0-aedb-653d290db758",
+                            "isBuiltIn": true,
+                            "iconCls": "icon-pie-chart",
+                            "autoName": "MyPieChart",
+                            "cn": [
+                                {
+                                    "type": "Ext.chart.series.Pie",
+                                    "reference": {
+                                        "name": "series",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "labelField": "Feeling",
+                                        "xField": "TotalValue"
+                                    },
+                                    "designerId": "362856c4-9332-45bc-b957-df94bb7a6078"
+                                },
+                                {
+                                    "type": "Ext.chart.interactions.Rotate",
+                                    "reference": {
+                                        "name": "interactions",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "designerId": "dd653f51-7c95-494e-a63b-e5eb927af376"
+                                },
+                                {
+                                    "type": "Ext.chart.Legend",
+                                    "reference": {
+                                        "name": "legend",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "id": "peacefulPie1Legend"
+                                    },
+                                    "designerId": "dae79e04-644c-4ff4-b6f5-84c6eae8ed27"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "initialize",
+                "implHandler": [
+                    "this.callParent(arguments);",
+                    "var pieToHide;",
+                    "var pieToShow;",
+                    "var legendToHide;",
+                    "var legendToShow;",
+                    "console.log(localStorage.getItem('ifLogged'));",
+                    "if(localStorage.getItem('ifLogged')== 'Invalid User' || localStorage.getItem('ifLogged')=== ''|| localStorage.getItem('ifLogged')=== undefined || localStorage.getItem('ifLogged') === null){",
+                    "    console.log(\"anonimous\");",
+                    "    Ext.getCmp('happyPie').hide();",
+                    "    Ext.getCmp('happyLegend').hide();",
+                    "    Ext.getCmp('excitedPie').hide();",
+                    "    Ext.getCmp('excitedLegend').hide();",
+                    "    Ext.getCmp('safePie').hide();",
+                    "    Ext.getCmp('safeLegend').hide();",
+                    "    Ext.getCmp('peacefulPie').hide();",
+                    "    Ext.getCmp('peacefulLegend').hide();",
+                    "}",
+                    "else{",
+                    "    console.log(\"logged in\");",
+                    "    Ext.getCmp('happyPie').show();",
+                    "    Ext.getCmp('happyLegend').show();",
+                    "    Ext.getCmp('excitedPie').show();",
+                    "    Ext.getCmp('excitedLegend').show();",
+                    "    Ext.getCmp('safePie').show();",
+                    "    Ext.getCmp('safeLegend').show();",
+                    "    Ext.getCmp('peacefulPie').show();",
+                    "    Ext.getCmp('peacefulLegend').show();",
+                    "}"
+                ]
+            },
+            "designerId": "57ecb18f-bc73-4e82-820a-35cf31ddfd40"
+        }
+    ]
+}

@@ -191,7 +191,7 @@ Ext.define('TranSafe.view.comfortPanel', {
                                 alert('Thank you!');
                                 console.log(response);
 
-                                Ext.Viewport.setActiveItem('statistics',{
+                                Ext.Viewport.setActiveItem('stattabpanel',{
                                     type: "slide",
                                     direction: "left"
                                 });
@@ -233,7 +233,7 @@ Ext.define('TranSafe.view.comfortPanel', {
                                 alert('Thank you!');
                                 console.log(response);
 
-                                Ext.Viewport.setActiveItem('statistics',{
+                                Ext.Viewport.setActiveItem('stattabpanel',{
                                     type: "slide",
                                     direction: "left"
                                 });

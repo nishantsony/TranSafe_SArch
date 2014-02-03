@@ -292,10 +292,7 @@ var ExtObject = Ext.Object = {
 
     /**
      * Iterate through an object and invoke the given callback function for each iteration. The iteration can be stop
-     * by returning `false` in the callback function. This method iterates over properties within the current object,
-     * not properties from its prototype. To iterate over a prototype, iterate over obj.proto instead of obj.
-     * In the next example, use Ext.Object.each(Person.proto ....) and so on.
-     * For example:
+     * by returning `false` in the callback function. For example:
      *
      *     var person = {
      *         name: 'Jacky',
@@ -400,7 +397,8 @@ var ExtObject = Ext.Object = {
     },
 
     /**
-     * @param {Object} source
+     * @private
+     * @param source
      */
     mergeIf: function(source) {
         var i = 1,
@@ -574,39 +572,6 @@ var ExtObject = Ext.Object = {
         return objectClass;
     },
 
-    equals: function(origin, target) {
-        var originType = typeof origin,
-            targetType = typeof target,
-            key;
-
-        if (targetType === targetType) {
-            if (originType === 'object') {
-                for (key in origin) {
-                    if (!(key in target)) {
-                        return false;
-                    }
-
-                    if (!ExtObject.equals(origin[key], target[key])) {
-                        return false;
-                    }
-                }
-
-                for (key in target) {
-                    if (!(key in origin)) {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-            else {
-                return origin === target;
-            }
-        }
-
-        return false;
-    },
-
     defineProperty: ('defineProperty' in Object) ? Object.defineProperty : function(object, name, descriptor) {
         if (descriptor.get) {
             object.__defineGetter__(name, descriptor.get);
@@ -636,7 +601,7 @@ Ext.mergeIf = Ext.Object.mergeIf;
  *
  * @member Ext
  * @method urlEncode
- * @deprecated 2.0.0 Please use `{@link Ext.Object#toQueryString Ext.Object.toQueryString}` instead
+ * @deprecated 4.0.0 Please use `{@link Ext.Object#toQueryString Ext.Object.toQueryString}` instead
  */
 Ext.urlEncode = function() {
     var args = Ext.Array.from(arguments),
@@ -656,7 +621,7 @@ Ext.urlEncode = function() {
  *
  * @member Ext
  * @method urlDecode
- * @deprecated 2.0.0 Please use {@link Ext.Object#fromQueryString Ext.Object.fromQueryString} instead
+ * @deprecated 4.0.0 Please use {@link Ext.Object#fromQueryString Ext.Object.fromQueryString} instead
  */
 Ext.urlDecode = function() {
     return ExtObject.fromQueryString.apply(ExtObject, arguments);

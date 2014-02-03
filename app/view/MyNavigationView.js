@@ -53,6 +53,7 @@ Ext.define('TranSafe.view.MyNavigationView', {
                 ],
                 store: 'FS',
                 grouped: true,
+                itemHeight: 5,
                 indexBar: true
             }
         ],

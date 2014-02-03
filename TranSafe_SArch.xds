@@ -36,7 +36,11 @@
         "displayfield-ExtBox1-1283-inputEl": "Not Installed",
         "displayfield-ExtBox1-1333-inputEl": "Not Installed",
         "displayfield-ExtBox1-1383-inputEl": "Not Installed",
-        "displayfield-ExtBox1-1433-inputEl": "Not Installed"
+        "displayfield-ExtBox1-1433-inputEl": "Not Installed",
+        "displayfield-ExtBox1-1277-inputEl": "Not Installed",
+        "displayfield-ExtBox1-1331-inputEl": "Not Installed",
+        "displayfield-ExtBox1-1481-inputEl": "Not Installed",
+        "displayfield-ExtBox1-1278-inputEl": "Not Installed"
     },
     "xdsVersion": "3.0.2",
     "xdsBuild": 1375,
@@ -51,13 +55,15 @@
             "b7ba1fa6-6778-43e0-a6b4-09767da752c8",
             "23ac6a21-268e-429c-9f79-b0b7b7010bc8",
             "84a0048a-1dd5-4977-a25f-8ec8d96cd0a4",
-            "091b688f-f7ac-4980-832e-4ff6d8a7f271"
+            "091b688f-f7ac-4980-832e-4ff6d8a7f271",
+            "99b97ed8-02f6-4e37-99b3-2ea3b8e0d136"
         ],
         "store": [
             "73fecb4d-dbdc-4b9b-9a7c-71100b0c50f9",
             "18abdb72-5fed-4b0d-9852-978cd32f9902",
             "f990e992-0abc-41fa-9fd0-1d4a1a2787b6",
-            "3168ca2d-30f8-48c6-90e3-0596681ed39b"
+            "3168ca2d-30f8-48c6-90e3-0596681ed39b",
+            "4f58440f-ffa8-45c2-a03c-98c987d55f7f"
         ],
         "controller": [
             "494abfff-6797-4594-ac9c-5f27f4940060"

@@ -64,7 +64,7 @@ Ext.define('Ext.field.Radio', {
     },
 
     getValue: function() {
-        return (typeof this._value === 'undefined') ? null : this._value;
+        return (this._value) ? this._value : null;
     },
 
     setValue: function(value) {
@@ -91,7 +91,7 @@ Ext.define('Ext.field.Radio', {
     // @private
     onMaskTap: function(component, e) {
         var me = this,
-            dom = me.getComponent().input.dom;
+            dom = component.input.dom;
 
         if (me.getDisabled()) {
             return false;

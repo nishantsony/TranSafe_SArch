@@ -20,7 +20,6 @@
 Ext.define('Ext.Mask', {
     extend: 'Ext.Component',
     xtype: 'mask',
-    requires: ['Ext.util.InputBlocker'],
 
     config: {
         /**
@@ -69,22 +68,6 @@ Ext.define('Ext.Mask', {
         this.callSuper();
 
         this.element.on('*', 'onEvent', this);
-
-        this.on({
-            hide: 'onHide'
-        });
-    },
-
-    onHide: function(){
-        Ext.util.InputBlocker.unblockInputs();
-
-        // Oh how I loves the Android
-        if (Ext.browser.is.AndroidStock4 && Ext.os.version.getMinor() === 0) {
-            var firstChild = this.element.getFirstChild();
-            if (firstChild) {
-                firstChild.redraw();
-            }
-        }
     },
 
     onEvent: function(e) {

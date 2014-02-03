@@ -137,7 +137,7 @@ Ext.define('Ext.Toolbar', {
          * The minimum height height of the Toolbar.
          * @accessor
          */
-        minHeight: null,
+        minHeight: '2.6em',
 
         /**
          * @cfg {Object/String} layout Configuration for this Container's layout. Example:
@@ -174,8 +174,6 @@ Ext.define('Ext.Toolbar', {
         }
     },
 
-    hasCSSMinHeight: true,
-
     constructor: function(config) {
         config = config || {};
 
@@ -194,7 +192,7 @@ Ext.define('Ext.Toolbar', {
         if (typeof title == 'string') {
             title = {
                 title: title,
-                centered : Ext.theme.is.Tizen ? false : true
+                centered: true
             };
         }
 

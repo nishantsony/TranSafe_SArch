@@ -120,6 +120,14 @@ Ext.define('Ext.tab.Panel', {
          */
     },
 
+    delegateListeners: {
+        delegate: '> component',
+        centeredchange: 'onItemCenteredChange',
+        dockedchange: 'onItemDockedChange',
+        floatingchange: 'onItemFloatingChange',
+        disabledchange: 'onItemDisabledChange'
+    },
+
     initialize: function() {
         this.callParent();
 
@@ -129,18 +137,7 @@ Ext.define('Ext.tab.Panel', {
             delegate: '> tabbar',
             scope   : this
         });
-
-        this.on({
-            disabledchange: 'onItemDisabledChange',
-            delegate: '> component',
-            scope   : this
-        });
     },
-
-    platformConfig: [{
-        theme: ['Blackberry'],
-        tabBarPosition: 'bottom'
-    }],
 
     /**
      * Tab panels should not be scrollable. Instead, you should add scrollable to any item that

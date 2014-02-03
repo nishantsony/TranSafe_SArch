@@ -23,21 +23,62 @@ Ext.define('TranSafe.store.MyArrayStore', {
     config: {
         data: [
             {
-                system: 'ololo',
-                percentage: 80
+                Intensity: 'Sad zero',
+                Value: 60
             },
             {
-                system: 'mehmeh',
-                percentage: 20
-            }
+                Intensity: 'Sad one',
+                Value: 10
+            },
+            {
+                Intensity: 'Sad two',
+                Value: 20
+            },
+            {
+                Intensity: 'Sad three',
+                Value: 40
+            },
+            {
+                Intensity: 'Sad four',
+                Value: 45
+            },
+            {
+                Intensity: 'Sad five',
+                Value: 40
+            },
+            {
+                Intensity: 'Happy zero',
+                Value: 60
+            },
+            {
+                Intensity: 'Happy one',
+                Value: 40
+            },
+            {
+                Intensity: 'Happy two',
+                Value: 0
+            },
+            {
+                Intensity: 'Happy three',
+                Value: 30
+            },
+            {
+                Intensity: 'Happy four',
+                Value: 4
+            },
+            {
+                Intensity: 'Happy five',
+                Value: 14
+            },
+            
         ],
         storeId: 'MyArrayStore',
         fields: [
             {
-                name: 'system'
+                name: 'Intensity'
             },
             {
-                name: 'percentage'
+                name: 'Value'
             }
         ]
     }

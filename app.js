@@ -27,7 +27,8 @@ Ext.application({
     stores: [
         'FS',
         'MyStore',
-        'MyArrayStore'
+        'MyArrayStore',
+        'anonimousArrayStore'
     ],
     views: [
         'MyPanel',
@@ -35,7 +36,8 @@ Ext.application({
         'MyNavigationView',
         'SignUpPanel',
         'SignInPanel',
-        'comfortPanel'
+        'comfortPanel',
+        'statTabPanel'
     ],
     controllers: [
         'MyController'

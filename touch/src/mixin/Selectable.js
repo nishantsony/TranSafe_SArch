@@ -116,9 +116,7 @@ Ext.define('Ext.mixin.Selectable', {
             }
             else {
                 oldStore.un(bindEvents);
-                if(newStore) {
-                    newStore.un('clear', 'onSelectionStoreClear', this);
-                }
+                newStore.un('clear', 'onSelectionStoreClear', this);
             }
         }
 
@@ -135,9 +133,12 @@ Ext.define('Ext.mixin.Selectable', {
      */
     selectAll: function(silent) {
         var me = this,
-            selections = me.getStore().getRange();
-
-        me.select(selections, true, silent);
+            selections = me.getStore().getRange(),
+            ln = selections.length,
+            i = 0;
+        for (; i < ln; i++) {
+            me.select(selections[i], true, silent);
+        }
     },
 
     /**
@@ -183,10 +184,10 @@ Ext.define('Ext.mixin.Selectable', {
 
     /**
      * Selects a range of rows if the selection model {@link Ext.mixin.Selectable#getDisableSelection} is not locked.
-     * All rows in between `startRecord` and `endRecord` are also selected.
-     * @param {Number} startRecord The index of the first row in the range.
-     * @param {Number} endRecord The index of the last row in the range.
-     * @param {Boolean} [keepExisting] `true` to retain existing selections.
+     * All rows in between `startRow` and `endRow` are also selected.
+     * @param {Number} startRow The index of the first row in the range.
+     * @param {Number} endRow The index of the last row in the range.
+     * @param {Boolean} keepExisting (optional) `true` to retain existing selections.
      */
     selectRange: function(startRecord, endRecord, keepExisting) {
         var me = this,

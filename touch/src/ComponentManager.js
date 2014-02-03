@@ -32,10 +32,9 @@ Ext.define('Ext.ComponentManager', {
                     id;
 
                 for (id in map) {
-                    if (map.hasOwnProperty(id)) {
-                        list.push(map[id]);
-                    }
+                    list.push(map[id]);
                 }
+
                 return list;
             }
         };
@@ -89,8 +88,8 @@ Ext.define('Ext.ComponentManager', {
     /**
      * Creates a new Component from the specified config object using the
      * config object's `xtype` to determine the class to instantiate.
-     * @param {Object} component A configuration object for the Component you wish to create.
-     * @param {Function} [defaultType] The constructor to provide the default Component type if
+     * @param {Object} config A configuration object for the Component you wish to create.
+     * @param {Function} defaultType (optional) The constructor to provide the default Component type if
      * the config object does not contain a `xtype`. (Optional if the config contains an `xtype`).
      * @return {Ext.Component} The newly instantiated Component.
      */

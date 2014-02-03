@@ -56,6 +56,7 @@
                 "docked": null,
                 "grouped": true,
                 "hideOnMaskTap": false,
+                "itemHeight": 5,
                 "itemId": "mylist",
                 "store": "FS",
                 "title": "Choose where you are"

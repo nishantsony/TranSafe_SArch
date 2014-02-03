@@ -12,7 +12,6 @@
  *     textareafield    {@link Ext.field.TextArea}
  *     hiddenfield      {@link Ext.field.Hidden}
  *     radiofield       {@link Ext.field.Radio}
- *     filefield        {@link Ext.field.File}
  *     checkboxfield    {@link Ext.field.Checkbox}
  *     selectfield      {@link Ext.field.Select}
  *     togglefield      {@link Ext.field.Toggle}
@@ -142,11 +141,6 @@ Ext.define('Ext.field.Field', {
          * @hide
          */
     },
-
-    platformConfig: [{
-        theme: ['Windows', 'MountainView', 'Blackberry', 'Tizen'],
-        labelAlign: 'top'
-    }],
 
     cachedConfig: {
         /**
@@ -323,15 +317,6 @@ Ext.define('Ext.field.Field', {
         this.setValue(this.originalValue);
 
         return this;
-    },
-
-    /**
-     * Resets the field's {@link #originalValue} property so it matches the current {@link #getValue value}. This is
-     * called by {@link Ext.form.Panel}.{@link Ext.form.Panel#setValues setValues} if the form's
-     * {@link Ext.form.Panel#trackResetOnLoad trackResetOnLoad} property is set to true.
-     */
-    resetOriginalValue: function() {
-        this.originalValue = this.getValue();
     },
 
     /**
