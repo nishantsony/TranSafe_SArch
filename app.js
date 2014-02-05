@@ -37,10 +37,12 @@ Ext.application({
         'SignUpPanel',
         'SignInPanel',
         'comfortPanel',
-        'statTabPanel'
+        'statTabPanel',
+        'MyPanel21'
     ],
     controllers: [
-        'MyController'
+        'MyController',
+        'Navigation'
     ],
     name: 'TranSafe',
 

@@ -1,0 +1,158 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "Navigation"
+    },
+    "designerId": "d9638cc1-86e4-4775-b592-b91ad90f32b0",
+    "cn": [
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "surveypanel",
+                "selector": "panel#surveypanel"
+            },
+            "designerId": "331c347b-fcd1-493b-8372-485f7d178068"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#surveypanel",
+                "designer|targetType": "surveyPanel",
+                "fn": "onSurveypanelActivate",
+                "implHandler": [
+                    "console.log('Survey panel activated');",
+                    "console.log('logged status is: ' + localStorage.getItem('ifLogged'));",
+                    "if(localStorage.getItem('ifLogged') == 'Invalid User' | localStorage.getItem('ifLogged') === '' | localStorage.getItem('ifLogged') == 'null' | localStorage.getItem('ifLogged') === null){",
+                    "//     this.getGreetingLabel().hide();",
+                    "//     this.getSignOutBtn().hide();",
+                    "// //     this.getSignInBtn().show();",
+                    "// //     this.getSignUpBtn().show();",
+                    "}",
+                    "else{",
+                    "    var username = localStorage.getItem('username');",
+                    "    console.log('name: ' + username);",
+                    "//     this.getGreetingLabel().setHtml('Hello, ' + username);",
+                    "//     this.getGreetingLabel().show();",
+                    "//     this.getSignOutBtn().show();",
+                    "// //     this.getSignInBtn().hide();",
+                    "// //     this.getSignUpBtn().hide();",
+                    "    }",
+                    "",
+                    "//this.getSadFacePic.setHeight(this.getSliderHappySad().getHeight());"
+                ],
+                "name": "activate"
+            },
+            "designerId": "ae838b68-bd9f-41bf-871b-e04e1e50fa4d"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "mynavigationview",
+                "selector": "panel#mynavigationview"
+            },
+            "designerId": "8f1cf9b6-535a-420d-a28d-c6b4dabccbba"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#mynavigationview",
+                "designer|targetType": "MyNavigationView",
+                "fn": "onMynavigationviewActivate",
+                "implHandler": [
+                    "console.log('Survey panel activated');",
+                    "console.log('logged status is: ' + localStorage.getItem('ifLogged'));",
+                    "if(localStorage.getItem('ifLogged') == 'Invalid User' | localStorage.getItem('ifLogged') === '' | localStorage.getItem('ifLogged') == 'null' | localStorage.getItem('ifLogged') === null){",
+                    "//     this.getGreetingLabel().hide();",
+                    "//     this.getSignOutBtn().hide();",
+                    "// //     this.getSignInBtn().show();",
+                    "// //     this.getSignUpBtn().show();",
+                    "        this.getLogOutBtn().hide();",
+                    "    this.getLogInBtn().setHeight(75);",
+                    "    this.getWelcomeUsernameId().hide();",
+                    "    ",
+                    "}",
+                    "else{",
+                    "    var username = localStorage.getItem('username');",
+                    "    console.log('name: ' + username);",
+                    "    this.getLogOutBtn().show();",
+                    "     this.getLogInBtn().setHeight(37);",
+                    "    this.getWelcomeUsernameId().show();",
+                    "    this.getWelcomeUsernameId().setHtml('Welcome, ' + username);",
+                    "//     this.getGreetingLabel().show();",
+                    "//     this.getSignOutBtn().show();",
+                    "// //     this.getSignInBtn().hide();",
+                    "// //     this.getSignUpBtn().hide();",
+                    "    }",
+                    "",
+                    "//this.getSadFacePic.setHeight(this.getSliderHappySad().getHeight());"
+                ],
+                "name": "activate"
+            },
+            "designerId": "c907561b-6288-4418-9bc1-c69ac54b09f1"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "logOutBtn",
+                "selector": "button#logOutBtn"
+            },
+            "designerId": "db5eba25-0139-4021-bcd7-8ebf67ca092e"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "logInBtn",
+                "selector": "button#logInBtn"
+            },
+            "designerId": "06e41347-d60e-4a15-862b-85494f770b20"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "welcomeUsernameId",
+                "selector": "label#welcomeUsernameId"
+            },
+            "designerId": "62bdc093-fab5-4406-8d89-f120dfa733b0"
+        }
+    ]
+}

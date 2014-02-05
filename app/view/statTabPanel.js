@@ -48,15 +48,18 @@ Ext.define('TranSafe.view.statTabPanel', {
                                 id: 'happyPie',
                                 maxWidth: '50%',
                                 colors: [
-                                    '#115fa6',
-                                    '#94ae0a',
-                                    '#a61120',
-                                    '#ff8809',
-                                    '#ffd13e',
-                                    '#a61187',
-                                    '#24ad9a',
-                                    '#7c7474',
-                                    '#a66111'
+                                    '#FFB8BF',
+                                    '#FF8F9A',
+                                    '#FF707E',
+                                    '#FF4D4F',
+                                    '#FF3D3F',
+                                    '#C2000C',
+                                    '#BDFFBD',
+                                    '#70FF70',
+                                    '#4CFF4D',
+                                    '#67DA68',
+                                    '#01B703',
+                                    '#036D04'
                                 ],
                                 store: 'MyArrayStore',
                                 series: [

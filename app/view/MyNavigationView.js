@@ -21,6 +21,7 @@ Ext.define('TranSafe.view.MyNavigationView', {
         'Ext.Panel',
         'Ext.Img',
         'Ext.Button',
+        'Ext.Label',
         'Ext.Map',
         'Ext.dataview.List',
         'Ext.XTemplate',
@@ -86,22 +87,57 @@ Ext.define('TranSafe.view.MyNavigationView', {
                                 iconCls: 'maps'
                             },
                             {
-                                xtype: 'button',
-                                handler: function(button, e) {
-                                    console.log('prev view');
-                                    console.log(Ext.Viewport.getActiveItem().getId());
-                                    localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());
-                                    Ext.Viewport.setActiveItem('signuppanel',{
-                                        type: "slide",
-                                        direction: "left"
-                                    });
-                                },
-                                flex: 1,
-                                minHeight: 75,
-                                top: '',
-                                ui: 'action',
-                                iconAlign: 'center',
-                                iconCls: 'user'
+                                xtype: 'container',
+                                items: [
+                                    {
+                                        xtype: 'button',
+                                        handler: function(button, e) {
+                                            console.log('prev view');
+                                            console.log(Ext.Viewport.getActiveItem().getId());
+                                            localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());
+                                            Ext.Viewport.setActiveItem('signuppanel',{
+                                                type: "slide",
+                                                direction: "left"
+                                            });
+                                        },
+                                        id: 'logInBtn',
+                                        minHeight: 37.5,
+                                        minWidth: 75,
+                                        top: '',
+                                        ui: 'action',
+                                        iconAlign: 'center',
+                                        iconCls: 'user'
+                                    },
+                                    {
+                                        xtype: 'button',
+                                        handler: function(button, e) {
+                                            localStorage.setItem('ifLogged', '');
+                                            localStorage.setItem('username','');
+                                            console.log('signing out');
+                                            Ext.Viewport.setActiveItem('surveypanel',{
+                                                type: "slide",
+                                                direction: "left"
+                                            });
+                                            window.location.reload();
+                                        },
+                                        centered: false,
+                                        html: '',
+                                        id: 'logOutBtn',
+                                        minHeight: 37.5,
+                                        minWidth: 75,
+                                        ui: 'action',
+                                        iconAlign: 'center',
+                                        iconCls: 'trash',
+                                        text: 'MyButton102'
+                                    }
+                                ]
+                            },
+                            {
+                                xtype: 'label',
+                                docked: 'bottom',
+                                html: 'Welcome',
+                                id: 'welcomeUsernameId',
+                                style: 'color: white'
                             }
                         ]
                     },

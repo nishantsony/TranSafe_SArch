@@ -151,53 +151,129 @@
                             ]
                         },
                         {
-                            "type": "Ext.Button",
+                            "type": "Ext.Container",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
-                            "userConfig": {
-                                "designer|displayName": "LoginViewButton",
-                                "designer|uiInterfaceName": "action",
-                                "html": null,
-                                "icon": null,
-                                "iconAlign": "center",
-                                "iconCls": "user",
-                                "layout|flex": 1,
-                                "minHeight": 75,
-                                "text": null,
-                                "top": "",
-                                "ui": "action"
-                            },
-                            "designerId": "0b825ccd-811f-472c-8420-df6fad858878",
+                            "designerId": "6c16d187-03c6-41b6-a357-cfc28ad22ba4",
                             "cn": [
                                 {
-                                    "type": "fixedfunction",
+                                    "type": "Ext.Button",
                                     "reference": {
                                         "name": "items",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "designer|params": [
-                                            "button",
-                                            "e"
-                                        ],
-                                        "fn": "handler",
-                                        "implHandler": [
-                                            "console.log('prev view');",
-                                            "console.log(Ext.Viewport.getActiveItem().getId());",
-                                            "localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());",
-                                            "Ext.Viewport.setActiveItem('signuppanel',{",
-                                            "    type: \"slide\",",
-                                            "    direction: \"left\"",
-                                            "});"
-                                        ]
+                                        "designer|displayName": "LoginViewButton",
+                                        "designer|uiInterfaceName": "action",
+                                        "html": null,
+                                        "icon": null,
+                                        "iconAlign": "center",
+                                        "iconCls": "user",
+                                        "id": "logInBtn",
+                                        "minHeight": 37.5,
+                                        "minWidth": 75,
+                                        "text": null,
+                                        "top": "",
+                                        "ui": "action"
                                     },
-                                    "designerId": "29945306-5b97-4fdf-8df0-70783e40cdec"
+                                    "designerId": "0b825ccd-811f-472c-8420-df6fad858878",
+                                    "cn": [
+                                        {
+                                            "type": "fixedfunction",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "designer|params": [
+                                                    "button",
+                                                    "e"
+                                                ],
+                                                "fn": "handler",
+                                                "implHandler": [
+                                                    "console.log('prev view');",
+                                                    "console.log(Ext.Viewport.getActiveItem().getId());",
+                                                    "localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());",
+                                                    "Ext.Viewport.setActiveItem('signuppanel',{",
+                                                    "    type: \"slide\",",
+                                                    "    direction: \"left\"",
+                                                    "});"
+                                                ]
+                                            },
+                                            "designerId": "29945306-5b97-4fdf-8df0-70783e40cdec"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.Button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "centered": false,
+                                        "designer|uiInterfaceName": "action",
+                                        "html": "",
+                                        "iconAlign": "center",
+                                        "iconCls": "trash",
+                                        "id": "logOutBtn",
+                                        "minHeight": 37.5,
+                                        "minWidth": 75,
+                                        "text": "MyButton102",
+                                        "ui": "action"
+                                    },
+                                    "designerId": "098b4b7b-f84e-4acd-bafb-5f18c7511018",
+                                    "cn": [
+                                        {
+                                            "type": "fixedfunction",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "designer|params": [
+                                                    "button",
+                                                    "e"
+                                                ],
+                                                "fn": "handler",
+                                                "implHandler": [
+                                                    "localStorage.setItem('ifLogged', '');",
+                                                    "localStorage.setItem('username','');",
+                                                    "console.log('signing out');",
+                                                    "Ext.Viewport.setActiveItem('surveypanel',{",
+                                                    "                            type: \"slide\",",
+                                                    "                            direction: \"left\"",
+                                                    "                        });",
+                                                    "window.location.reload();"
+                                                ]
+                                            },
+                                            "designerId": "d064dc4c-5e60-4d28-b251-899e632b4d9f"
+                                        }
+                                    ]
                                 }
                             ]
+                        },
+                        {
+                            "type": "Ext.Label",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "docked": "bottom",
+                                "html": "Welcome",
+                                "id": "welcomeUsernameId",
+                                "style": "color: white"
+                            },
+                            "designerId": "29a6eb23-2298-491f-9148-c6fb9d1cb436"
                         }
                     ]
                 },
