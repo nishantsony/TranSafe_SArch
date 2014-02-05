@@ -145,6 +145,16 @@
                 ]
             },
             "designerId": "3473090c-9710-47b1-8b9b-3ca298adee38"
+        },
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "7ac0d50e-8771-4de7-bfa4-d9ce5805e370",
+            "masterInstanceId": "b18eae63-e580-4593-977f-4eb128b04fc8"
         }
     ]
 }

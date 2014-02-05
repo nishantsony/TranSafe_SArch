@@ -29,7 +29,8 @@
             "SignInPanel",
             "comfortPanel",
             "statTabPanel",
-            "MyPanel21"
+            "MyPanel21",
+            "TransafeMenuPanel"
         ]
     },
     "designerId": "application"

@@ -17,7 +17,9 @@ Ext.define('TranSafe.view.MyPanel21', {
     extend: 'Ext.Panel',
 
     requires: [
-        'Ext.Map'
+        'TranSafe.view.TransafeMenuPanel',
+        'Ext.Map',
+        'Ext.Panel'
     ],
 
     config: {
@@ -34,6 +36,9 @@ Ext.define('TranSafe.view.MyPanel21', {
                     mapTypeId: google.maps.MapTypeId.HYBRID
                 },
                 useCurrentLocation: true
+            },
+            {
+                xtype: 'TransafeMenuPanel'
             }
         ]
     },

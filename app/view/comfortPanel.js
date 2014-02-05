@@ -18,11 +18,11 @@ Ext.define('TranSafe.view.comfortPanel', {
     alias: 'widget.comfortPanel',
 
     requires: [
+        'TranSafe.view.TransafeMenuPanel',
         'Ext.field.Slider',
         'Ext.Label',
         'Ext.Button',
-        'Ext.Panel',
-        'Ext.Img'
+        'Ext.Panel'
     ],
 
     config: {
@@ -354,73 +354,7 @@ Ext.define('TranSafe.view.comfortPanel', {
                 text: 'Submit'
             },
             {
-                xtype: 'panel',
-                centered: false,
-                docked: 'top',
-                maxHeight: 100,
-                style: 'background-color:#006db9',
-                layout: {
-                    type: 'hbox',
-                    align: 'start',
-                    pack: 'end'
-                },
-                items: [
-                    {
-                        xtype: 'image',
-                        flex: 1,
-                        height: 201,
-                        maxHeight: 75,
-                        style: 'background-color:#FFFFFF',
-                        src: 'transafe_logo.png'
-                    },
-                    {
-                        xtype: 'button',
-                        handler: function(button, e) {
-                            Ext.Viewport.setActiveItem('mynavigationview',{
-                                type: "slide",
-                                direction: "left"
-                            });
-                        },
-                        flex: 1,
-                        cls: '@include icon("list", "l");',
-                        id: 'listViewButton2',
-                        minHeight: 75,
-                        ui: 'action',
-                        iconAlign: 'center',
-                        iconCls: 'list',
-                        text: ''
-                    },
-                    {
-                        xtype: 'button',
-                        handler: function(button, e) {
-
-                        },
-                        flex: 1,
-                        disabled: true,
-                        minHeight: 75,
-                        ui: 'action',
-                        iconAlign: 'center',
-                        iconCls: 'maps'
-                    },
-                    {
-                        xtype: 'button',
-                        handler: function(button, e) {
-                            console.log('prev view');
-                            console.log(Ext.Viewport.getActiveItem().getId());
-                            localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());
-                            Ext.Viewport.setActiveItem('signuppanel',{
-                                type: "slide",
-                                direction: "left"
-                            });
-                        },
-                        flex: 1,
-                        minHeight: 75,
-                        top: '',
-                        ui: 'action',
-                        iconAlign: 'center',
-                        iconCls: 'user'
-                    }
-                ]
+                xtype: 'TransafeMenuPanel'
             }
         ]
     }

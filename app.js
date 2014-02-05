@@ -38,7 +38,8 @@ Ext.application({
         'SignInPanel',
         'comfortPanel',
         'statTabPanel',
-        'MyPanel21'
+        'MyPanel21',
+        'TransafeMenuPanel'
     ],
     controllers: [
         'MyController',

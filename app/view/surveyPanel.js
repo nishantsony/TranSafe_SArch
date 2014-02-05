@@ -18,11 +18,12 @@ Ext.define('TranSafe.view.surveyPanel', {
     alias: 'widget.surveypanel',
 
     requires: [
-        'Ext.Panel',
-        'Ext.Img',
+        'TranSafe.view.TransafeMenuPanel',
         'Ext.Button',
         'Ext.Label',
-        'Ext.field.Slider'
+        'Ext.Img',
+        'Ext.field.Slider',
+        'Ext.Panel'
     ],
 
     config: {
@@ -34,75 +35,6 @@ Ext.define('TranSafe.view.surveyPanel', {
                 xtype: 'container',
                 docked: 'top',
                 items: [
-                    {
-                        xtype: 'panel',
-                        centered: false,
-                        docked: 'top',
-                        maxHeight: 100,
-                        style: 'background-color:#006db9',
-                        layout: {
-                            type: 'hbox',
-                            align: 'start',
-                            pack: 'end'
-                        },
-                        items: [
-                            {
-                                xtype: 'image',
-                                flex: 1,
-                                height: 201,
-                                maxHeight: 75,
-                                style: 'background-color:#FFFFFF',
-                                src: 'transafe_logo.png'
-                            },
-                            {
-                                xtype: 'button',
-                                handler: function(button, e) {
-                                    Ext.Viewport.setActiveItem('mynavigationview',{
-                                        type: "slide",
-                                        direction: "left"
-                                    });
-                                },
-                                flex: 1,
-                                cls: '@include icon("list", "l");',
-                                id: 'listViewButton1',
-                                minHeight: 75,
-                                ui: 'action',
-                                iconAlign: 'center',
-                                iconCls: 'list',
-                                text: ''
-                            },
-                            {
-                                xtype: 'button',
-                                handler: function(button, e) {
-
-                                },
-                                flex: 1,
-                                disabled: true,
-                                minHeight: 75,
-                                ui: 'action',
-                                iconAlign: 'center',
-                                iconCls: 'maps'
-                            },
-                            {
-                                xtype: 'button',
-                                handler: function(button, e) {
-                                    console.log('prev view');
-                                    console.log(Ext.Viewport.getActiveItem().getId());
-                                    localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());
-                                    Ext.Viewport.setActiveItem('signuppanel',{
-                                        type: "slide",
-                                        direction: "left"
-                                    });
-                                },
-                                flex: 1,
-                                minHeight: 75,
-                                top: '',
-                                ui: 'action',
-                                iconAlign: 'center',
-                                iconCls: 'user'
-                            }
-                        ]
-                    },
                     {
                         xtype: 'button',
                         handler: function(button, e) {
@@ -413,8 +345,15 @@ Ext.define('TranSafe.view.surveyPanel', {
                         text: 'Next'
                     }
                 ]
+            },
+            {
+                xtype: 'TransafeMenuPanel'
             }
         ]
+    },
+
+    initialize: function() {
+
     }
 
 });
