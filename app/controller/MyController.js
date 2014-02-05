@@ -19,12 +19,16 @@ Ext.define('TranSafe.controller.MyController', {
     config: {
         refs: {
             venueLblSurvey: 'label#venueLblSurvey',
-            surveyPanel: 'panel#surveyPanel',
+            surveyPanel: 'panel#surveypanel',
             greetingLabel: 'label#greetingLabel',
             signInBtn: 'button#signInBtn',
             signUpBtn: 'button#signUpBtn',
             signOutBtn: 'button#signOutBtn',
-            logoPanel: 'panel#logoPanel'
+            logoPanel: 'panel#logoPanel',
+            statLocationLabelHappy: 'label#statLocationHappy',
+            statLocationLabelExcited: 'label#statLocationExcited',
+            statLocationLabelSafe: 'label#statLocationSafe',
+            statLocationLabelPeaceful: 'label#statLocationPeaceful'
         },
 
         control: {
@@ -36,6 +40,9 @@ Ext.define('TranSafe.controller.MyController', {
             },
             "#logoPanel": {
                 activate: 'onLogoPanelActivate'
+            },
+            "#stattabpanel": {
+                activate: 'onStattabpanelActivate'
             }
         }
     },
@@ -47,6 +54,7 @@ Ext.define('TranSafe.controller.MyController', {
             direction: "left"
         });
         console.log(this.getVenueLblSurvey().setHtml('You are at ' + record.get('name')));
+        localStorage.setItem('location',record.get('name'));
     },
 
     onSurveyPanelActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
@@ -55,8 +63,8 @@ Ext.define('TranSafe.controller.MyController', {
         if(localStorage.getItem('ifLogged') == 'Invalid User' | localStorage.getItem('ifLogged') === '' | localStorage.getItem('ifLogged') == 'null' | localStorage.getItem('ifLogged') === null){
             this.getGreetingLabel().hide();
             this.getSignOutBtn().hide();
-            this.getSignInBtn().show();
-            this.getSignUpBtn().show();
+        //     this.getSignInBtn().show();
+        //     this.getSignUpBtn().show();
         }
         else{
             var username = localStorage.getItem('username');
@@ -64,8 +72,8 @@ Ext.define('TranSafe.controller.MyController', {
             this.getGreetingLabel().setHtml('Hello, ' + username);
             this.getGreetingLabel().show();
             this.getSignOutBtn().show();
-            this.getSignInBtn().hide();
-            this.getSignUpBtn().hide();
+        //     this.getSignInBtn().hide();
+        //     this.getSignUpBtn().hide();
             }
 
         //this.getSadFacePic.setHeight(this.getSliderHappySad().getHeight());
@@ -78,6 +86,13 @@ Ext.define('TranSafe.controller.MyController', {
             direction: "left"
         });}, 2000);
 
+    },
+
+    onStattabpanelActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
+        this.getStatLocationLabelHappy().setHtml(localStorage.getItem('location'));
+        this.getStatLocationLabelExcited().setHtml(localStorage.getItem('location'));
+        this.getStatLocationLabelSafe().setHtml(localStorage.getItem('location'));
+        this.getStatLocationLabelPeaceful().setHtml(localStorage.getItem('location'));
     }
 
 });

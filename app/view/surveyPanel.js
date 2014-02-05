@@ -18,21 +18,91 @@ Ext.define('TranSafe.view.surveyPanel', {
     alias: 'widget.surveypanel',
 
     requires: [
-        'Ext.Container',
+        'Ext.Panel',
+        'Ext.Img',
         'Ext.Button',
         'Ext.Label',
-        'Ext.Img',
         'Ext.field.Slider'
     ],
 
     config: {
-        id: 'surveyPanel',
+        id: 'surveypanel',
         style: 'background-color: #FFF',
+        scrollable: true,
         items: [
             {
                 xtype: 'container',
                 docked: 'top',
                 items: [
+                    {
+                        xtype: 'panel',
+                        centered: false,
+                        docked: 'top',
+                        maxHeight: 100,
+                        style: 'background-color:#006db9',
+                        layout: {
+                            type: 'hbox',
+                            align: 'start',
+                            pack: 'end'
+                        },
+                        items: [
+                            {
+                                xtype: 'image',
+                                flex: 1,
+                                height: 201,
+                                maxHeight: 75,
+                                style: 'background-color:#FFFFFF',
+                                src: 'transafe_logo.png'
+                            },
+                            {
+                                xtype: 'button',
+                                handler: function(button, e) {
+                                    Ext.Viewport.setActiveItem('mynavigationview',{
+                                        type: "slide",
+                                        direction: "left"
+                                    });
+                                },
+                                flex: 1,
+                                cls: '@include icon("list", "l");',
+                                id: 'listViewButton1',
+                                minHeight: 75,
+                                ui: 'action',
+                                iconAlign: 'center',
+                                iconCls: 'list',
+                                text: ''
+                            },
+                            {
+                                xtype: 'button',
+                                handler: function(button, e) {
+
+                                },
+                                flex: 1,
+                                disabled: true,
+                                minHeight: 75,
+                                ui: 'action',
+                                iconAlign: 'center',
+                                iconCls: 'maps'
+                            },
+                            {
+                                xtype: 'button',
+                                handler: function(button, e) {
+                                    console.log('prev view');
+                                    console.log(Ext.Viewport.getActiveItem().getId());
+                                    localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());
+                                    Ext.Viewport.setActiveItem('signuppanel',{
+                                        type: "slide",
+                                        direction: "left"
+                                    });
+                                },
+                                flex: 1,
+                                minHeight: 75,
+                                top: '',
+                                ui: 'action',
+                                iconAlign: 'center',
+                                iconCls: 'user'
+                            }
+                        ]
+                    },
                     {
                         xtype: 'button',
                         handler: function(button, e) {
@@ -44,6 +114,7 @@ Ext.define('TranSafe.view.surveyPanel', {
 
                         },
                         docked: 'right',
+                        hidden: true,
                         id: 'signUpBtn',
                         ui: 'action-round',
                         text: 'Sign up'
@@ -59,6 +130,7 @@ Ext.define('TranSafe.view.surveyPanel', {
 
                         },
                         docked: 'right',
+                        hidden: true,
                         id: 'signInBtn',
                         ui: 'action-round',
                         text: 'Sign in'
@@ -98,222 +170,228 @@ Ext.define('TranSafe.view.surveyPanel', {
             },
             {
                 xtype: 'container',
-                docked: 'top',
+                scrollable: true,
                 items: [
                     {
                         xtype: 'container',
                         docked: 'top',
-                        margin: '10 0 10 0',
                         items: [
                             {
                                 xtype: 'container',
                                 docked: 'top',
+                                margin: '10 0 10 0',
                                 items: [
                                     {
-                                        xtype: 'image',
-                                        docked: 'left',
-                                        height: 70,
-                                        id: 'sadFacePic',
-                                        styleHtmlContent: true,
-                                        width: 70,
-                                        src: 'Emoticons/centered/sad.png'
-                                    },
-                                    {
-                                        xtype: 'image',
-                                        docked: 'right',
-                                        height: 70,
-                                        width: 70,
-                                        src: 'Emoticons/centered/happy.png'
-                                    },
-                                    {
-                                        xtype: 'sliderfield',
+                                        xtype: 'container',
                                         docked: 'top',
-                                        id: 'sliderHappySad',
-                                        width: '',
-                                        clearIcon: false,
-                                        label: '',
-                                        labelAlign: 'top',
-                                        value: [
-                                            0
-                                        ],
-                                        maxValue: 5,
-                                        minValue: -5
+                                        items: [
+                                            {
+                                                xtype: 'image',
+                                                docked: 'left',
+                                                height: 70,
+                                                id: 'sadFacePic',
+                                                styleHtmlContent: true,
+                                                width: 70,
+                                                src: 'Emoticons/centered/sad.png'
+                                            },
+                                            {
+                                                xtype: 'image',
+                                                docked: 'right',
+                                                height: 70,
+                                                width: 70,
+                                                src: 'Emoticons/centered/happy.png'
+                                            },
+                                            {
+                                                xtype: 'sliderfield',
+                                                docked: 'top',
+                                                id: 'sliderHappySad',
+                                                width: '',
+                                                clearIcon: false,
+                                                label: '',
+                                                labelAlign: 'top',
+                                                value: [
+                                                    0
+                                                ],
+                                                maxValue: 5,
+                                                minValue: -5
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        xtype: 'label',
+                                        docked: 'left',
+                                        html: 'Sad',
+                                        padding: '0 0 0 10'
+                                    },
+                                    {
+                                        xtype: 'label',
+                                        docked: 'right',
+                                        html: 'Happy',
+                                        padding: '0 10 0 0'
                                     }
                                 ]
                             },
-                            {
-                                xtype: 'label',
-                                docked: 'left',
-                                html: 'Sad',
-                                padding: '0 0 0 10'
-                            },
-                            {
-                                xtype: 'label',
-                                docked: 'right',
-                                html: 'Happy',
-                                padding: '0 10 0 0'
-                            }
-                        ]
-                    },
-                    {
-                        xtype: 'container',
-                        margin: '10 0 0 0',
-                        width: '',
-                        items: [
                             {
                                 xtype: 'container',
-                                docked: 'top',
+                                margin: '10 0 0 0',
+                                width: '',
                                 items: [
                                     {
-                                        xtype: 'image',
-                                        docked: 'right',
-                                        height: 70,
-                                        width: 70,
-                                        src: 'Emoticons/centered/excited.png'
-                                    },
-                                    {
-                                        xtype: 'image',
-                                        docked: 'left',
-                                        height: 70,
-                                        width: 70,
-                                        src: 'Emoticons/centered/bored.png'
-                                    },
-                                    {
-                                        xtype: 'sliderfield',
+                                        xtype: 'container',
                                         docked: 'top',
-                                        id: 'sliderExcitedBored',
-                                        width: '',
-                                        clearIcon: false,
-                                        label: '',
-                                        labelAlign: 'top',
-                                        value: [
-                                            0
-                                        ],
-                                        maxValue: 5,
-                                        minValue: -5
+                                        items: [
+                                            {
+                                                xtype: 'image',
+                                                docked: 'right',
+                                                height: 70,
+                                                width: 70,
+                                                src: 'Emoticons/centered/excited.png'
+                                            },
+                                            {
+                                                xtype: 'image',
+                                                docked: 'left',
+                                                height: 70,
+                                                width: 70,
+                                                src: 'Emoticons/centered/bored.png'
+                                            },
+                                            {
+                                                xtype: 'sliderfield',
+                                                docked: 'top',
+                                                id: 'sliderExcitedBored',
+                                                width: '',
+                                                clearIcon: false,
+                                                label: '',
+                                                labelAlign: 'top',
+                                                value: [
+                                                    0
+                                                ],
+                                                maxValue: 5,
+                                                minValue: -5
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        xtype: 'label',
+                                        docked: 'left',
+                                        html: 'Bored',
+                                        padding: '0 0 0 10'
+                                    },
+                                    {
+                                        xtype: 'label',
+                                        docked: 'right',
+                                        html: 'Excited',
+                                        padding: '0 10 0 0'
                                     }
                                 ]
                             },
-                            {
-                                xtype: 'label',
-                                docked: 'left',
-                                html: 'Bored',
-                                padding: '0 0 0 10'
-                            },
-                            {
-                                xtype: 'label',
-                                docked: 'right',
-                                html: 'Excited',
-                                padding: '0 10 0 0'
-                            }
-                        ]
-                    },
-                    {
-                        xtype: 'container',
-                        margin: '10 0 10 0',
-                        items: [
                             {
                                 xtype: 'container',
-                                docked: 'top',
+                                margin: '10 0 10 0',
                                 items: [
                                     {
-                                        xtype: 'image',
-                                        docked: 'right',
-                                        height: 70,
-                                        width: 70,
-                                        src: 'Emoticons/centered/safe.png'
-                                    },
-                                    {
-                                        xtype: 'image',
-                                        docked: 'left',
-                                        height: 70,
-                                        width: 70,
-                                        src: 'Emoticons/centered/scared.png'
-                                    },
-                                    {
-                                        xtype: 'sliderfield',
+                                        xtype: 'container',
                                         docked: 'top',
-                                        id: 'sliderSafeScared',
-                                        width: '',
-                                        clearIcon: false,
-                                        label: '',
-                                        labelAlign: 'top',
-                                        value: [
-                                            0
-                                        ],
-                                        maxValue: 5,
-                                        minValue: -5
+                                        items: [
+                                            {
+                                                xtype: 'image',
+                                                docked: 'right',
+                                                height: 70,
+                                                width: 70,
+                                                src: 'Emoticons/centered/safe.png'
+                                            },
+                                            {
+                                                xtype: 'image',
+                                                docked: 'left',
+                                                height: 70,
+                                                width: 70,
+                                                src: 'Emoticons/centered/scared.png'
+                                            },
+                                            {
+                                                xtype: 'sliderfield',
+                                                docked: 'top',
+                                                id: 'sliderSafeScared',
+                                                width: '',
+                                                clearIcon: false,
+                                                label: '',
+                                                labelAlign: 'top',
+                                                value: [
+                                                    0
+                                                ],
+                                                maxValue: 5,
+                                                minValue: -5
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        xtype: 'label',
+                                        docked: 'left',
+                                        html: 'Scared',
+                                        padding: '0 0 0 10'
+                                    },
+                                    {
+                                        xtype: 'label',
+                                        docked: 'right',
+                                        html: 'Safe',
+                                        padding: '0 10 0 0'
                                     }
                                 ]
                             },
-                            {
-                                xtype: 'label',
-                                docked: 'left',
-                                html: 'Scared',
-                                padding: '0 0 0 10'
-                            },
-                            {
-                                xtype: 'label',
-                                docked: 'right',
-                                html: 'Safe',
-                                padding: '0 10 0 0'
-                            }
-                        ]
-                    },
-                    {
-                        xtype: 'container',
-                        margin: '10 0 0 0',
-                        items: [
                             {
                                 xtype: 'container',
-                                docked: 'top',
+                                margin: '10 0 0 0',
                                 items: [
                                     {
-                                        xtype: 'image',
-                                        docked: 'right',
-                                        height: 70,
-                                        width: 70,
-                                        src: 'Emoticons/centered/peaceful.png'
-                                    },
-                                    {
-                                        xtype: 'image',
-                                        docked: 'left',
-                                        height: 70,
-                                        width: 70,
-                                        src: 'Emoticons/centered/angry.png'
-                                    },
-                                    {
-                                        xtype: 'sliderfield',
+                                        xtype: 'container',
                                         docked: 'top',
-                                        id: 'sliderPeacefulAngry',
-                                        width: '',
-                                        clearIcon: false,
-                                        label: '',
-                                        labelAlign: 'top',
-                                        value: [
-                                            0
-                                        ],
-                                        maxValue: 5,
-                                        minValue: -5
+                                        items: [
+                                            {
+                                                xtype: 'image',
+                                                docked: 'right',
+                                                height: 70,
+                                                width: 70,
+                                                src: 'Emoticons/centered/peaceful.png'
+                                            },
+                                            {
+                                                xtype: 'image',
+                                                docked: 'left',
+                                                height: 70,
+                                                width: 70,
+                                                src: 'Emoticons/centered/angry.png'
+                                            },
+                                            {
+                                                xtype: 'sliderfield',
+                                                docked: 'top',
+                                                id: 'sliderPeacefulAngry',
+                                                width: '',
+                                                clearIcon: false,
+                                                label: '',
+                                                labelAlign: 'top',
+                                                value: [
+                                                    0
+                                                ],
+                                                maxValue: 5,
+                                                minValue: -5
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        xtype: 'label',
+                                        docked: 'left',
+                                        html: 'Angry',
+                                        padding: '0 0 0 10'
+                                    },
+                                    {
+                                        xtype: 'label',
+                                        docked: 'right',
+                                        html: 'Peaceful',
+                                        padding: '0 10 0 0'
                                     }
                                 ]
                             },
                             {
-                                xtype: 'label',
-                                docked: 'left',
-                                html: 'Angry',
-                                padding: '0 0 0 10'
-                            },
-                            {
-                                xtype: 'label',
-                                docked: 'right',
-                                html: 'Peaceful',
-                                padding: '0 10 0 0'
+                                xtype: 'label'
                             }
                         ]
-                    },
-                    {
-                        xtype: 'label'
                     }
                 ]
             },

@@ -8,7 +8,8 @@
     "userConfig": {
         "designer|userAlias": "surveypanel",
         "designer|userClassName": "surveyPanel",
-        "id": "surveyPanel",
+        "id": "surveypanel",
+        "scrollable": true,
         "style": "background-color: #FFF"
     },
     "designerId": "b7ba1fa6-6778-43e0-a6b4-09767da752c8",
@@ -26,6 +27,182 @@
             "designerId": "283506ad-1a1a-49a1-b775-459087cc2050",
             "cn": [
                 {
+                    "type": "Ext.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "centered": false,
+                        "container|align": "start",
+                        "container|pack": "end",
+                        "docked": "top",
+                        "layout": "hbox",
+                        "maxHeight": 100,
+                        "style": "background-color:#006db9"
+                    },
+                    "designerId": "1da1f297-1d2c-4566-aa3f-b15eb59f1404",
+                    "cn": [
+                        {
+                            "type": "Ext.Img",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "height": 201,
+                                "layout|flex": 1,
+                                "maxHeight": 75,
+                                "src": "transafe_logo.png",
+                                "style": "background-color:#FFFFFF"
+                            },
+                            "designerId": "3f2492e9-77ac-45a8-af11-be4585e074dc"
+                        },
+                        {
+                            "type": "Ext.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "cls": [
+                                    "@include icon(\"list\", \"l\");"
+                                ],
+                                "designer|displayName": "ListViewButton",
+                                "designer|uiInterfaceName": "action",
+                                "html": null,
+                                "icon": null,
+                                "iconAlign": "center",
+                                "iconCls": "list",
+                                "id": "listViewButton1",
+                                "layout|flex": 1,
+                                "maxWidth": null,
+                                "minHeight": 75,
+                                "text": "",
+                                "ui": "action"
+                            },
+                            "designerId": "3e8917b2-c622-4bf3-afba-32d11c2fb8c2",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "button",
+                                            "e"
+                                        ],
+                                        "fn": "handler",
+                                        "implHandler": [
+                                            "Ext.Viewport.setActiveItem('mynavigationview',{",
+                                            "    type: \"slide\",",
+                                            "    direction: \"left\"",
+                                            "});"
+                                        ]
+                                    },
+                                    "designerId": "837af848-09b6-4ab9-88be-f02c16a544a5"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "MapViewButton",
+                                "designer|uiInterfaceName": "action",
+                                "disabled": true,
+                                "html": null,
+                                "icon": null,
+                                "iconAlign": "center",
+                                "iconCls": "maps",
+                                "layout|flex": 1,
+                                "minHeight": 75,
+                                "text": null,
+                                "ui": "action"
+                            },
+                            "designerId": "fdae1fbe-f5bd-4cda-b3e2-1d9aeb3d40ac",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "button",
+                                            "e"
+                                        ],
+                                        "fn": "handler",
+                                        "implHandler": null
+                                    },
+                                    "designerId": "3f7556f0-8714-480b-bd11-5ecfa0130ce6"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "LoginViewButton",
+                                "designer|uiInterfaceName": "action",
+                                "html": null,
+                                "icon": null,
+                                "iconAlign": "center",
+                                "iconCls": "user",
+                                "layout|flex": 1,
+                                "minHeight": 75,
+                                "text": null,
+                                "top": "",
+                                "ui": "action"
+                            },
+                            "designerId": "a7c56f4e-c472-4d8b-b7fd-21c420c4aff1",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "button",
+                                            "e"
+                                        ],
+                                        "fn": "handler",
+                                        "implHandler": [
+                                            "console.log('prev view');",
+                                            "console.log(Ext.Viewport.getActiveItem().getId());",
+                                            "localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());",
+                                            "Ext.Viewport.setActiveItem('signuppanel',{",
+                                            "    type: \"slide\",",
+                                            "    direction: \"left\"",
+                                            "});"
+                                        ]
+                                    },
+                                    "designerId": "705771fe-3cfd-4fae-bb5d-84cb5e2a6e3a"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
                     "type": "Ext.Button",
                     "reference": {
                         "name": "items",
@@ -35,6 +212,8 @@
                     "userConfig": {
                         "designer|uiInterfaceName": "action-round",
                         "docked": "right",
+                        "hidden": true,
+                        "icon": null,
                         "id": "signUpBtn",
                         "text": "Sign up",
                         "ui": "action-round"
@@ -77,6 +256,7 @@
                     "userConfig": {
                         "designer|uiInterfaceName": "action-round",
                         "docked": "right",
+                        "hidden": true,
                         "id": "signInBtn",
                         "text": "Sign in",
                         "ui": "action-round"
@@ -193,9 +373,9 @@
             },
             "codeClass": null,
             "userConfig": {
-                "docked": "top"
+                "scrollable": true
             },
-            "designerId": "707a60eb-6916-4fd1-a186-408ac011d2be",
+            "designerId": "690ba2bd-6971-45c6-bfd8-5dc112bc2680",
             "cn": [
                 {
                     "type": "Ext.Container",
@@ -205,10 +385,9 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "docked": "top",
-                        "margin": "10 0 10 0"
+                        "docked": "top"
                     },
-                    "designerId": "91e61bc3-39f9-4e65-8495-193846d6ad44",
+                    "designerId": "707a60eb-6916-4fd1-a186-408ac011d2be",
                     "cn": [
                         {
                             "type": "Ext.Container",
@@ -218,12 +397,81 @@
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "docked": "top"
+                                "docked": "top",
+                                "margin": "10 0 10 0"
                             },
-                            "designerId": "15648170-f514-4e78-a267-a77a03633aca",
+                            "designerId": "91e61bc3-39f9-4e65-8495-193846d6ad44",
                             "cn": [
                                 {
-                                    "type": "Ext.Img",
+                                    "type": "Ext.Container",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "top"
+                                    },
+                                    "designerId": "15648170-f514-4e78-a267-a77a03633aca",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.Img",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "docked": "left",
+                                                "height": 70,
+                                                "id": "sadFacePic",
+                                                "src": "Emoticons/centered/sad.png",
+                                                "styleHtmlContent": true,
+                                                "width": 70
+                                            },
+                                            "designerId": "f03dcde5-dea0-46ed-9dae-8dcef8816d8a"
+                                        },
+                                        {
+                                            "type": "Ext.Img",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "docked": "right",
+                                                "height": 70,
+                                                "src": "Emoticons/centered/happy.png",
+                                                "width": 70
+                                            },
+                                            "designerId": "152a9dd2-89a2-4e31-867d-252be42be5a2"
+                                        },
+                                        {
+                                            "type": "Ext.field.Slider",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "clearIcon": false,
+                                                "docked": "top",
+                                                "id": "sliderHappySad",
+                                                "label": "",
+                                                "labelAlign": "top",
+                                                "maxValue": 5,
+                                                "minValue": -5,
+                                                "value": [
+                                                    0
+                                                ],
+                                                "width": ""
+                                            },
+                                            "designerId": "b51ee636-9837-45e4-a367-4b621d0ab52f"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.Label",
                                     "reference": {
                                         "name": "items",
                                         "type": "array"
@@ -231,16 +479,13 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "docked": "left",
-                                        "height": 70,
-                                        "id": "sadFacePic",
-                                        "src": "Emoticons/centered/sad.png",
-                                        "styleHtmlContent": true,
-                                        "width": 70
+                                        "html": "Sad",
+                                        "padding": "0 0 0 10"
                                     },
-                                    "designerId": "f03dcde5-dea0-46ed-9dae-8dcef8816d8a"
+                                    "designerId": "0eb1d071-b8d5-4828-879b-ab7f7ee7f486"
                                 },
                                 {
-                                    "type": "Ext.Img",
+                                    "type": "Ext.Label",
                                     "reference": {
                                         "name": "items",
                                         "type": "array"
@@ -248,33 +493,335 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "docked": "right",
-                                        "height": 70,
-                                        "src": "Emoticons/centered/happy.png",
-                                        "width": 70
+                                        "html": "Happy",
+                                        "padding": "0 10 0 0"
                                     },
-                                    "designerId": "152a9dd2-89a2-4e31-867d-252be42be5a2"
-                                },
+                                    "designerId": "b354d420-9bab-4e3b-b7f0-978aa05e88da"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "margin": "10 0 0 0",
+                                "width": ""
+                            },
+                            "designerId": "028a3743-ba14-4bc5-97f3-d7640646d792",
+                            "cn": [
                                 {
-                                    "type": "Ext.field.Slider",
+                                    "type": "Ext.Container",
                                     "reference": {
                                         "name": "items",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "clearIcon": false,
-                                        "docked": "top",
-                                        "id": "sliderHappySad",
-                                        "label": "",
-                                        "labelAlign": "top",
-                                        "maxValue": 5,
-                                        "minValue": -5,
-                                        "value": [
-                                            0
-                                        ],
-                                        "width": ""
+                                        "docked": "top"
                                     },
-                                    "designerId": "b51ee636-9837-45e4-a367-4b621d0ab52f"
+                                    "designerId": "f356de47-89ea-4c52-863c-1341875b1777",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.Img",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "docked": "right",
+                                                "height": 70,
+                                                "src": "Emoticons/centered/excited.png",
+                                                "width": 70
+                                            },
+                                            "designerId": "a46a302f-c2a4-4ec4-baee-d77ab3f6f719"
+                                        },
+                                        {
+                                            "type": "Ext.Img",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "docked": "left",
+                                                "height": 70,
+                                                "src": "Emoticons/centered/bored.png",
+                                                "width": 70
+                                            },
+                                            "designerId": "554432a7-b1cc-44c2-8b93-94e439cdc86e"
+                                        },
+                                        {
+                                            "type": "Ext.field.Slider",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "clearIcon": false,
+                                                "docked": "top",
+                                                "id": "sliderExcitedBored",
+                                                "label": "",
+                                                "labelAlign": "top",
+                                                "maxValue": 5,
+                                                "minValue": -5,
+                                                "value": [
+                                                    0
+                                                ],
+                                                "width": ""
+                                            },
+                                            "designerId": "008b9077-c45b-452e-81b6-dd65da4588b8"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "left",
+                                        "html": "Bored",
+                                        "padding": "0 0 0 10"
+                                    },
+                                    "designerId": "a146c350-625a-4d90-921e-49deadac4ca7"
+                                },
+                                {
+                                    "type": "Ext.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "right",
+                                        "html": "Excited",
+                                        "padding": "0 10 0 0"
+                                    },
+                                    "designerId": "ccdf2d3d-ae8c-4e1e-a271-ecfc9de20eaf"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "margin": "10 0 10 0"
+                            },
+                            "designerId": "fd59ae5a-4a1a-48be-b851-68e6cb9b355e",
+                            "cn": [
+                                {
+                                    "type": "Ext.Container",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "top"
+                                    },
+                                    "designerId": "fcca6052-1952-46b4-9a2a-5b4238fe49ae",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.Img",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "docked": "right",
+                                                "height": 70,
+                                                "src": "Emoticons/centered/safe.png",
+                                                "width": 70
+                                            },
+                                            "designerId": "1d811a1d-167f-4c9e-b99d-4df8303479c6"
+                                        },
+                                        {
+                                            "type": "Ext.Img",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "docked": "left",
+                                                "height": 70,
+                                                "src": "Emoticons/centered/scared.png",
+                                                "width": 70
+                                            },
+                                            "designerId": "5bef0fbf-fe80-4bd4-a37f-6b83656fb677"
+                                        },
+                                        {
+                                            "type": "Ext.field.Slider",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "clearIcon": false,
+                                                "docked": "top",
+                                                "id": "sliderSafeScared",
+                                                "label": "",
+                                                "labelAlign": "top",
+                                                "maxValue": 5,
+                                                "minValue": -5,
+                                                "value": [
+                                                    0
+                                                ],
+                                                "width": ""
+                                            },
+                                            "designerId": "26cd6e2c-68d8-4557-9a69-eca590863464"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "left",
+                                        "html": "Scared",
+                                        "padding": "0 0 0 10"
+                                    },
+                                    "designerId": "e165c64e-3528-4678-a88a-b136e8da4897"
+                                },
+                                {
+                                    "type": "Ext.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "right",
+                                        "html": "Safe",
+                                        "padding": "0 10 0 0"
+                                    },
+                                    "designerId": "4ffbca31-cd8f-42cf-af87-9741e1979d59"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "margin": "10 0 0 0"
+                            },
+                            "designerId": "3b7ff7ca-5914-49bd-914c-8e87a4d73fb9",
+                            "cn": [
+                                {
+                                    "type": "Ext.Container",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "top"
+                                    },
+                                    "designerId": "89510c18-6002-488c-959b-852e479bdb3c",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.Img",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "docked": "right",
+                                                "height": 70,
+                                                "src": "Emoticons/centered/peaceful.png",
+                                                "width": 70
+                                            },
+                                            "designerId": "206454e4-8a42-4346-809e-9a7597d9e735"
+                                        },
+                                        {
+                                            "type": "Ext.Img",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "docked": "left",
+                                                "height": 70,
+                                                "src": "Emoticons/centered/angry.png",
+                                                "width": 70
+                                            },
+                                            "designerId": "a12e7b6e-13d4-436e-9f26-ed4f6cff709b"
+                                        },
+                                        {
+                                            "type": "Ext.field.Slider",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "clearIcon": false,
+                                                "docked": "top",
+                                                "id": "sliderPeacefulAngry",
+                                                "label": "",
+                                                "labelAlign": "top",
+                                                "maxValue": 5,
+                                                "minValue": -5,
+                                                "value": [
+                                                    0
+                                                ],
+                                                "width": ""
+                                            },
+                                            "designerId": "9147e21b-024e-4e65-894b-46af621e00ce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "left",
+                                        "html": "Angry",
+                                        "padding": "0 0 0 10"
+                                    },
+                                    "designerId": "906be9fd-2fcc-4e6e-99e1-def161e9b546"
+                                },
+                                {
+                                    "type": "Ext.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "docked": "right",
+                                        "html": "Peaceful",
+                                        "padding": "0 10 0 0"
+                                    },
+                                    "designerId": "3733de5d-1e61-44bd-bde8-148bef6e1cd7"
                                 }
                             ]
                         },
@@ -285,362 +832,9 @@
                                 "type": "array"
                             },
                             "codeClass": null,
-                            "userConfig": {
-                                "docked": "left",
-                                "html": "Sad",
-                                "padding": "0 0 0 10"
-                            },
-                            "designerId": "0eb1d071-b8d5-4828-879b-ab7f7ee7f486"
-                        },
-                        {
-                            "type": "Ext.Label",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "docked": "right",
-                                "html": "Happy",
-                                "padding": "0 10 0 0"
-                            },
-                            "designerId": "b354d420-9bab-4e3b-b7f0-978aa05e88da"
+                            "designerId": "ff9aba1b-251a-4cb4-9161-8515b20d9671"
                         }
                     ]
-                },
-                {
-                    "type": "Ext.Container",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "margin": "10 0 0 0",
-                        "width": ""
-                    },
-                    "designerId": "028a3743-ba14-4bc5-97f3-d7640646d792",
-                    "cn": [
-                        {
-                            "type": "Ext.Container",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "docked": "top"
-                            },
-                            "designerId": "f356de47-89ea-4c52-863c-1341875b1777",
-                            "cn": [
-                                {
-                                    "type": "Ext.Img",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "docked": "right",
-                                        "height": 70,
-                                        "src": "Emoticons/centered/excited.png",
-                                        "width": 70
-                                    },
-                                    "designerId": "a46a302f-c2a4-4ec4-baee-d77ab3f6f719"
-                                },
-                                {
-                                    "type": "Ext.Img",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "docked": "left",
-                                        "height": 70,
-                                        "src": "Emoticons/centered/bored.png",
-                                        "width": 70
-                                    },
-                                    "designerId": "554432a7-b1cc-44c2-8b93-94e439cdc86e"
-                                },
-                                {
-                                    "type": "Ext.field.Slider",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "clearIcon": false,
-                                        "docked": "top",
-                                        "id": "sliderExcitedBored",
-                                        "label": "",
-                                        "labelAlign": "top",
-                                        "maxValue": 5,
-                                        "minValue": -5,
-                                        "value": [
-                                            0
-                                        ],
-                                        "width": ""
-                                    },
-                                    "designerId": "008b9077-c45b-452e-81b6-dd65da4588b8"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "Ext.Label",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "docked": "left",
-                                "html": "Bored",
-                                "padding": "0 0 0 10"
-                            },
-                            "designerId": "a146c350-625a-4d90-921e-49deadac4ca7"
-                        },
-                        {
-                            "type": "Ext.Label",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "docked": "right",
-                                "html": "Excited",
-                                "padding": "0 10 0 0"
-                            },
-                            "designerId": "ccdf2d3d-ae8c-4e1e-a271-ecfc9de20eaf"
-                        }
-                    ]
-                },
-                {
-                    "type": "Ext.Container",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "margin": "10 0 10 0"
-                    },
-                    "designerId": "fd59ae5a-4a1a-48be-b851-68e6cb9b355e",
-                    "cn": [
-                        {
-                            "type": "Ext.Container",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "docked": "top"
-                            },
-                            "designerId": "fcca6052-1952-46b4-9a2a-5b4238fe49ae",
-                            "cn": [
-                                {
-                                    "type": "Ext.Img",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "docked": "right",
-                                        "height": 70,
-                                        "src": "Emoticons/centered/safe.png",
-                                        "width": 70
-                                    },
-                                    "designerId": "1d811a1d-167f-4c9e-b99d-4df8303479c6"
-                                },
-                                {
-                                    "type": "Ext.Img",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "docked": "left",
-                                        "height": 70,
-                                        "src": "Emoticons/centered/scared.png",
-                                        "width": 70
-                                    },
-                                    "designerId": "5bef0fbf-fe80-4bd4-a37f-6b83656fb677"
-                                },
-                                {
-                                    "type": "Ext.field.Slider",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "clearIcon": false,
-                                        "docked": "top",
-                                        "id": "sliderSafeScared",
-                                        "label": "",
-                                        "labelAlign": "top",
-                                        "maxValue": 5,
-                                        "minValue": -5,
-                                        "value": [
-                                            0
-                                        ],
-                                        "width": ""
-                                    },
-                                    "designerId": "26cd6e2c-68d8-4557-9a69-eca590863464"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "Ext.Label",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "docked": "left",
-                                "html": "Scared",
-                                "padding": "0 0 0 10"
-                            },
-                            "designerId": "e165c64e-3528-4678-a88a-b136e8da4897"
-                        },
-                        {
-                            "type": "Ext.Label",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "docked": "right",
-                                "html": "Safe",
-                                "padding": "0 10 0 0"
-                            },
-                            "designerId": "4ffbca31-cd8f-42cf-af87-9741e1979d59"
-                        }
-                    ]
-                },
-                {
-                    "type": "Ext.Container",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "margin": "10 0 0 0"
-                    },
-                    "designerId": "3b7ff7ca-5914-49bd-914c-8e87a4d73fb9",
-                    "cn": [
-                        {
-                            "type": "Ext.Container",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "docked": "top"
-                            },
-                            "designerId": "89510c18-6002-488c-959b-852e479bdb3c",
-                            "cn": [
-                                {
-                                    "type": "Ext.Img",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "docked": "right",
-                                        "height": 70,
-                                        "src": "Emoticons/centered/peaceful.png",
-                                        "width": 70
-                                    },
-                                    "designerId": "206454e4-8a42-4346-809e-9a7597d9e735"
-                                },
-                                {
-                                    "type": "Ext.Img",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "docked": "left",
-                                        "height": 70,
-                                        "src": "Emoticons/centered/angry.png",
-                                        "width": 70
-                                    },
-                                    "designerId": "a12e7b6e-13d4-436e-9f26-ed4f6cff709b"
-                                },
-                                {
-                                    "type": "Ext.field.Slider",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "clearIcon": false,
-                                        "docked": "top",
-                                        "id": "sliderPeacefulAngry",
-                                        "label": "",
-                                        "labelAlign": "top",
-                                        "maxValue": 5,
-                                        "minValue": -5,
-                                        "value": [
-                                            0
-                                        ],
-                                        "width": ""
-                                    },
-                                    "designerId": "9147e21b-024e-4e65-894b-46af621e00ce"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "Ext.Label",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "docked": "left",
-                                "html": "Angry",
-                                "padding": "0 0 0 10"
-                            },
-                            "designerId": "906be9fd-2fcc-4e6e-99e1-def161e9b546"
-                        },
-                        {
-                            "type": "Ext.Label",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "docked": "right",
-                                "html": "Peaceful",
-                                "padding": "0 10 0 0"
-                            },
-                            "designerId": "3733de5d-1e61-44bd-bde8-148bef6e1cd7"
-                        }
-                    ]
-                },
-                {
-                    "type": "Ext.Label",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "designerId": "ff9aba1b-251a-4cb4-9161-8515b20d9671"
                 }
             ]
         },

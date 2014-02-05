@@ -18,75 +18,96 @@ Ext.define('TranSafe.view.SignUpPanel', {
     alias: 'widget.signuppanel',
 
     requires: [
-        'Ext.Button',
         'Ext.form.FieldSet',
         'Ext.field.Password',
-        'Ext.field.Radio'
+        'Ext.Button',
+        'Ext.Label',
+        'Ext.field.Radio',
+        'Ext.Panel',
+        'Ext.Img'
     ],
 
     config: {
-        id: 'signinpanel',
+        id: 'signuppanel',
         style: 'background-color: #FFF',
         modal: false,
+        scrollable: true,
         items: [
             {
-                xtype: 'button',
-                handler: function(button, e) {
-                    var login = Ext.getCmp('signUpUsernameField').getValue();
-                    var pass = Ext.getCmp('signUpPasswordField').getValue();
-                    var email = Ext.getCmp('emailField').getValue();
-                    var gender = Ext.ComponentQuery.query('radiofield[name=gender]')[0].getGroupValue();
-                    var age = Ext.getCmp('ageField').getValue();
-                    var occupation = Ext.getCmp('occupationField').getValue();
-                    console.log('Username: ' + login);
-                    console.log('Password: ' + pass);
-                    console.log('email: ' + email);
-                    console.log('age: ' + age);
-                    console.log('occupation: ' + occupation);
-                    console.log('gender: ' + gender);
+                xtype: 'fieldset',
+                title: 'Please, authorise',
+                items: [
+                    {
+                        xtype: 'textfield',
+                        border: 1,
+                        id: 'signInUsernameField1',
+                        padding: 2,
+                        style: '\'border-color: blue; border-style: solid;\',',
+                        label: 'Login'
+                    },
+                    {
+                        xtype: 'passwordfield',
+                        border: 1,
+                        id: 'signInPasswordField1',
+                        style: '\'border-color: blue; border-style: solid;\',',
+                        label: 'Password'
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            var username = Ext.getCmp('signInUsernameField1').getValue();
+                            var pass = Ext.getCmp('signInPasswordField1').getValue();
+                            console.log('Username: ' + username );
+                            console.log('Password: ' + pass );
 
-                    Ext.data.JsonP.request({
+                            Ext.data.JsonP.request({
 
-                        url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/CreateUser',
-                        params: {
-                            username: login,
-                            password: pass,
-                            email: email,
-                            gender: gender,
-                            age: age,
-                            occupation: occupation,
-                            format: 'json',
-                            response: 'application/jsonp'
+                                url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/Login',
+                                // method: 'POST',
+                                // dataType: 'json',
+                                params: {
+                                    username: username,
+                                    pass: pass,
+                                    format: 'json',
+                                    response: 'application/jsonp'
+                                },
+                                callbackKey: 'callback',
+                                success: function (response) {
+                                    alert('Working!');
+                                    console.log(response);
+                                    if(response['return'] === undefined || response['return'] == 'Invalid User')
+                                    return;
+                                    if(response['return'] != 'Invalid User' || response['return'] !== undefined || response.responseBytes !== null){
+                                        console.log(response['return']);
+                                        localStorage.setItem('ifLogged', response['return']);
+                                        localStorage.setItem('username', username);
+                                        console.log(localStorage.getItem('ifLogged'));
+                                    }
+                                    console.log('prevView is:' + localStorage.getItem('prevView'));
+                                    Ext.Viewport.setActiveItem(localStorage.getItem('prevView'),{
+                                        type: "slide",
+                                        direction: "left"
+                                    });
+                                },
+                                failure: function (response) {
+                                    alert('Not working!');
+                                    console.log(response);
+                                },
+                                callback: function(successful, data){
+                                    alert(data);
+                                }
+                            });
+
                         },
-                        callbackKey: 'callback',
-                        success: function (response) {
-                            alert('Working!');
-                            console.log(response);
-                            if(response['return'] != 'Invalid User'){
-                                localStorage.setItem('ifLogged', response['return']);
-                                localStorage.setItem('username', login);
-                                Ext.Viewport.setActiveItem('surveypanel',{
-                                    type: "slide",
-                                    direction: "left"
-                                });
-                            }
-                            else{
-                                console.log('the user is invalid');
-                                alert('Sorry, these user details cannot be used, try again with another details');
-                            }
-                        },
-                        failure: function (response) {
-                            alert('Not working!');
-                            console.log(response);
-                        },
-                        callback: function(successful, data){
-                            alert(data);
-                        }
-                    });
-                },
-                docked: 'bottom',
-                ui: 'action-round',
-                text: 'Submit'
+                        docked: 'bottom',
+                        ui: 'action-round',
+                        text: 'Submit'
+                    }
+                ]
+            },
+            {
+                xtype: 'label',
+                html: 'Or sign up'
             },
             {
                 xtype: 'fieldset',
@@ -168,6 +189,134 @@ Ext.define('TranSafe.view.SignUpPanel', {
                                 value: 'female'
                             }
                         ]
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            var login = Ext.getCmp('signUpUsernameField').getValue();
+                            var pass = Ext.getCmp('signUpPasswordField').getValue();
+                            var email = Ext.getCmp('emailField').getValue();
+                            var gender = Ext.ComponentQuery.query('radiofield[name=gender]')[0].getGroupValue();
+                            var age = Ext.getCmp('ageField').getValue();
+                            var occupation = Ext.getCmp('occupationField').getValue();
+                            console.log('Username: ' + login);
+                            console.log('Password: ' + pass);
+                            console.log('email: ' + email);
+                            console.log('age: ' + age);
+                            console.log('occupation: ' + occupation);
+                            console.log('gender: ' + gender);
+
+                            Ext.data.JsonP.request({
+
+                                url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/CreateUser',
+                                params: {
+                                    username: login,
+                                    password: pass,
+                                    email: email,
+                                    gender: gender,
+                                    age: age,
+                                    occupation: occupation,
+                                    format: 'json',
+                                    response: 'application/jsonp'
+                                },
+                                callbackKey: 'callback',
+                                success: function (response) {
+                                    alert('Working!');
+                                    console.log(response);
+                                    if(response['return'] != 'Invalid User'){
+                                        localStorage.setItem('ifLogged', response['return']);
+                                        localStorage.setItem('username', login);
+                                        Ext.Viewport.setActiveItem(localStorage.getItem('prevView'),{
+                                            type: "slide",
+                                            direction: "left"
+                                        });
+                                    }
+                                    else{
+                                        console.log('the user is invalid');
+                                        alert('Sorry, these user details cannot be used, try again with another details');
+                                    }
+                                },
+                                failure: function (response) {
+                                    alert('Not working!');
+                                    console.log(response);
+                                },
+                                callback: function(successful, data){
+                                    alert(data);
+                                }
+                            });
+                        },
+                        docked: 'bottom',
+                        ui: 'action-round',
+                        text: 'Submit'
+                    }
+                ]
+            },
+            {
+                xtype: 'panel',
+                centered: false,
+                docked: 'top',
+                maxHeight: 100,
+                style: 'background-color:#006db9',
+                layout: {
+                    type: 'hbox',
+                    align: 'start',
+                    pack: 'end'
+                },
+                items: [
+                    {
+                        xtype: 'image',
+                        flex: 1,
+                        height: 201,
+                        maxHeight: 75,
+                        style: 'background-color:#FFFFFF',
+                        src: 'transafe_logo.png'
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            Ext.Viewport.setActiveItem('mynavigationview',{
+                                type: "slide",
+                                direction: "left"
+                            });
+                        },
+                        flex: 1,
+                        cls: '@include icon("list", "l");',
+                        id: 'listViewButton3',
+                        minHeight: 75,
+                        ui: 'action',
+                        iconAlign: 'center',
+                        iconCls: 'list',
+                        text: ''
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+
+                        },
+                        flex: 1,
+                        disabled: true,
+                        minHeight: 75,
+                        ui: 'action',
+                        iconAlign: 'center',
+                        iconCls: 'maps'
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            console.log('prev view');
+                            console.log(Ext.Viewport.getActiveItem().getId());
+                            localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());
+                            Ext.Viewport.setActiveItem('signuppanel',{
+                                type: "slide",
+                                direction: "left"
+                            });
+                        },
+                        flex: 1,
+                        minHeight: 75,
+                        top: '',
+                        ui: 'action',
+                        iconAlign: 'center',
+                        iconCls: 'user'
                     }
                 ]
             }

@@ -27,7 +27,8 @@
                     "    type: \"slide\",",
                     "    direction: \"left\"",
                     "});",
-                    "console.log(this.getVenueLblSurvey().setHtml('You are at ' + record.get('name')));"
+                    "console.log(this.getVenueLblSurvey().setHtml('You are at ' + record.get('name')));",
+                    "localStorage.setItem('location',record.get('name'));"
                 ],
                 "name": "itemtap"
             },
@@ -55,7 +56,7 @@
             "codeClass": null,
             "userConfig": {
                 "ref": "surveyPanel",
-                "selector": "panel#surveyPanel"
+                "selector": "panel#surveypanel"
             },
             "designerId": "65c3e78e-8ac9-4979-b897-5a68da380340"
         },
@@ -128,8 +129,8 @@
                     "if(localStorage.getItem('ifLogged') == 'Invalid User' | localStorage.getItem('ifLogged') === '' | localStorage.getItem('ifLogged') == 'null' | localStorage.getItem('ifLogged') === null){",
                     "    this.getGreetingLabel().hide();",
                     "    this.getSignOutBtn().hide();",
-                    "    this.getSignInBtn().show();",
-                    "    this.getSignUpBtn().show();",
+                    "//     this.getSignInBtn().show();",
+                    "//     this.getSignUpBtn().show();",
                     "}",
                     "else{",
                     "    var username = localStorage.getItem('username');",
@@ -137,8 +138,8 @@
                     "    this.getGreetingLabel().setHtml('Hello, ' + username);",
                     "    this.getGreetingLabel().show();",
                     "    this.getSignOutBtn().show();",
-                    "    this.getSignInBtn().hide();",
-                    "    this.getSignUpBtn().hide();",
+                    "//     this.getSignInBtn().hide();",
+                    "//     this.getSignUpBtn().hide();",
                     "    }",
                     "",
                     "//this.getSadFacePic.setHeight(this.getSliderHappySad().getHeight());"
@@ -182,6 +183,79 @@
                 "name": "activate"
             },
             "designerId": "762c566d-8c52-4105-8084-2fe895a26862"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "statLocationLabelHappy",
+                "selector": "label#statLocationHappy"
+            },
+            "designerId": "d73f31d7-9295-44e4-b57d-83819b8d4580"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#stattabpanel",
+                "designer|targetType": "statTabPanel",
+                "fn": "onStattabpanelActivate",
+                "implHandler": [
+                    "this.getStatLocationLabelHappy().setHtml(localStorage.getItem('location'));",
+                    "this.getStatLocationLabelExcited().setHtml(localStorage.getItem('location'));",
+                    "this.getStatLocationLabelSafe().setHtml(localStorage.getItem('location'));",
+                    "this.getStatLocationLabelPeaceful().setHtml(localStorage.getItem('location'));"
+                ],
+                "name": "activate"
+            },
+            "designerId": "82f698df-c837-4b98-8323-eac76a2d362f"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "statLocationLabelExcited",
+                "selector": "label#statLocationExcited"
+            },
+            "designerId": "628ed0c7-c1da-4cb7-af8e-e02d7600de59"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "statLocationLabelSafe",
+                "selector": "label#statLocationSafe"
+            },
+            "designerId": "f2b17a94-1f6f-43b3-917a-9ea792f287f2"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "statLocationLabelPeaceful",
+                "selector": "label#statLocationPeaceful"
+            },
+            "designerId": "8fc93eab-0508-4d5d-82aa-ba7d11be657d"
         }
     ]
 }

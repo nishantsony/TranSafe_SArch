@@ -8,6 +8,7 @@
     "userConfig": {
         "designer|userAlias": "comfortPanel",
         "designer|userClassName": "comfortPanel",
+        "id": "comfortPanel",
         "scrollable": true,
         "style": "background-color: #FFF",
         "styleHtmlContent": true
@@ -46,13 +47,15 @@
                                 "clearIcon": false,
                                 "designer|displayName": "hotorcold",
                                 "docked": null,
+                                "id": "sliderHotCold",
                                 "label": "",
-                                "maxValue": 10,
+                                "maxValue": 5,
+                                "minValue": -5,
                                 "minWidth": "70%",
                                 "name": "",
                                 "styleHtmlContent": true,
                                 "value": [
-                                    5
+                                    0
                                 ]
                             },
                             "designerId": "ea5eb05c-2958-455d-9c4b-893b1025f083"
@@ -108,12 +111,14 @@
                             "codeClass": null,
                             "userConfig": {
                                 "designer|displayName": "noisyorquiet",
+                                "id": "sliderNoisyQuiet",
                                 "label": "",
-                                "maxValue": 10,
+                                "maxValue": 5,
+                                "minValue": -5,
                                 "minWidth": "",
                                 "styleHtmlContent": true,
                                 "value": [
-                                    5
+                                    0
                                 ]
                             },
                             "designerId": "293c5121-73fd-4b14-bac6-42c6a7c0cfd1"
@@ -168,11 +173,13 @@
                             "codeClass": null,
                             "userConfig": {
                                 "designer|displayName": "crowdedorempty",
+                                "id": "sliderCrowdedEmpty",
                                 "label": "",
-                                "maxValue": 10,
+                                "maxValue": 5,
+                                "minValue": -5,
                                 "styleHtmlContent": true,
                                 "value": [
-                                    5
+                                    0
                                 ]
                             },
                             "designerId": "820d6343-57ba-460a-b07e-096fbcad21e3"
@@ -235,6 +242,7 @@
             "codeClass": null,
             "userConfig": {
                 "designer|displayName": "comfortlevel",
+                "id": "sliderComfortLevel",
                 "label": "Comfort Level",
                 "labelAlign": "top",
                 "value": [
@@ -252,7 +260,7 @@
             "codeClass": null,
             "userConfig": {
                 "designer|uiInterfaceName": "confirm",
-                "docked": "bottom",
+                "docked": null,
                 "itemId": "mybutton8",
                 "text": "Submit",
                 "ui": "confirm"
@@ -274,6 +282,7 @@
                         "fn": "handler",
                         "implHandler": [
                             "var currentdate = new Date();",
+                            "var feelingsSurveyId;",
                             "var timestamp = currentdate.getFullYear() + \"-\"+(currentdate.getMonth()+1)  + \"-\" + currentdate.getDate() + \" \"  + currentdate.getHours() + \"-\"  + currentdate.getMinutes() + \"-\" + currentdate.getSeconds();",
                             "var chosenVenue = Ext.getCmp('venueLblSurvey').getHtml();",
                             "chosenVenue = chosenVenue.replace('You are at ','');",
@@ -293,8 +302,26 @@
                             "for(var i = 0; i < 4; i++){",
                             "    feelingsValues=setFeelings(feelingsValues, tempFeelingArray[i]);",
                             "}",
+                            "var tempComfortArray = new Array();",
+                            "tempComfortArray.push(Ext.getCmp('sliderHotCold').getValue()[0]);",
+                            "tempComfortArray.push(Ext.getCmp('sliderNoisyQuiet').getValue()[0]);",
+                            "tempComfortArray.push(Ext.getCmp('sliderCrowdedEmpty').getValue()[0]);",
+                            "//tempComfortArray.push(Ext.getCmp('sliderComfortLevel').getValue()[0]);",
+                            "console.log(tempComfortArray);",
+                            "var comfortValues = new Array();",
+                            "for(var i = 0; i < 3; i++){",
+                            "    comfortValues=setFeelings(comfortValues, tempComfortArray[i]);",
+                            "}",
+                            "comfortValues.push(Ext.getCmp('sliderComfortLevel').getValue()[0]);",
                             "console.log(feelingsValues);",
                             "console.log(chosenVenue);",
+                            "console.log(HOT_TO_SERVER()+'|'+comfortValues[HOT_INDEX]+'|'+",
+                            "         COLD_TO_SERVER()+'|'+comfortValues[COLD_INDEX]+'|'+",
+                            "         NOISY_TO_SERVER()+'|'+comfortValues[NOISY_INDEX]+'|'+",
+                            "         QUIET_TO_SERVER()+'|'+comfortValues[QUITE_INDEX]+'|'+",
+                            "         FULL_TO_SERVER()+'|'+comfortValues[FULL_INDEX]+'|'+",
+                            "         EMPTY_TO_SERVER()+'|'+comfortValues[EMPTY_INDEX]+'|'+",
+                            "         COMFORT_TO_SERVER()+'|'+comfortValues[COMFORT_INDEX]);",
                             "console.log(localStorage.getItem('ifLogged') + ', ' + localStorage.getItem('username'));",
                             "console.log(SAD_TO_SERVER()+'|'+feelingsValues[SAD_INDEX] + '|' +",
                             "         HAPPY_TO_SERVER()+'|'+feelingsValues[HAPPY_INDEX] + '|' +",
@@ -326,21 +353,58 @@
                             "             },",
                             "     callbackKey: 'callback',",
                             "                    success: function (response) {",
+                            "                        feelingsSurveyId = response.return;",
+                            "                        console.log(response.return);",
+                            "",
+                            "",
+                            "                         // request for comfort data",
+                            "    console.log('survey id: ' + feelingsSurveyId);",
+                            "",
+                            "     Ext.data.JsonP.request({",
+                            "",
+                            "        url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/SaveComfortLevelAnonymouse',",
+                            "     params: {",
+                            "         surveyID: feelingsSurveyId,",
+                            "         comfort: HOT_TO_SERVER()+'|'+comfortValues[HOT_INDEX]+'|'+",
+                            "         COLD_TO_SERVER()+'|'+comfortValues[COLD_INDEX]+'|'+",
+                            "         NOISY_TO_SERVER()+'|'+comfortValues[NOISY_INDEX]+'|'+",
+                            "         QUIET_TO_SERVER()+'|'+comfortValues[QUITE_INDEX]+'|'+",
+                            "         FULL_TO_SERVER()+'|'+comfortValues[FULL_INDEX]+'|'+",
+                            "         EMPTY_TO_SERVER()+'|'+comfortValues[EMPTY_INDEX]+'|'+",
+                            "         COMFORT_TO_SERVER()+'|'+comfortValues[COMFORT_INDEX],",
+                            "         format: 'json',",
+                            "         response: 'application/jsonp'",
+                            "             },",
+                            "     callbackKey: 'callback',",
+                            "                    success: function (response) {",
                             "                        alert('Thank you!');",
-                            "                        console.log(response);",
+                            "//                         feelingsSurveyId = response.return;",
+                            "//                         console.log(response.return);",
                             "",
                             "                         Ext.Viewport.setActiveItem('stattabpanel',{",
                             "                            type: \"slide\",",
                             "                            direction: \"left\"",
                             "                        });",
-                            "//                         window.location = 'user_stats/piechart.html';",
                             "                    },",
                             "                    failure: function (response) {",
                             "                        alert('Not working!');",
-                            "                        console.log(response);",
+                            "                        console.log(response.return);",
                             "                    },",
                             "     callback: function(successful, data){",
-                            "     alert(data);",
+                            " }",
+                            "               });",
+                            "",
+                            "",
+                            "//                          Ext.Viewport.setActiveItem('stattabpanel',{",
+                            "//                             type: \"slide\",",
+                            "//                             direction: \"left\"",
+                            "//                         });",
+                            "                    },",
+                            "                    failure: function (response) {",
+                            "                        alert('Not working!');",
+                            "                        console.log(response.return);",
+                            "                    },",
+                            "     callback: function(successful, data){",
                             " }",
                             "               });",
                             "}",
@@ -368,8 +432,31 @@
                             "             },",
                             "     callbackKey: 'callback',",
                             "                    success: function (response) {",
+                            "                        feelingsSurveyId = response.return;",
+                            "                        console.log(response.return);",
+                            "                         // request for comfort data",
+                            "    console.log('survey id: ' + feelingsSurveyId);",
+                            "",
+                            "     Ext.data.JsonP.request({",
+                            "",
+                            "        url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/SaveComfortLevelAnonymouse',",
+                            "     params: {",
+                            "         surveyID: feelingsSurveyId,",
+                            "         comfort: HOT_TO_SERVER()+'|'+comfortValues[HOT_INDEX]+'|'+",
+                            "         COLD_TO_SERVER()+'|'+comfortValues[COLD_INDEX]+'|'+",
+                            "         NOISY_TO_SERVER()+'|'+comfortValues[NOISY_INDEX]+'|'+",
+                            "         QUIET_TO_SERVER()+'|'+comfortValues[QUITE_INDEX]+'|'+",
+                            "         FULL_TO_SERVER()+'|'+comfortValues[FULL_INDEX]+'|'+",
+                            "         EMPTY_TO_SERVER()+'|'+comfortValues[EMPTY_INDEX]+'|'+",
+                            "         COMFORT_TO_SERVER()+'|'+comfortValues[COMFORT_INDEX],",
+                            "         format: 'json',",
+                            "         response: 'application/jsonp'",
+                            "             },",
+                            "     callbackKey: 'callback',",
+                            "                    success: function (response) {",
                             "                        alert('Thank you!');",
-                            "                        console.log(response);",
+                            "//                         feelingsSurveyId = response.return;",
+                            "//                         console.log(response.return);",
                             "",
                             "                         Ext.Viewport.setActiveItem('stattabpanel',{",
                             "                            type: \"slide\",",
@@ -378,17 +465,205 @@
                             "                    },",
                             "                    failure: function (response) {",
                             "                        alert('Not working!');",
-                            "                        console.log(response);",
+                            "                        console.log(response.return);",
                             "                    },",
                             "     callback: function(successful, data){",
-                            "     alert(data);",
                             " }",
                             "               });",
+                            "//                          Ext.Viewport.setActiveItem('stattabpanel',{",
+                            "//                             type: \"slide\",",
+                            "//                             direction: \"left\"",
+                            "//                         });",
+                            "                    },",
+                            "                    failure: function (response) {",
+                            "                        alert('Not working!');",
+                            "                        console.log(response.return);",
+                            "                    },",
+                            "     callback: function(successful, data){",
+                            " }",
+                            "               });",
+                            "",
                             "",
                             "}"
                         ]
                     },
                     "designerId": "206707d5-856d-4ccd-be30-bbf06bbeede7"
+                }
+            ]
+        },
+        {
+            "type": "Ext.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "centered": false,
+                "container|align": "start",
+                "container|pack": "end",
+                "docked": "top",
+                "layout": "hbox",
+                "maxHeight": 100,
+                "style": "background-color:#006db9"
+            },
+            "designerId": "ba4adf19-75ad-4c0c-9899-ba32b7fa4b33",
+            "cn": [
+                {
+                    "type": "Ext.Img",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 201,
+                        "layout|flex": 1,
+                        "maxHeight": 75,
+                        "src": "transafe_logo.png",
+                        "style": "background-color:#FFFFFF"
+                    },
+                    "designerId": "36310aa6-4d34-4ce9-be2f-2a04d8b33157"
+                },
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "cls": [
+                            "@include icon(\"list\", \"l\");"
+                        ],
+                        "designer|displayName": "ListViewButton",
+                        "designer|uiInterfaceName": "action",
+                        "html": null,
+                        "icon": null,
+                        "iconAlign": "center",
+                        "iconCls": "list",
+                        "id": "listViewButton2",
+                        "layout|flex": 1,
+                        "maxWidth": null,
+                        "minHeight": 75,
+                        "text": "",
+                        "ui": "action"
+                    },
+                    "designerId": "9c0df311-6835-4e01-80dc-fb575fedc352",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    "Ext.Viewport.setActiveItem('mynavigationview',{",
+                                    "    type: \"slide\",",
+                                    "    direction: \"left\"",
+                                    "});"
+                                ]
+                            },
+                            "designerId": "5eb24694-9636-4e9f-8645-4d2f98f1cf0e"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|displayName": "MapViewButton",
+                        "designer|uiInterfaceName": "action",
+                        "disabled": true,
+                        "html": null,
+                        "icon": null,
+                        "iconAlign": "center",
+                        "iconCls": "maps",
+                        "layout|flex": 1,
+                        "minHeight": 75,
+                        "text": null,
+                        "ui": "action"
+                    },
+                    "designerId": "1fc1ff46-4190-49e2-b846-ee8513fca382",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": null
+                            },
+                            "designerId": "ee02b712-95db-4518-8550-846bbc0a60d0"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|displayName": "LoginViewButton",
+                        "designer|uiInterfaceName": "action",
+                        "html": null,
+                        "icon": null,
+                        "iconAlign": "center",
+                        "iconCls": "user",
+                        "layout|flex": 1,
+                        "minHeight": 75,
+                        "text": null,
+                        "top": "",
+                        "ui": "action"
+                    },
+                    "designerId": "f318f45b-f776-4d8d-857f-9894ada32bf0",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    "console.log('prev view');",
+                                    "console.log(Ext.Viewport.getActiveItem().getId());",
+                                    "localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());",
+                                    "Ext.Viewport.setActiveItem('signuppanel',{",
+                                    "    type: \"slide\",",
+                                    "    direction: \"left\"",
+                                    "});"
+                                ]
+                            },
+                            "designerId": "8bad32e6-aa07-4d7b-b62a-d62f47fb72aa"
+                        }
+                    ]
                 }
             ]
         }

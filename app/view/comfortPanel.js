@@ -18,13 +18,15 @@ Ext.define('TranSafe.view.comfortPanel', {
     alias: 'widget.comfortPanel',
 
     requires: [
-        'Ext.Container',
         'Ext.field.Slider',
         'Ext.Label',
-        'Ext.Button'
+        'Ext.Button',
+        'Ext.Panel',
+        'Ext.Img'
     ],
 
     config: {
+        id: 'comfortPanel',
         style: 'background-color: #FFF',
         styleHtmlContent: true,
         scrollable: true,
@@ -38,15 +40,17 @@ Ext.define('TranSafe.view.comfortPanel', {
                         items: [
                             {
                                 xtype: 'sliderfield',
+                                id: 'sliderHotCold',
                                 minWidth: '70%',
                                 styleHtmlContent: true,
                                 clearIcon: false,
                                 label: '',
                                 name: '',
                                 value: [
-                                    5
+                                    0
                                 ],
-                                maxValue: 10
+                                maxValue: 5,
+                                minValue: -5
                             },
                             {
                                 xtype: 'label',
@@ -68,13 +72,15 @@ Ext.define('TranSafe.view.comfortPanel', {
                         items: [
                             {
                                 xtype: 'sliderfield',
+                                id: 'sliderNoisyQuiet',
                                 minWidth: '',
                                 styleHtmlContent: true,
                                 label: '',
                                 value: [
-                                    5
+                                    0
                                 ],
-                                maxValue: 10
+                                maxValue: 5,
+                                minValue: -5
                             },
                             {
                                 xtype: 'label',
@@ -95,12 +101,14 @@ Ext.define('TranSafe.view.comfortPanel', {
                         items: [
                             {
                                 xtype: 'sliderfield',
+                                id: 'sliderCrowdedEmpty',
                                 styleHtmlContent: true,
                                 label: '',
                                 value: [
-                                    5
+                                    0
                                 ],
-                                maxValue: 10
+                                maxValue: 5,
+                                minValue: -5
                             },
                             {
                                 xtype: 'label',
@@ -126,6 +134,7 @@ Ext.define('TranSafe.view.comfortPanel', {
             },
             {
                 xtype: 'sliderfield',
+                id: 'sliderComfortLevel',
                 label: 'Comfort Level',
                 labelAlign: 'top',
                 value: [
@@ -136,6 +145,7 @@ Ext.define('TranSafe.view.comfortPanel', {
                 xtype: 'button',
                 handler: function(button, e) {
                     var currentdate = new Date();
+                    var feelingsSurveyId;
                     var timestamp = currentdate.getFullYear() + "-"+(currentdate.getMonth()+1)  + "-" + currentdate.getDate() + " "  + currentdate.getHours() + "-"  + currentdate.getMinutes() + "-" + currentdate.getSeconds();
                     var chosenVenue = Ext.getCmp('venueLblSurvey').getHtml();
                     chosenVenue = chosenVenue.replace('You are at ','');
@@ -155,8 +165,26 @@ Ext.define('TranSafe.view.comfortPanel', {
                     for(var i = 0; i < 4; i++){
                         feelingsValues=setFeelings(feelingsValues, tempFeelingArray[i]);
                     }
+                    var tempComfortArray = new Array();
+                    tempComfortArray.push(Ext.getCmp('sliderHotCold').getValue()[0]);
+                    tempComfortArray.push(Ext.getCmp('sliderNoisyQuiet').getValue()[0]);
+                    tempComfortArray.push(Ext.getCmp('sliderCrowdedEmpty').getValue()[0]);
+                    //tempComfortArray.push(Ext.getCmp('sliderComfortLevel').getValue()[0]);
+                    console.log(tempComfortArray);
+                    var comfortValues = new Array();
+                    for(var i = 0; i < 3; i++){
+                        comfortValues=setFeelings(comfortValues, tempComfortArray[i]);
+                    }
+                    comfortValues.push(Ext.getCmp('sliderComfortLevel').getValue()[0]);
                     console.log(feelingsValues);
                     console.log(chosenVenue);
+                    console.log(HOT_TO_SERVER()+'|'+comfortValues[HOT_INDEX]+'|'+
+                    COLD_TO_SERVER()+'|'+comfortValues[COLD_INDEX]+'|'+
+                    NOISY_TO_SERVER()+'|'+comfortValues[NOISY_INDEX]+'|'+
+                    QUIET_TO_SERVER()+'|'+comfortValues[QUITE_INDEX]+'|'+
+                    FULL_TO_SERVER()+'|'+comfortValues[FULL_INDEX]+'|'+
+                    EMPTY_TO_SERVER()+'|'+comfortValues[EMPTY_INDEX]+'|'+
+                    COMFORT_TO_SERVER()+'|'+comfortValues[COMFORT_INDEX]);
                     console.log(localStorage.getItem('ifLogged') + ', ' + localStorage.getItem('username'));
                     console.log(SAD_TO_SERVER()+'|'+feelingsValues[SAD_INDEX] + '|' +
                     HAPPY_TO_SERVER()+'|'+feelingsValues[HAPPY_INDEX] + '|' +
@@ -188,21 +216,58 @@ Ext.define('TranSafe.view.comfortPanel', {
                             },
                             callbackKey: 'callback',
                             success: function (response) {
-                                alert('Thank you!');
-                                console.log(response);
+                                feelingsSurveyId = response.return;
+                                console.log(response.return);
 
-                                Ext.Viewport.setActiveItem('stattabpanel',{
-                                    type: "slide",
-                                    direction: "left"
+
+                                // request for comfort data
+                                console.log('survey id: ' + feelingsSurveyId);
+
+                                Ext.data.JsonP.request({
+
+                                    url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/SaveComfortLevelAnonymouse',
+                                    params: {
+                                        surveyID: feelingsSurveyId,
+                                        comfort: HOT_TO_SERVER()+'|'+comfortValues[HOT_INDEX]+'|'+
+                                        COLD_TO_SERVER()+'|'+comfortValues[COLD_INDEX]+'|'+
+                                        NOISY_TO_SERVER()+'|'+comfortValues[NOISY_INDEX]+'|'+
+                                        QUIET_TO_SERVER()+'|'+comfortValues[QUITE_INDEX]+'|'+
+                                        FULL_TO_SERVER()+'|'+comfortValues[FULL_INDEX]+'|'+
+                                        EMPTY_TO_SERVER()+'|'+comfortValues[EMPTY_INDEX]+'|'+
+                                        COMFORT_TO_SERVER()+'|'+comfortValues[COMFORT_INDEX],
+                                        format: 'json',
+                                        response: 'application/jsonp'
+                                    },
+                                    callbackKey: 'callback',
+                                    success: function (response) {
+                                        alert('Thank you!');
+                                        //                         feelingsSurveyId = response.return;
+                                        //                         console.log(response.return);
+
+                                        Ext.Viewport.setActiveItem('stattabpanel',{
+                                            type: "slide",
+                                            direction: "left"
+                                        });
+                                    },
+                                    failure: function (response) {
+                                        alert('Not working!');
+                                        console.log(response.return);
+                                    },
+                                    callback: function(successful, data){
+                                    }
                                 });
-                                //                         window.location = 'user_stats/piechart.html';
+
+
+                                //                          Ext.Viewport.setActiveItem('stattabpanel',{
+                                //                             type: "slide",
+                                //                             direction: "left"
+                                //                         });
                             },
                             failure: function (response) {
                                 alert('Not working!');
-                                console.log(response);
+                                console.log(response.return);
                             },
                             callback: function(successful, data){
-                                alert(data);
                             }
                         });
                     }
@@ -230,29 +295,132 @@ Ext.define('TranSafe.view.comfortPanel', {
                             },
                             callbackKey: 'callback',
                             success: function (response) {
-                                alert('Thank you!');
-                                console.log(response);
+                                feelingsSurveyId = response.return;
+                                console.log(response.return);
+                                // request for comfort data
+                                console.log('survey id: ' + feelingsSurveyId);
 
-                                Ext.Viewport.setActiveItem('stattabpanel',{
-                                    type: "slide",
-                                    direction: "left"
+                                Ext.data.JsonP.request({
+
+                                    url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/SaveComfortLevelAnonymouse',
+                                    params: {
+                                        surveyID: feelingsSurveyId,
+                                        comfort: HOT_TO_SERVER()+'|'+comfortValues[HOT_INDEX]+'|'+
+                                        COLD_TO_SERVER()+'|'+comfortValues[COLD_INDEX]+'|'+
+                                        NOISY_TO_SERVER()+'|'+comfortValues[NOISY_INDEX]+'|'+
+                                        QUIET_TO_SERVER()+'|'+comfortValues[QUITE_INDEX]+'|'+
+                                        FULL_TO_SERVER()+'|'+comfortValues[FULL_INDEX]+'|'+
+                                        EMPTY_TO_SERVER()+'|'+comfortValues[EMPTY_INDEX]+'|'+
+                                        COMFORT_TO_SERVER()+'|'+comfortValues[COMFORT_INDEX],
+                                        format: 'json',
+                                        response: 'application/jsonp'
+                                    },
+                                    callbackKey: 'callback',
+                                    success: function (response) {
+                                        alert('Thank you!');
+                                        //                         feelingsSurveyId = response.return;
+                                        //                         console.log(response.return);
+
+                                        Ext.Viewport.setActiveItem('stattabpanel',{
+                                            type: "slide",
+                                            direction: "left"
+                                        });
+                                    },
+                                    failure: function (response) {
+                                        alert('Not working!');
+                                        console.log(response.return);
+                                    },
+                                    callback: function(successful, data){
+                                    }
                                 });
+                                //                          Ext.Viewport.setActiveItem('stattabpanel',{
+                                //                             type: "slide",
+                                //                             direction: "left"
+                                //                         });
                             },
                             failure: function (response) {
                                 alert('Not working!');
-                                console.log(response);
+                                console.log(response.return);
                             },
                             callback: function(successful, data){
-                                alert(data);
                             }
                         });
 
+
                     }
                 },
-                docked: 'bottom',
                 itemId: 'mybutton8',
                 ui: 'confirm',
                 text: 'Submit'
+            },
+            {
+                xtype: 'panel',
+                centered: false,
+                docked: 'top',
+                maxHeight: 100,
+                style: 'background-color:#006db9',
+                layout: {
+                    type: 'hbox',
+                    align: 'start',
+                    pack: 'end'
+                },
+                items: [
+                    {
+                        xtype: 'image',
+                        flex: 1,
+                        height: 201,
+                        maxHeight: 75,
+                        style: 'background-color:#FFFFFF',
+                        src: 'transafe_logo.png'
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            Ext.Viewport.setActiveItem('mynavigationview',{
+                                type: "slide",
+                                direction: "left"
+                            });
+                        },
+                        flex: 1,
+                        cls: '@include icon("list", "l");',
+                        id: 'listViewButton2',
+                        minHeight: 75,
+                        ui: 'action',
+                        iconAlign: 'center',
+                        iconCls: 'list',
+                        text: ''
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+
+                        },
+                        flex: 1,
+                        disabled: true,
+                        minHeight: 75,
+                        ui: 'action',
+                        iconAlign: 'center',
+                        iconCls: 'maps'
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            console.log('prev view');
+                            console.log(Ext.Viewport.getActiveItem().getId());
+                            localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());
+                            Ext.Viewport.setActiveItem('signuppanel',{
+                                type: "slide",
+                                direction: "left"
+                            });
+                        },
+                        flex: 1,
+                        minHeight: 75,
+                        top: '',
+                        ui: 'action',
+                        iconAlign: 'center',
+                        iconCls: 'user'
+                    }
+                ]
             }
         ]
     }

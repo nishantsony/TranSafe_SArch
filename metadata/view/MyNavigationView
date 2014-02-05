@@ -8,6 +8,7 @@
     "userConfig": {
         "designer|userAlias": "mynavigationview",
         "designer|userClassName": "MyNavigationView",
+        "id": "mynavigationview",
         "style": "background-color: #FFF"
     },
     "designerId": "6f6512a8-2106-4983-b1cf-102c7371b9fd",
@@ -24,6 +25,182 @@
             },
             "designerId": "474bdd50-ffc0-463b-9c1c-7a38a7a6b034",
             "cn": [
+                {
+                    "type": "Ext.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "centered": false,
+                        "container|align": "start",
+                        "container|pack": "end",
+                        "docked": "top",
+                        "layout": "hbox",
+                        "maxHeight": 100,
+                        "style": "background-color:#006db9"
+                    },
+                    "designerId": "f192045e-65b5-4d3c-bc74-d0f891a4610f",
+                    "cn": [
+                        {
+                            "type": "Ext.Img",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "height": 201,
+                                "layout|flex": 1,
+                                "maxHeight": 75,
+                                "src": "transafe_logo.png",
+                                "style": "background-color:#FFFFFF"
+                            },
+                            "designerId": "0f677184-e44a-4725-a983-e95ab250e875"
+                        },
+                        {
+                            "type": "Ext.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "cls": [
+                                    "@include icon(\"list\", \"l\");"
+                                ],
+                                "designer|displayName": "ListViewButton",
+                                "designer|uiInterfaceName": "action",
+                                "html": null,
+                                "icon": null,
+                                "iconAlign": "center",
+                                "iconCls": "list",
+                                "id": "listViewButton",
+                                "layout|flex": 1,
+                                "maxWidth": null,
+                                "minHeight": 75,
+                                "text": "",
+                                "ui": "action"
+                            },
+                            "designerId": "5c3ecdbe-27d8-4aa6-9f3f-fa27a320481e",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "button",
+                                            "e"
+                                        ],
+                                        "fn": "handler",
+                                        "implHandler": [
+                                            "Ext.Viewport.setActiveItem('surveypanel',{",
+                                            "    type: \"slide\",",
+                                            "    direction: \"left\"",
+                                            "});"
+                                        ]
+                                    },
+                                    "designerId": "2e593612-b75d-4c04-8336-715f6c249d9a"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "MapViewButton",
+                                "designer|uiInterfaceName": "action",
+                                "disabled": true,
+                                "html": null,
+                                "icon": null,
+                                "iconAlign": "center",
+                                "iconCls": "maps",
+                                "layout|flex": 1,
+                                "minHeight": 75,
+                                "text": null,
+                                "ui": "action"
+                            },
+                            "designerId": "2d800cc9-97dc-445c-9082-80c2f2a15fad",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "button",
+                                            "e"
+                                        ],
+                                        "fn": "handler",
+                                        "implHandler": null
+                                    },
+                                    "designerId": "db706574-c91c-48f9-894f-8b87a5a7c20d"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "LoginViewButton",
+                                "designer|uiInterfaceName": "action",
+                                "html": null,
+                                "icon": null,
+                                "iconAlign": "center",
+                                "iconCls": "user",
+                                "layout|flex": 1,
+                                "minHeight": 75,
+                                "text": null,
+                                "top": "",
+                                "ui": "action"
+                            },
+                            "designerId": "0b825ccd-811f-472c-8420-df6fad858878",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "button",
+                                            "e"
+                                        ],
+                                        "fn": "handler",
+                                        "implHandler": [
+                                            "console.log('prev view');",
+                                            "console.log(Ext.Viewport.getActiveItem().getId());",
+                                            "localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());",
+                                            "Ext.Viewport.setActiveItem('signuppanel',{",
+                                            "    type: \"slide\",",
+                                            "    direction: \"left\"",
+                                            "});"
+                                        ]
+                                    },
+                                    "designerId": "29945306-5b97-4fdf-8df0-70783e40cdec"
+                                }
+                            ]
+                        }
+                    ]
+                },
                 {
                     "type": "Ext.Map",
                     "reference": {
@@ -59,7 +236,8 @@
                 "itemHeight": 5,
                 "itemId": "mylist",
                 "store": "FS",
-                "title": "Choose where you are"
+                "title": "Choose where you are",
+                "variableHeights": true
             },
             "designerId": "346f3943-73aa-4272-9e42-5d3d64d91c39",
             "cn": [
@@ -85,6 +263,10 @@
                         "type": "object"
                     },
                     "codeClass": null,
+                    "userConfig": {
+                        "hidden": false,
+                        "maxHeight": null
+                    },
                     "designerId": "0c092602-cba6-414f-b292-22108fae70cf"
                 }
             ]

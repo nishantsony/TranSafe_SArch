@@ -8,97 +8,149 @@
     "userConfig": {
         "designer|userAlias": "signuppanel",
         "designer|userClassName": "SignUpPanel",
-        "id": "signinpanel",
+        "id": "signuppanel",
         "modal": false,
+        "scrollable": true,
         "style": "background-color: #FFF"
     },
     "designerId": "84a0048a-1dd5-4977-a25f-8ec8d96cd0a4",
     "cn": [
         {
-            "type": "Ext.Button",
+            "type": "Ext.form.FieldSet",
             "reference": {
                 "name": "items",
                 "type": "array"
             },
             "codeClass": null,
             "userConfig": {
-                "designer|uiInterfaceName": "action-round",
-                "docked": "bottom",
-                "text": "Submit",
-                "ui": "action-round"
+                "title": "Please, authorise"
             },
-            "designerId": "9073b3c8-b944-42dc-ad8e-c8dfb89aa32f",
+            "designerId": "ae5b60e2-e127-4124-b3fe-237d28567f92",
             "cn": [
                 {
-                    "type": "fixedfunction",
+                    "type": "Ext.field.Text",
                     "reference": {
                         "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "designer|params": [
-                            "button",
-                            "e"
-                        ],
-                        "fn": "handler",
-                        "implHandler": [
-                            "var login = Ext.getCmp('signUpUsernameField').getValue();",
-                            "var pass = Ext.getCmp('signUpPasswordField').getValue();",
-                            "var email = Ext.getCmp('emailField').getValue();",
-                            "var gender = Ext.ComponentQuery.query('radiofield[name=gender]')[0].getGroupValue();",
-                            "var age = Ext.getCmp('ageField').getValue();",
-                            "var occupation = Ext.getCmp('occupationField').getValue();",
-                            "console.log('Username: ' + login);",
-                            "console.log('Password: ' + pass);",
-                            "console.log('email: ' + email);",
-                            "console.log('age: ' + age);",
-                            "console.log('occupation: ' + occupation);",
-                            "console.log('gender: ' + gender);",
-                            "",
-                            "Ext.data.JsonP.request({",
-                            "",
-                            "     url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/CreateUser',",
-                            "     params: {",
-                            "         username: login,",
-                            "         password: pass,",
-                            "         email: email,",
-                            "         gender: gender,",
-                            "         age: age,",
-                            "         occupation: occupation,",
-                            "         format: 'json',",
-                            "         response: 'application/jsonp'",
-                            "             },",
-                            "     callbackKey: 'callback',",
-                            "                    success: function (response) {",
-                            "                        alert('Working!');",
-                            "                        console.log(response);",
-                            "                        if(response['return'] != 'Invalid User'){",
-                            "                            localStorage.setItem('ifLogged', response['return']);",
-                            "                        localStorage.setItem('username', login);",
-                            "                            Ext.Viewport.setActiveItem('surveypanel',{",
-                            "                            type: \"slide\",",
-                            "                            direction: \"left\"",
-                            "                        });",
-                            "                        }",
-                            "                        else{",
-                            "                            console.log('the user is invalid');",
-                            "                            alert('Sorry, these user details cannot be used, try again with another details');",
-                            "                        }",
-                            "                    },",
-                            "                    failure: function (response) {",
-                            "                        alert('Not working!');",
-                            "                        console.log(response);",
-                            "                    },",
-                            "     callback: function(successful, data){",
-                            "     alert(data);",
-                            " }",
-                            "               });"
-                        ]
+                        "border": 1,
+                        "id": "signInUsernameField1",
+                        "label": "Login",
+                        "margin": null,
+                        "padding": 2,
+                        "style": "'border-color: blue; border-style: solid;',"
                     },
-                    "designerId": "b4d2094c-bae2-4db6-bd14-5fe56497f29b"
+                    "designerId": "3487a8f1-e771-4adb-98af-e765966676cc"
+                },
+                {
+                    "type": "Ext.field.Password",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "border": 1,
+                        "id": "signInPasswordField1",
+                        "label": "Password",
+                        "labelAlign": null,
+                        "style": "'border-color: blue; border-style: solid;',"
+                    },
+                    "designerId": "989724b1-48a4-4877-b3d6-3cfb808f3d2c"
+                },
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|uiInterfaceName": "action-round",
+                        "docked": "bottom",
+                        "text": "Submit",
+                        "ui": "action-round"
+                    },
+                    "designerId": "7923d05c-ae00-4d7a-8508-22fe66498803",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    "var username = Ext.getCmp('signInUsernameField1').getValue();",
+                                    "var pass = Ext.getCmp('signInPasswordField1').getValue();",
+                                    "console.log('Username: ' + username );",
+                                    "console.log('Password: ' + pass );",
+                                    "",
+                                    "Ext.data.JsonP.request({",
+                                    "",
+                                    "     url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/Login',",
+                                    "   // method: 'POST',",
+                                    "   // dataType: 'json',",
+                                    "     params: {",
+                                    "         username: username,",
+                                    "         pass: pass,",
+                                    "         format: 'json',",
+                                    "         response: 'application/jsonp'",
+                                    "             },",
+                                    "      callbackKey: 'callback',",
+                                    "                    success: function (response) {",
+                                    "                        alert('Working!');",
+                                    "                        console.log(response);",
+                                    "                        if(response['return'] === undefined || response['return'] == 'Invalid User')",
+                                    "                            return;",
+                                    "                        if(response['return'] != 'Invalid User' || response['return'] !== undefined || response.responseBytes !== null){",
+                                    "                            console.log(response['return']);",
+                                    "                            localStorage.setItem('ifLogged', response['return']);",
+                                    "                            localStorage.setItem('username', username);",
+                                    "                            console.log(localStorage.getItem('ifLogged'));",
+                                    "                        }",
+                                    "                        console.log('prevView is:' + localStorage.getItem('prevView'));",
+                                    "                         Ext.Viewport.setActiveItem(localStorage.getItem('prevView'),{",
+                                    "                            type: \"slide\",",
+                                    "                            direction: \"left\"",
+                                    "                        });",
+                                    "                    },",
+                                    "                    failure: function (response) {",
+                                    "                        alert('Not working!');",
+                                    "                        console.log(response);",
+                                    "                    },",
+                                    "     callback: function(successful, data){",
+                                    "     alert(data);",
+                                    " }",
+                                    "               });",
+                                    ""
+                                ]
+                            },
+                            "designerId": "50f21d9a-644d-41ff-9f46-4ed9eaf7684b"
+                        }
+                    ]
                 }
             ]
+        },
+        {
+            "type": "Ext.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "html": "Or sign up"
+            },
+            "designerId": "30f1c5b8-70f3-4206-b4de-e59b85b3ad2b"
         },
         {
             "type": "Ext.form.FieldSet",
@@ -264,6 +316,268 @@
                                 "value": "female"
                             },
                             "designerId": "2f386365-7d3a-4200-a7a3-2bf05fb0c1f7"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|uiInterfaceName": "action-round",
+                        "docked": "bottom",
+                        "text": "Submit",
+                        "ui": "action-round"
+                    },
+                    "designerId": "9073b3c8-b944-42dc-ad8e-c8dfb89aa32f",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    "var login = Ext.getCmp('signUpUsernameField').getValue();",
+                                    "var pass = Ext.getCmp('signUpPasswordField').getValue();",
+                                    "var email = Ext.getCmp('emailField').getValue();",
+                                    "var gender = Ext.ComponentQuery.query('radiofield[name=gender]')[0].getGroupValue();",
+                                    "var age = Ext.getCmp('ageField').getValue();",
+                                    "var occupation = Ext.getCmp('occupationField').getValue();",
+                                    "console.log('Username: ' + login);",
+                                    "console.log('Password: ' + pass);",
+                                    "console.log('email: ' + email);",
+                                    "console.log('age: ' + age);",
+                                    "console.log('occupation: ' + occupation);",
+                                    "console.log('gender: ' + gender);",
+                                    "",
+                                    "Ext.data.JsonP.request({",
+                                    "",
+                                    "     url: 'http://115.146.86.216:8080/TransNet/services/SurveyBO/CreateUser',",
+                                    "     params: {",
+                                    "         username: login,",
+                                    "         password: pass,",
+                                    "         email: email,",
+                                    "         gender: gender,",
+                                    "         age: age,",
+                                    "         occupation: occupation,",
+                                    "         format: 'json',",
+                                    "         response: 'application/jsonp'",
+                                    "             },",
+                                    "     callbackKey: 'callback',",
+                                    "                    success: function (response) {",
+                                    "                        alert('Working!');",
+                                    "                        console.log(response);",
+                                    "                        if(response['return'] != 'Invalid User'){",
+                                    "                            localStorage.setItem('ifLogged', response['return']);",
+                                    "                        localStorage.setItem('username', login);",
+                                    "                            Ext.Viewport.setActiveItem(localStorage.getItem('prevView'),{",
+                                    "                            type: \"slide\",",
+                                    "                            direction: \"left\"",
+                                    "                        });",
+                                    "                        }",
+                                    "                        else{",
+                                    "                            console.log('the user is invalid');",
+                                    "                            alert('Sorry, these user details cannot be used, try again with another details');",
+                                    "                        }",
+                                    "                    },",
+                                    "                    failure: function (response) {",
+                                    "                        alert('Not working!');",
+                                    "                        console.log(response);",
+                                    "                    },",
+                                    "     callback: function(successful, data){",
+                                    "     alert(data);",
+                                    " }",
+                                    "               });"
+                                ]
+                            },
+                            "designerId": "b4d2094c-bae2-4db6-bd14-5fe56497f29b"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Ext.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "centered": false,
+                "container|align": "start",
+                "container|pack": "end",
+                "docked": "top",
+                "layout": "hbox",
+                "maxHeight": 100,
+                "style": "background-color:#006db9"
+            },
+            "designerId": "bba3fad9-6c9b-4c77-a871-e1c965c6dc72",
+            "cn": [
+                {
+                    "type": "Ext.Img",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 201,
+                        "layout|flex": 1,
+                        "maxHeight": 75,
+                        "src": "transafe_logo.png",
+                        "style": "background-color:#FFFFFF"
+                    },
+                    "designerId": "c530ca79-e7ab-47ad-a122-2691e4d34f66"
+                },
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "cls": [
+                            "@include icon(\"list\", \"l\");"
+                        ],
+                        "designer|displayName": "ListViewButton",
+                        "designer|uiInterfaceName": "action",
+                        "html": null,
+                        "icon": null,
+                        "iconAlign": "center",
+                        "iconCls": "list",
+                        "id": "listViewButton3",
+                        "layout|flex": 1,
+                        "maxWidth": null,
+                        "minHeight": 75,
+                        "text": "",
+                        "ui": "action"
+                    },
+                    "designerId": "5dd9edfa-2a9e-4fcc-8d17-5fd50a9aa5c1",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    "Ext.Viewport.setActiveItem('mynavigationview',{",
+                                    "    type: \"slide\",",
+                                    "    direction: \"left\"",
+                                    "});"
+                                ]
+                            },
+                            "designerId": "959ea1da-6af8-4c45-b0ca-8fff26f2a63e"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|displayName": "MapViewButton",
+                        "designer|uiInterfaceName": "action",
+                        "disabled": true,
+                        "html": null,
+                        "icon": null,
+                        "iconAlign": "center",
+                        "iconCls": "maps",
+                        "layout|flex": 1,
+                        "minHeight": 75,
+                        "text": null,
+                        "ui": "action"
+                    },
+                    "designerId": "662f3b0d-b95e-4bfe-b353-63921521170d",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": null
+                            },
+                            "designerId": "c018b452-0fc6-4875-a6ad-fd9409fb5872"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|displayName": "LoginViewButton",
+                        "designer|uiInterfaceName": "action",
+                        "html": null,
+                        "icon": null,
+                        "iconAlign": "center",
+                        "iconCls": "user",
+                        "layout|flex": 1,
+                        "minHeight": 75,
+                        "text": null,
+                        "top": "",
+                        "ui": "action"
+                    },
+                    "designerId": "06ce0b85-2e93-48e8-beef-38b018c47090",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    "console.log('prev view');",
+                                    "console.log(Ext.Viewport.getActiveItem().getId());",
+                                    "localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());",
+                                    "Ext.Viewport.setActiveItem('signuppanel',{",
+                                    "    type: \"slide\",",
+                                    "    direction: \"left\"",
+                                    "});"
+                                ]
+                            },
+                            "designerId": "51d76837-ad6b-49af-abc8-9fda9cfa1240"
                         }
                     ]
                 }

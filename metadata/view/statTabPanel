@@ -108,60 +108,17 @@
                             ]
                         },
                         {
-                            "type": "Ext.chart.PolarChart",
+                            "type": "Ext.Label",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "colors": [
-                                    "[\"#115fa6\", \"#94ae0a\", \"#a61120\", \"#ff8809\", \"#ffd13e\", \"#a61187\", \"#24ad9a\", \"#7c7474\", \"#a66111\"]"
-                                ],
-                                "id": "happyPie1",
-                                "margin": "0 0 0 50%",
-                                "store": "anonimousArrayStore"
+                                "html": "default location",
+                                "id": "statLocationHappy"
                             },
-                            "designerId": "dc63178e-3cb8-4188-be56-692e4778c6af",
-                            "isBuiltIn": true,
-                            "iconCls": "icon-pie-chart",
-                            "autoName": "MyPieChart",
-                            "cn": [
-                                {
-                                    "type": "Ext.chart.series.Pie",
-                                    "reference": {
-                                        "name": "series",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "labelField": "Feeling",
-                                        "xField": "TotalValue"
-                                    },
-                                    "designerId": "5e0d24ab-51f2-4c7e-aea5-027a51c46719"
-                                },
-                                {
-                                    "type": "Ext.chart.interactions.Rotate",
-                                    "reference": {
-                                        "name": "interactions",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "designerId": "603eb631-4586-4d7a-a846-55aaa39c7b26"
-                                },
-                                {
-                                    "type": "Ext.chart.Legend",
-                                    "reference": {
-                                        "name": "legend",
-                                        "type": "object"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "id": "happyPie1Legend"
-                                    },
-                                    "designerId": "9716580a-222e-43c2-a40f-be9d0077f43c"
-                                }
-                            ]
+                            "designerId": "a71c642d-42db-4b57-b00d-0be6c85641e0"
                         }
                     ]
                 }
@@ -250,60 +207,17 @@
                             ]
                         },
                         {
-                            "type": "Ext.chart.PolarChart",
+                            "type": "Ext.Label",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "colors": [
-                                    "[\"#115fa6\", \"#94ae0a\", \"#a61120\", \"#ff8809\", \"#ffd13e\", \"#a61187\", \"#24ad9a\", \"#7c7474\", \"#a66111\"]"
-                                ],
-                                "id": "excitedPie1",
-                                "margin": "0 0 0 50%",
-                                "store": "anonimousArrayStore"
+                                "html": "default location",
+                                "id": "statLocationExcited"
                             },
-                            "designerId": "453a248f-e15d-4897-97f8-2ef47c516652",
-                            "isBuiltIn": true,
-                            "iconCls": "icon-pie-chart",
-                            "autoName": "MyPieChart",
-                            "cn": [
-                                {
-                                    "type": "Ext.chart.series.Pie",
-                                    "reference": {
-                                        "name": "series",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "labelField": "Feeling",
-                                        "xField": "TotalValue"
-                                    },
-                                    "designerId": "21d065fe-19da-41e8-aadd-30c5ba9ed64d"
-                                },
-                                {
-                                    "type": "Ext.chart.interactions.Rotate",
-                                    "reference": {
-                                        "name": "interactions",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "designerId": "3e13a68f-5393-402b-a304-9d0a22410bda"
-                                },
-                                {
-                                    "type": "Ext.chart.Legend",
-                                    "reference": {
-                                        "name": "legend",
-                                        "type": "object"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "id": "excitedPie1Legend"
-                                    },
-                                    "designerId": "64bbf426-7bd7-4e28-80f9-4f2ace6ca29b"
-                                }
-                            ]
+                            "designerId": "8b72caea-ea2b-45b6-b6de-288f45e4832b"
                         }
                     ]
                 }
@@ -391,60 +305,17 @@
                             ]
                         },
                         {
-                            "type": "Ext.chart.PolarChart",
+                            "type": "Ext.Label",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "colors": [
-                                    "[\"#115fa6\", \"#94ae0a\", \"#a61120\", \"#ff8809\", \"#ffd13e\", \"#a61187\", \"#24ad9a\", \"#7c7474\", \"#a66111\"]"
-                                ],
-                                "id": "safePie1",
-                                "margin": "0 0 0 50%",
-                                "store": "anonimousArrayStore"
+                                "html": "default location",
+                                "id": "statLocationSafe"
                             },
-                            "designerId": "119b654b-4e0e-419c-b9af-574384296065",
-                            "isBuiltIn": true,
-                            "iconCls": "icon-pie-chart",
-                            "autoName": "MyPieChart",
-                            "cn": [
-                                {
-                                    "type": "Ext.chart.series.Pie",
-                                    "reference": {
-                                        "name": "series",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "labelField": "Feeling",
-                                        "xField": "TotalValue"
-                                    },
-                                    "designerId": "e759c5a9-5cfb-408c-9521-2e48302749dd"
-                                },
-                                {
-                                    "type": "Ext.chart.interactions.Rotate",
-                                    "reference": {
-                                        "name": "interactions",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "designerId": "3e513dd6-744d-4d68-8650-fc415efbaf0c"
-                                },
-                                {
-                                    "type": "Ext.chart.Legend",
-                                    "reference": {
-                                        "name": "legend",
-                                        "type": "object"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "id": "safePie1Legend"
-                                    },
-                                    "designerId": "bb3deb43-a883-4b7d-a183-64e73b47570e"
-                                }
-                            ]
+                            "designerId": "bea3c6e4-2950-44f3-ade5-fd0b9c80e620"
                         }
                     ]
                 }
@@ -532,60 +403,17 @@
                             ]
                         },
                         {
-                            "type": "Ext.chart.PolarChart",
+                            "type": "Ext.Label",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "colors": [
-                                    "[\"#115fa6\", \"#94ae0a\", \"#a61120\", \"#ff8809\", \"#ffd13e\", \"#a61187\", \"#24ad9a\", \"#7c7474\", \"#a66111\"]"
-                                ],
-                                "id": "peacfulPie1",
-                                "margin": "0 0 0 50%",
-                                "store": "anonimousArrayStore"
+                                "html": "default location",
+                                "id": "statLocationPeaceful"
                             },
-                            "designerId": "b2b8828e-d1ed-4ed0-aedb-653d290db758",
-                            "isBuiltIn": true,
-                            "iconCls": "icon-pie-chart",
-                            "autoName": "MyPieChart",
-                            "cn": [
-                                {
-                                    "type": "Ext.chart.series.Pie",
-                                    "reference": {
-                                        "name": "series",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "labelField": "Feeling",
-                                        "xField": "TotalValue"
-                                    },
-                                    "designerId": "362856c4-9332-45bc-b957-df94bb7a6078"
-                                },
-                                {
-                                    "type": "Ext.chart.interactions.Rotate",
-                                    "reference": {
-                                        "name": "interactions",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "designerId": "dd653f51-7c95-494e-a63b-e5eb927af376"
-                                },
-                                {
-                                    "type": "Ext.chart.Legend",
-                                    "reference": {
-                                        "name": "legend",
-                                        "type": "object"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "id": "peacefulPie1Legend"
-                                    },
-                                    "designerId": "dae79e04-644c-4ff4-b6f5-84c6eae8ed27"
-                                }
-                            ]
+                            "designerId": "00a02b48-0de7-4cb6-9514-3328268f650b"
                         }
                     ]
                 }
@@ -632,6 +460,182 @@
                 ]
             },
             "designerId": "57ecb18f-bc73-4e82-820a-35cf31ddfd40"
+        },
+        {
+            "type": "Ext.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "centered": false,
+                "container|align": "start",
+                "container|pack": "end",
+                "docked": "top",
+                "layout": "hbox",
+                "maxHeight": 100,
+                "style": "background-color:#006db9"
+            },
+            "designerId": "97e52cd3-ec8a-4f09-86d1-165f15b97a0f",
+            "cn": [
+                {
+                    "type": "Ext.Img",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 201,
+                        "layout|flex": 1,
+                        "maxHeight": 75,
+                        "src": "transafe_logo.png",
+                        "style": "background-color:#FFFFFF"
+                    },
+                    "designerId": "ca494c83-f42e-4b2b-bb87-7327f044d96f"
+                },
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "cls": [
+                            "@include icon(\"list\", \"l\");"
+                        ],
+                        "designer|displayName": "ListViewButton",
+                        "designer|uiInterfaceName": "action",
+                        "html": null,
+                        "icon": null,
+                        "iconAlign": "center",
+                        "iconCls": "list",
+                        "id": "listViewButton4",
+                        "layout|flex": 1,
+                        "maxWidth": null,
+                        "minHeight": 75,
+                        "text": "",
+                        "ui": "action"
+                    },
+                    "designerId": "9d275b58-c15c-4fa1-aa0f-2407015886d3",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    "Ext.Viewport.setActiveItem('mynavigationview',{",
+                                    "    type: \"slide\",",
+                                    "    direction: \"left\"",
+                                    "});"
+                                ]
+                            },
+                            "designerId": "4cba9777-9a96-4a62-8483-8b5a14d8cb38"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|displayName": "MapViewButton",
+                        "designer|uiInterfaceName": "action",
+                        "disabled": true,
+                        "html": null,
+                        "icon": null,
+                        "iconAlign": "center",
+                        "iconCls": "maps",
+                        "layout|flex": 1,
+                        "minHeight": 75,
+                        "text": null,
+                        "ui": "action"
+                    },
+                    "designerId": "17ddd1d0-56ce-4ab0-9db6-0bd165f37a7e",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": null
+                            },
+                            "designerId": "31958bd7-de9e-4b46-bada-3e53ef842c2d"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|displayName": "LoginViewButton",
+                        "designer|uiInterfaceName": "action",
+                        "html": null,
+                        "icon": null,
+                        "iconAlign": "center",
+                        "iconCls": "user",
+                        "layout|flex": 1,
+                        "minHeight": 75,
+                        "text": null,
+                        "top": "",
+                        "ui": "action"
+                    },
+                    "designerId": "ca307144-2216-4b49-b9ca-2b396030f7b1",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    "console.log('prev view');",
+                                    "console.log(Ext.Viewport.getActiveItem().getId());",
+                                    "localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());",
+                                    "Ext.Viewport.setActiveItem('signuppanel',{",
+                                    "    type: \"slide\",",
+                                    "    direction: \"left\"",
+                                    "});"
+                                ]
+                            },
+                            "designerId": "8343b727-b1a8-4fb3-b449-f59f0821c473"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

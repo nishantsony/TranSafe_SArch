@@ -21,7 +21,11 @@ Ext.define('TranSafe.view.statTabPanel', {
         'Ext.chart.PolarChart',
         'Ext.chart.series.Pie',
         'Ext.chart.interactions.Rotate',
-        'Ext.chart.Legend'
+        'Ext.chart.Legend',
+        'Ext.Label',
+        'Ext.Panel',
+        'Ext.Img',
+        'Ext.Button'
     ],
 
     config: {
@@ -73,37 +77,9 @@ Ext.define('TranSafe.view.statTabPanel', {
                                 }
                             },
                             {
-                                xtype: 'polar',
-                                id: 'happyPie1',
-                                margin: '0 0 0 50%',
-                                colors: [
-                                    '#115fa6',
-                                    '#94ae0a',
-                                    '#a61120',
-                                    '#ff8809',
-                                    '#ffd13e',
-                                    '#a61187',
-                                    '#24ad9a',
-                                    '#7c7474',
-                                    '#a66111'
-                                ],
-                                store: 'anonimousArrayStore',
-                                series: [
-                                    {
-                                        type: 'pie',
-                                        labelField: 'Feeling',
-                                        xField: 'TotalValue'
-                                    }
-                                ],
-                                interactions: [
-                                    {
-                                        type: 'rotate'
-                                    }
-                                ],
-                                legend: {
-                                    xtype: 'legend',
-                                    id: 'happyPie1Legend'
-                                }
+                                xtype: 'label',
+                                html: 'default location',
+                                id: 'statLocationHappy'
                             }
                         ]
                     }
@@ -153,37 +129,9 @@ Ext.define('TranSafe.view.statTabPanel', {
                                 }
                             },
                             {
-                                xtype: 'polar',
-                                id: 'excitedPie1',
-                                margin: '0 0 0 50%',
-                                colors: [
-                                    '#115fa6',
-                                    '#94ae0a',
-                                    '#a61120',
-                                    '#ff8809',
-                                    '#ffd13e',
-                                    '#a61187',
-                                    '#24ad9a',
-                                    '#7c7474',
-                                    '#a66111'
-                                ],
-                                store: 'anonimousArrayStore',
-                                series: [
-                                    {
-                                        type: 'pie',
-                                        labelField: 'Feeling',
-                                        xField: 'TotalValue'
-                                    }
-                                ],
-                                interactions: [
-                                    {
-                                        type: 'rotate'
-                                    }
-                                ],
-                                legend: {
-                                    xtype: 'legend',
-                                    id: 'excitedPie1Legend'
-                                }
+                                xtype: 'label',
+                                html: 'default location',
+                                id: 'statLocationExcited'
                             }
                         ]
                     }
@@ -232,37 +180,9 @@ Ext.define('TranSafe.view.statTabPanel', {
                                 }
                             },
                             {
-                                xtype: 'polar',
-                                id: 'safePie1',
-                                margin: '0 0 0 50%',
-                                colors: [
-                                    '#115fa6',
-                                    '#94ae0a',
-                                    '#a61120',
-                                    '#ff8809',
-                                    '#ffd13e',
-                                    '#a61187',
-                                    '#24ad9a',
-                                    '#7c7474',
-                                    '#a66111'
-                                ],
-                                store: 'anonimousArrayStore',
-                                series: [
-                                    {
-                                        type: 'pie',
-                                        labelField: 'Feeling',
-                                        xField: 'TotalValue'
-                                    }
-                                ],
-                                interactions: [
-                                    {
-                                        type: 'rotate'
-                                    }
-                                ],
-                                legend: {
-                                    xtype: 'legend',
-                                    id: 'safePie1Legend'
-                                }
+                                xtype: 'label',
+                                html: 'default location',
+                                id: 'statLocationSafe'
                             }
                         ]
                     }
@@ -311,39 +231,80 @@ Ext.define('TranSafe.view.statTabPanel', {
                                 }
                             },
                             {
-                                xtype: 'polar',
-                                id: 'peacfulPie1',
-                                margin: '0 0 0 50%',
-                                colors: [
-                                    '#115fa6',
-                                    '#94ae0a',
-                                    '#a61120',
-                                    '#ff8809',
-                                    '#ffd13e',
-                                    '#a61187',
-                                    '#24ad9a',
-                                    '#7c7474',
-                                    '#a66111'
-                                ],
-                                store: 'anonimousArrayStore',
-                                series: [
-                                    {
-                                        type: 'pie',
-                                        labelField: 'Feeling',
-                                        xField: 'TotalValue'
-                                    }
-                                ],
-                                interactions: [
-                                    {
-                                        type: 'rotate'
-                                    }
-                                ],
-                                legend: {
-                                    xtype: 'legend',
-                                    id: 'peacefulPie1Legend'
-                                }
+                                xtype: 'label',
+                                html: 'default location',
+                                id: 'statLocationPeaceful'
                             }
                         ]
+                    }
+                ]
+            },
+            {
+                xtype: 'panel',
+                centered: false,
+                docked: 'top',
+                maxHeight: 100,
+                style: 'background-color:#006db9',
+                layout: {
+                    type: 'hbox',
+                    align: 'start',
+                    pack: 'end'
+                },
+                items: [
+                    {
+                        xtype: 'image',
+                        flex: 1,
+                        height: 201,
+                        maxHeight: 75,
+                        style: 'background-color:#FFFFFF',
+                        src: 'transafe_logo.png'
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            Ext.Viewport.setActiveItem('mynavigationview',{
+                                type: "slide",
+                                direction: "left"
+                            });
+                        },
+                        flex: 1,
+                        cls: '@include icon("list", "l");',
+                        id: 'listViewButton4',
+                        minHeight: 75,
+                        ui: 'action',
+                        iconAlign: 'center',
+                        iconCls: 'list',
+                        text: ''
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+
+                        },
+                        flex: 1,
+                        disabled: true,
+                        minHeight: 75,
+                        ui: 'action',
+                        iconAlign: 'center',
+                        iconCls: 'maps'
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            console.log('prev view');
+                            console.log(Ext.Viewport.getActiveItem().getId());
+                            localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());
+                            Ext.Viewport.setActiveItem('signuppanel',{
+                                type: "slide",
+                                direction: "left"
+                            });
+                        },
+                        flex: 1,
+                        minHeight: 75,
+                        top: '',
+                        ui: 'action',
+                        iconAlign: 'center',
+                        iconCls: 'user'
                     }
                 ]
             }

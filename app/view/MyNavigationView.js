@@ -18,6 +18,9 @@ Ext.define('TranSafe.view.MyNavigationView', {
     alias: 'widget.mynavigationview',
 
     requires: [
+        'Ext.Panel',
+        'Ext.Img',
+        'Ext.Button',
         'Ext.Map',
         'Ext.dataview.List',
         'Ext.XTemplate',
@@ -26,12 +29,82 @@ Ext.define('TranSafe.view.MyNavigationView', {
     ],
 
     config: {
+        id: 'mynavigationview',
         style: 'background-color: #FFF',
         items: [
             {
                 xtype: 'container',
                 docked: 'top',
                 items: [
+                    {
+                        xtype: 'panel',
+                        centered: false,
+                        docked: 'top',
+                        maxHeight: 100,
+                        style: 'background-color:#006db9',
+                        layout: {
+                            type: 'hbox',
+                            align: 'start',
+                            pack: 'end'
+                        },
+                        items: [
+                            {
+                                xtype: 'image',
+                                flex: 1,
+                                height: 201,
+                                maxHeight: 75,
+                                style: 'background-color:#FFFFFF',
+                                src: 'transafe_logo.png'
+                            },
+                            {
+                                xtype: 'button',
+                                handler: function(button, e) {
+                                    Ext.Viewport.setActiveItem('surveypanel',{
+                                        type: "slide",
+                                        direction: "left"
+                                    });
+                                },
+                                flex: 1,
+                                cls: '@include icon("list", "l");',
+                                id: 'listViewButton',
+                                minHeight: 75,
+                                ui: 'action',
+                                iconAlign: 'center',
+                                iconCls: 'list',
+                                text: ''
+                            },
+                            {
+                                xtype: 'button',
+                                handler: function(button, e) {
+
+                                },
+                                flex: 1,
+                                disabled: true,
+                                minHeight: 75,
+                                ui: 'action',
+                                iconAlign: 'center',
+                                iconCls: 'maps'
+                            },
+                            {
+                                xtype: 'button',
+                                handler: function(button, e) {
+                                    console.log('prev view');
+                                    console.log(Ext.Viewport.getActiveItem().getId());
+                                    localStorage.setItem('prevView', Ext.Viewport.getActiveItem().getId());
+                                    Ext.Viewport.setActiveItem('signuppanel',{
+                                        type: "slide",
+                                        direction: "left"
+                                    });
+                                },
+                                flex: 1,
+                                minHeight: 75,
+                                top: '',
+                                ui: 'action',
+                                iconAlign: 'center',
+                                iconCls: 'user'
+                            }
+                        ]
+                    },
                     {
                         xtype: 'map',
                         height: 200,
@@ -54,7 +127,10 @@ Ext.define('TranSafe.view.MyNavigationView', {
                 store: 'FS',
                 grouped: true,
                 itemHeight: 5,
-                indexBar: true
+                variableHeights: true,
+                indexBar: {
+                    hidden: false
+                }
             }
         ],
         navigationBar: {
